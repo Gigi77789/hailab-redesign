@@ -5,7 +5,17 @@
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-  const TOPICS = { health: "Health", education: "Learning", agents: "LLM agents", data: "Data work", collab: "Collaboration" };
+  // Research categories, in chart stack order (adjacent colours validated for colour-blind separation).
+  // Each paper has exactly one; "other" (gray) holds papers that fit none of the areas.
+  const CATS = [
+    ["health", "AI for Healthcare", "AI for Healthcare"],
+    ["agents", "LLM Agents & AI Algorithms", "LLM Agents & AI Algorithms"],
+    ["education", "AI for Learning", "AI for Learning"],
+    ["data", "Data Science", "Data Science"],
+    ["community", "Community Engagement", "Community Engagement"],
+    ["other", "Other", "Other topics"],
+  ];
+  const TOPICS = Object.fromEntries(CATS.map(([k, short]) => [k, short]));
   const PEER_FREE = new Set(["Preprint"]);
 
   /* ---------- nav ---------- */
@@ -53,7 +63,7 @@
 
   const primaryLink = (p) => {
     const l = p.links || {};
-    return l.arXiv || l.PDF || l.Web || l.Project || "https://scholar.google.com/scholar?q=" + encodeURIComponent('"' + p.t + '"');
+    return p.venueUrl || l.Paper || l.arXiv || l.PDF || l.Web || l.Project || "https://scholar.google.com/scholar?q=" + encodeURIComponent('"' + p.t + '"');
   };
 
   const fmtMonth = (d) => {
@@ -71,16 +81,20 @@
       .map(([k, u]) => `<a href="${esc(u)}">${esc(k)}</a>`)
       .join("");
     const venue = p.v && p.v !== p.tag && p.v.length > 12 ? `<span class="pub-venue">${esc(p.v)}</span>` : "";
-    const award = p.award ? `<span class="award">Paper award</span>` : "";
+    const award = p.award ? `<span class="award">${esc(p.award)}</span>` : "";
+    const tags = (p.topics || []).map((t) => `<span class="ptag k-${t}"><span class="key"></span>${esc(TOPICS[t] || t)}</span>`).join("");
+    const pre = p.pre ? `<span class="pub-pre">Earlier as a preprint</span>` : "";
     const abs = p.abs
       ? `<details><summary>Abstract</summary><p>${esc(p.abs)}</p></details>`
       : "";
-    return `<li class="pub">
+    const thumb = p.img ? `<a class="pub-thumb" href="${esc(primaryLink(p))}" tabindex="-1" aria-hidden="true"><img src="${esc(p.img)}" alt="" loading="lazy"></a>` : `<span class="pub-thumb empty" aria-hidden="true"></span>`;
+    return `<li class="pub${p.img ? " has-img" : ""}">${thumb}<div class="pub-body">
       <h3 class="pub-title"><a href="${esc(primaryLink(p))}">${esc(p.t)}</a></h3>
       <p class="pub-authors">${authorsHTML(p.a)}</p>
-      <div class="pub-meta">${tagHTML(p)}${venue}${award}${links ? `<span class="pub-links">${links}</span>` : ""}</div>
+      <div class="pub-meta">${tagHTML(p)}${venue}${award}${pre}${links ? `<span class="pub-links">${links}</span>` : ""}</div>
+      <div class="pub-tags" aria-label="Topics">${tags}</div>
       ${abs}
-    </li>`;
+    </div></li>`;
   }
 
   function faceHTML(m) {
@@ -94,9 +108,9 @@
 
   /* ---------- the paper field (home hero) ---------- */
   // Stack order doubles as the colour-safety order: adjacent hues were validated for colour-blind separation.
-  const STACK = ["health", "agents", "education", "data", "other"];
-  const AREA_NAMES = { health: "AI for health care", agents: "LLM agents", education: "AI for learning", data: "Data work", other: "Other topics" };
-  const primaryTopic = (p) => ["health", "education", "agents", "data"].find((t) => p.topics.includes(t)) || "other";
+  const STACK = CATS.map(([k]) => k);
+  const AREA_NAMES = Object.fromEntries(CATS.map(([k, , long]) => [k, long]));
+  const primaryTopic = (p) => (p.topics && p.topics[0]) || "other";
   const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function countTo(el, to, ms = 500) {
@@ -109,6 +123,8 @@
       if (k < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+    // background tabs pause animation frames: make sure the final number lands anyway
+    setTimeout(() => { if (el.isConnected) el.textContent = to; }, ms + 100);
   }
 
   function renderField() {
@@ -123,7 +139,7 @@
     const years = Array.from({ length: y1 - y0 + 1 }, (_, i) => y0 + i);
     const cols = years.map((y) => PUBS.map((p, i) => ({ p, i, t: primaryTopic(p) }))
       .filter((d) => d.p.y === y)
-      .sort((a, b) => STACK.indexOf(a.t) - STACK.indexOf(b.t)));
+      .sort((a, b) => STACK.indexOf(a.t) - STACK.indexOf(b.t) || STACK.indexOf((a.p.topics || [])[1]) - STACK.indexOf((b.p.topics || [])[1])));
 
     const PER_ROW = 2, PITCH = 17, R = 6.5, GAP = 8;
     const colW = PER_ROW * PITCH, step = colW + GAP;
@@ -141,7 +157,7 @@
         const sx = Math.random() * (W + 120) - 60;
         const sy = Math.random() * (H + 80) - H * 0.9;
         dots.push({ ...d, tx, ty, x: REDUCED ? tx : sx, y: REDUCED ? ty : sy, cx: tx, cy: ty, sx, sy, r: R, delay: ci * 85 + row * 30 + Math.random() * 120, phase: Math.random() * 6.28 });
-        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" transform="translate(${tx} ${ty})"><circle class="hit" r="${PITCH / 2 + 0.5}"/><circle class="dot" r="${R}"/></g></a>`;
+        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" transform="translate(${tx} ${ty})"><circle class="hit" r="${PITCH / 2 + 0.5}"/><g class="dot"><circle r="${R}"/>${(d.p.topics || [])[1] ? `<path class="half k-${d.p.topics[1]}" d="M0 ${-R}A${R} ${R} 0 0 1 0 ${R}Z"/>` : ""}</g></g></a>`;
       });
       const y = years[ci];
       if (y % 5 === 0 || ci === 0 || ci === years.length - 1) {
@@ -167,16 +183,25 @@
 
     // legend counts
     const counts = {};
-    dots.forEach((d) => (counts[d.t] = (counts[d.t] || 0) + 1));
-    document.querySelectorAll("#legend .fk").forEach((b) => b.insertAdjacentHTML("beforeend", ` <span class="n">${counts[b.dataset.topic] || 0}</span>`));
+    const tagged = {};
+    dots.forEach((d) => {
+      counts[d.t] = (counts[d.t] || 0) + 1;
+      (d.p.topics || []).forEach((t) => (tagged[t] = (tagged[t] || 0) + 1));
+    });
+    // legend shows every paper carrying the tag, not just those whose main tag it is
+    document.querySelectorAll("#legend .fk").forEach((b) => b.insertAdjacentHTML("beforeend", ` <span class="n">${tagged[b.dataset.topic] || 0}</span>`));
 
     // caption with a live count
     const setCaption = (topic) => {
-      const n = topic ? counts[topic] : PUBS.length;
-      cap.innerHTML = topic
-        ? `<b class="cnt">${+(cap.querySelector(".cnt")?.textContent || 0)}</b> papers on ${esc(AREA_NAMES[topic].replace(/^Data/, "data"))}. <a href="publications.html#${topic}">See the list</a>`
-        : `<b class="cnt">${+(cap.querySelector(".cnt")?.textContent || 0)}</b> papers since ${y0}, one dot each. Point at a dot to read it.`;
-      countTo(cap.querySelector(".cnt"), n);
+      const prev = +(cap.querySelector(".cnt")?.textContent || 0);
+      if (topic) {
+        const main = counts[topic] || 0, also = (tagged[topic] || 0) - main;
+        cap.innerHTML = `<b class="cnt">${prev}</b> papers in ${esc(TOPICS[topic])}. <a href="publications.html#${topic}">See the list</a>`;
+        countTo(cap.querySelector(".cnt"), tagged[topic] || 0);
+      } else {
+        cap.innerHTML = `<b class="cnt">${prev}</b> papers since ${y0}, one dot each. Point at a dot to read it.`;
+        countTo(cap.querySelector(".cnt"), PUBS.length);
+      }
     };
     setCaption("");
 
@@ -212,7 +237,7 @@
           groups[n].setAttribute("transform", `translate(${d.cx.toFixed(1)} ${d.cy.toFixed(1)})`);
         }
         // size: dim when another area is in focus, swell near the cursor
-        let target = focus && d.t !== focus ? R * 0.7 : R;
+        let target = focus && !(d.p.topics || []).includes(focus) ? R * 0.7 : R;
         if (pointer && d.x === d.tx) {
           const dist = Math.hypot(d.tx - pointer.x, d.ty - pointer.y);
           if (dist < LENS) target *= 1 + 0.6 * Math.pow(1 - dist / LENS, 2);
@@ -223,7 +248,7 @@
         const nr = d.r + (target - d.r) * 0.28;
         if (Math.abs(nr - target) > 0.02) busy = true;
         d.r = Math.abs(nr - target) > 0.02 ? nr : target;
-        circles[n].setAttribute("r", d.r.toFixed(2));
+        circles[n].setAttribute("transform", `scale(${(d.r / R).toFixed(3)})`);
       }
       if ((busy || (!REDUCED && onScreen)) && !document.hidden) requestAnimationFrame(frame); else running = false;
     }
@@ -237,7 +262,8 @@
     let pinned = null, lastPointer = "mouse";
     const showTip = (n, pin) => {
       const d = dots[n], p = d.p;
-      tip.innerHTML = `<div class="tip-meta"><span class="key k-${d.t}"></span>${esc(AREA_NAMES[d.t])}<span class="tag">${esc(p.tag)}</span></div>
+      const tagList = (p.topics || []).map((t) => `<span class="ptag k-${t}"><span class="key"></span>${esc(TOPICS[t])}</span>`).join("");
+      tip.innerHTML = `<div class="tip-meta"><span class="tag">${esc(p.tag)}</span>${p.y}</div><div class="tip-tags">${tagList}</div>
         <a class="tip-title" href="${esc(primaryLink(p))}" tabindex="${pin ? 0 : -1}">${esc(p.t)}</a>`;
       const fr = fig.getBoundingClientRect(), dr = circles[n].getBoundingClientRect();
       const w = tip.offsetWidth, h = tip.offsetHeight;
@@ -293,7 +319,12 @@
     let locked = "";
     const applyFocus = (t) => {
       focus = t;
-      if (t) fig.dataset.focus = t; else delete fig.dataset.focus;
+      if (t) { fig.dataset.focus = t; fig.style.setProperty("--fk", `var(--t-${t})`); } else delete fig.dataset.focus;
+      groups.forEach((g, n) => {
+        const ts = dots[n].p.topics || [];
+        g.classList.toggle("on", !!t && ts[0] === t);
+        g.classList.toggle("also", !!t && ts[0] !== t && ts.includes(t));
+      });
       legend.querySelectorAll(".fk").forEach((b) => b.classList.toggle("on", b.dataset.topic === t));
       setCaption(t);
       kick();
@@ -307,6 +338,12 @@
       legend.querySelectorAll(".fk").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.topic === locked)));
       applyFocus(locked);
     });
+    // index.html#collab (any category key) opens the chart with that category locked in focus
+    const fromHash = location.hash.slice(1);
+    if (TOPICS[fromHash]) {
+      const b = legend.querySelector(`.fk[data-topic="${fromHash}"]`);
+      if (b) b.click();
+    }
   }
 
   /* ---------- definition: words light up as you read down ---------- */
@@ -363,14 +400,42 @@
       </button>`;
     }).join("")}</div>
     <div class="ex-stage">${areas.map((a, i) => {
-      const papers = a.papers.slice(0, 3).map(findPub).filter(Boolean)
-        .map((p) => `<li><a href="${esc(primaryLink(p))}">${esc(p.t.split(":")[0])}</a>${tagHTML(p)}</li>`).join("");
+      const latest = PUBS.filter((p) => primaryTopic(p) === a.topic).slice(0, 4);
       return `<div class="ex-panel" role="tabpanel" id="ex-p-${a.id}" aria-labelledby="ex-t-${a.id}"${i ? " hidden" : ""}>
-        <figure class="hud"><div class="screen"><img src="${esc(a.figure.src)}" alt="${esc(a.figure.alt)}" loading="lazy"></div><figcaption class="readout">Fig. ${i + 1} <span class="sep">/</span> ${esc(a.figure.caption)}</figcaption></figure>
-        <ul class="paper-mini">${papers}</ul>
-        <a class="more" href="research.html#${a.id}">Read more about ${esc(a.name)}</a>
+        <div class="ex-feature" aria-live="polite"></div>
+        <ol class="ex-papers" aria-label="Newest papers in ${esc(a.name)}">${latest.map((p, j) => {
+          const links = Object.entries(p.links || {}).map(([k, u]) => `<a href="${esc(u)}">${esc(k)}</a>`).join("")
+            || `<a href="${esc(primaryLink(p))}">Find the paper</a>`;
+          return `<li${j === 0 ? ' class="on"' : ""}><button type="button" class="ex-paper" data-i="${PUBS.indexOf(p)}" aria-pressed="${j === 0}">
+            <span class="ex-paper-title">${esc(p.t)}</span>
+            <span class="ex-paper-meta">${tagHTML(p)}${/\d{4}/.test(p.tag) ? "" : `<span class="readout">${p.y}</span>`}</span>
+          </button><p class="pub-links ex-row-links">${links}</p></li>`;
+        }).join("")}</ol>
+        <a class="more" href="publications.html#${a.topic}">Read more about ${esc(a.name)}</a>
       </div>`;
     }).join("")}</div>`;
+
+    // the selected paper: its figure on top (when it has one); its row below shows title, venue, year and links
+    const feature = (panel, p) => {
+      panel.querySelector(".ex-feature").innerHTML = p.img
+        ? `<figure class="hud"><a class="screen" href="${esc(primaryLink(p))}"><img src="${esc(p.img)}" alt="Figure from “${esc(p.t)}”" loading="lazy"></a></figure>`
+        : "";
+      panel.querySelectorAll(".ex-paper").forEach((b) => {
+        const on = +b.dataset.i === PUBS.indexOf(p);
+        b.setAttribute("aria-pressed", String(on));
+        b.parentElement.classList.toggle("on", on);
+      });
+    };
+    host.querySelectorAll(".ex-panel").forEach((panel) => {
+      const first = panel.querySelector(".ex-paper");
+      if (first) feature(panel, PUBS[+first.dataset.i]);
+      panel.addEventListener("click", (e) => {
+        const b = e.target.closest(".ex-paper");
+        if (!b) return;
+        stop();
+        feature(panel, PUBS[+b.dataset.i]);
+      });
+    });
 
     const tabs = [...host.querySelectorAll(".ex-item")];
     const panels = [...host.querySelectorAll(".ex-panel")];
@@ -383,7 +448,7 @@
       if (focusTab) tabs[cur].focus();
       start = performance.now();
     };
-    const stop = () => { auto = false; tabs.forEach((t) => t.style.setProperty("--p", "100%")); };
+    function stop() { auto = false; tabs.forEach((t) => t.style.setProperty("--p", "100%")); }
     tabs.forEach((t, i) => {
       t.addEventListener("click", () => { stop(); select(i); });
       t.addEventListener("keydown", (e) => {
@@ -497,6 +562,20 @@
     onScroll();
   }
 
+  /* ---------- grants ---------- */
+  const GRANTS = window.HAI_GRANTS || [];
+  const grantHTML = (g) => `<li class="grant k-${g.topic}">
+      <span class="readout grant-years">${esc(g.years)}</span>
+      <div>
+        <h3 class="grant-title">${esc(g.title)}</h3>
+        <p class="grant-meta"><span class="grant-sponsor">${esc(g.sponsor)}${g.award ? ` <b>${esc(g.award)}</b>` : ""}</span><span>Role: ${esc(g.role)}</span>${g.lead ? `<span>Lead PI: ${esc(g.lead)}</span>` : ""}</p>
+      </div>
+    </li>`;
+  const sponsorSummary = () => {
+    const c = {};
+    GRANTS.filter((g) => !g.internal).forEach((g) => { const k = g.sponsor.split(" / ")[0]; c[k] = (c[k] || 0) + 1; });
+    return Object.entries(c).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${esc(k)} <b>${n}</b>`).join(' <span class="sep">/</span> ');
+  };
   /* ---------- pages ---------- */
   const page = ($("[data-page]") || document.body).dataset.page;
 
@@ -522,11 +601,14 @@
     }
     const team = window.HAI_TEAM || [];
     const readouts = {
-      areas: `${(window.HAI_AREAS || []).length} areas <span class="sep">/</span> <b>${PUBS.filter((p) => primaryTopic(p) !== "other").length}</b> papers mapped`,
+      areas: `${(window.HAI_AREAS || []).length} areas <span class="sep">/</span> <b>${PUBS.length}</b> papers tagged`,
       recent: `Latest <b>5</b> of ${PUBS.length}`,
+      grants: `<b>${GRANTS.length}</b> funded <span class="sep">/</span> ${sponsorSummary()}`,
       people: `<b>${team.filter((m) => m.group === "core").length + 1}</b> current <span class="sep">/</span> ${team.filter((m) => m.group === "visiting").length} visiting <span class="sep">/</span> ${team.filter((m) => m.group === "alumni").length} alumni`,
     };
     document.querySelectorAll("[data-readout]").forEach((el) => (el.innerHTML = readouts[el.dataset.readout] || ""));
+    const hg = $("#home-grants");
+    if (hg) hg.innerHTML = GRANTS.filter((g) => !g.internal).slice(0, 4).map(grantHTML).join("");
     const fieldN = $("#field-n");
     if (fieldN) fieldN.textContent = PUBS.length;
     renderField();
@@ -560,6 +642,75 @@
     if (h1) decode(h1, { stagger: 40, base: 120 });
   });
 
+  if (page === "grants") {
+    $("#grants-ext").innerHTML = GRANTS.filter((g) => !g.internal).map(grantHTML).join("");
+    $("#grants-int").innerHTML = GRANTS.filter((g) => g.internal).map(grantHTML).join("");
+    $("#grant-sum").innerHTML = `<b>${GRANTS.length}</b> funded grants <span class="sep">/</span> ${sponsorSummary()}`;
+  }
+
+  /* ---------- copy buttons (mail links don't open everywhere) ---------- */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy");
+    if (!b) return;
+    const done = () => { b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy"), 1600); };
+    const text = b.dataset.copy;
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => selectText(b.previousElementSibling));
+    else selectText(b.previousElementSibling);
+  });
+  function selectText(el) {
+    if (!el) return;
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    const sel = getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
+
+  if (page === "join") {
+    const N = window.HAI_NORMS;
+    const body = $("#norms-body");
+    if (N && body) {
+      $("#norms-version").innerHTML = `Version <b>${esc(N.version)}</b> <span class="sep">/</span> ${N.norms.length} norms`;
+      $("#agree-version").textContent = `(version ${N.version}) `;
+      $("#norms-credit").innerHTML = `Everyone in the lab works by these norms. Inspired by ${esc(N.inspiredBy.by)}’s <a href="${esc(N.inspiredBy.url)}">${esc(N.inspiredBy.text)}</a>.`;
+      body.innerHTML = `
+        <ol class="norm-list">${N.norms.map((n) => `<li>${n}</li>`).join("")}</ol>
+        <h3 class="norms-sub">Calendar events <span>(remote participation is fine)</span></h3>
+        <dl class="cal">${N.calendar.map(([name, when, text]) => `<div><dt>${esc(name)}<span class="readout">${esc(when)}</span></dt><dd>${esc(text)}</dd></div>`).join("")}</dl>
+        <h3 class="norms-sub">Getting started</h3>
+        <p class="norms-note">If you are a visiting or rotating PhD student, master’s student, or undergraduate, make sure you do all of these. We will approve your membership on these lists if you agree with the NEU-HAI group norms listed on this page.</p>
+        <ol class="start-list">${N.gettingStarted.map((n) => `<li>${n}</li>`).join("")}</ol>`;
+    }
+
+    // the application link stays locked until the norms are accepted; the choice is remembered per browser
+    const box = $("#agree"), btn = $("#apply-btn"), hint = $("#agree-hint");
+    const KEY = "hai-norms-agreed";
+    const setAgreed = (on) => {
+      btn.setAttribute("aria-disabled", String(!on));
+      btn.tabIndex = on ? 0 : -1;
+      hint.textContent = on ? "Thanks. The form opens in a new tab." : "Check the box to unlock the application form.";
+      $("#agree-box").classList.toggle("ok", on);
+    };
+    let saved = "";
+    try { saved = localStorage.getItem(KEY) || ""; } catch (_) { /* storage blocked */ }
+    if (N && saved === N.version) box.checked = true;
+    setAgreed(box.checked);
+    box.addEventListener("change", () => {
+      setAgreed(box.checked);
+      try { box.checked ? localStorage.setItem(KEY, N.version) : localStorage.removeItem(KEY); } catch (_) { /* storage blocked */ }
+    });
+    btn.addEventListener("click", (e) => {
+      if (btn.getAttribute("aria-disabled") === "true") {
+        e.preventDefault();
+        hint.textContent = "Please read the norms above and check the box first.";
+        $("#agree-box").classList.remove("nudge"); void btn.offsetWidth; $("#agree-box").classList.add("nudge");
+        box.focus();
+      }
+    });
+    btn.target = "_blank";
+    btn.rel = "noopener";
+  }
+
   if (page === "people") {
     const pi = window.HAI_PI;
     $("#pi").innerHTML = `
@@ -575,23 +726,6 @@
     $("#visiting").innerHTML = team.filter((m) => m.group === "visiting").map(faceHTML).join("");
     $("#alumni").innerHTML = team.filter((m) => m.group === "alumni").map((m) =>
       `<li>${m.url ? `<a class="n" href="${esc(m.url)}">${esc(m.name)}</a>` : `<span class="n">${esc(m.name)}</span>`}<span class="r">${esc(m.role)}</span></li>`).join("");
-  }
-
-  if (page === "research") {
-    $("#research-areas").innerHTML = (window.HAI_AREAS || []).map((a) => {
-      const papers = a.papers.map(findPub).filter(Boolean)
-        .map((p) => `<li><a href="${esc(primaryLink(p))}">${esc(p.t)}</a>${tagHTML(p)}</li>`).join("");
-      return `<section class="area-full k-${a.topic}" id="${a.id}" aria-labelledby="${a.id}-h">
-        <div class="prose">
-          <h2 id="${a.id}-h">${esc(a.name)}</h2>
-          ${a.body.map((b) => `<p>${esc(b)}</p>`).join("")}
-          <h3>Selected papers</h3>
-          <ul class="paper-mini">${papers}</ul>
-          <p style="margin-top:14px;font-size:var(--fs-sm);font-weight:500"><a href="publications.html#${a.topic}">See all ${PUBS.filter((p) => p.topics.includes(a.topic)).length} related papers</a></p>
-        </div>
-        <figure><div class="frame"><img src="${esc(a.figure.src)}" alt="${esc(a.figure.alt)}" loading="lazy"></div><figcaption>${esc(a.figure.caption)}</figcaption></figure>
-      </section>`;
-    }).join("");
   }
 
   if (page === "news") {
@@ -610,7 +744,7 @@
     input.value = state.q;
 
     const chips = [["", "All topics"], ...Object.entries(TOPICS)];
-    filters.innerHTML = chips.map(([k, label]) => `<button type="button" class="chip${k && k !== "collab" ? " k-" + k : ""}" data-topic="${k}" aria-pressed="false">${k && k !== "collab" ? '<span class="key"></span>' : ""}${label}</button>`).join("")
+    filters.innerHTML = chips.map(([k, label]) => `<button type="button" class="chip${k ? " k-" + k : ""}" data-topic="${k}" aria-pressed="false">${k ? '<span class="key"></span>' : ""}${label}</button>`).join("")
       + `<button type="button" class="chip" data-peer aria-pressed="false">Peer-reviewed only</button>`;
 
     const sync = () => {

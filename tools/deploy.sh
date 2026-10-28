@@ -17,5 +17,8 @@ git init -q -b gh-pages
 git add -A
 git -c user.name="$(git -C "$ROOT" config user.name)" -c user.email="$(git -C "$ROOT" config user.email)" \
   commit -qm "Deploy draft from $(git -C "$ROOT" rev-parse --short HEAD)"
+# In GitHub Actions the checkout's auth header lives in the source repo's config; reuse it here.
+AUTH=$(git -C "$ROOT" config --get http.https://github.com/.extraheader || true)
+[ -n "$AUTH" ] && git config http.https://github.com/.extraheader "$AUTH"
 git push -qf "$REMOTE" gh-pages
 echo "Pushed draft to gh-pages on $REMOTE"

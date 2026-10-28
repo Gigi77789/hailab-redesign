@@ -15,15 +15,15 @@ window.HAI_PI = {
 window.HAI_TEAM = [
   { group: "core", name: "Bingsheng ‘Arthur’ Yao", role: "Associate Research Scientist", url: "https://bingshengyao.com", photo: "" },
   { group: "core", name: "Jia Zhang", role: "Research Scientist", url: "", photo: "assets/team/jia.jpg" },
+  { group: "core", name: "Yao Du", role: "Research Scientist", url: "https://dornsife.usc.edu/ccls/yao-du/", photo: "assets/team/yaodu.jpg" },
   { group: "core", name: "Jiaju Chen", role: "PhD student", url: "https://malcolm-chen.github.io/", photo: "assets/team/jiaju.jpg" },
   { group: "core", name: "Jingfei Huang", role: "PhD student", url: "https://www.jingfeihuang.com/research", photo: "assets/team/jingfei.jpg" },
   { group: "core", name: "Menglin Zhao", role: "PhD student", url: "https://gigi77789.github.io/my_website/", photo: "assets/team/menglin.jpg" },
   { group: "core", name: "Yuxuan Lu", role: "PhD student", url: "https://yuxuan.lu", photo: "assets/team/yuxuan.jpg" },
   { group: "core", name: "Ziyi Wang", role: "PhD student", url: "https://ziyiii0-0.github.io/", photo: "assets/team/ziyi.jpg" },
 
-  { group: "visiting", name: "AmirAli Amini", role: "Visiting student", url: "", photo: "assets/team/amirali.jpg" },
-  { group: "visiting", name: "Bo Sun", role: "Visiting student", url: "", photo: "assets/team/bo.jpg" },
-  { group: "visiting", name: "Jiayi (Elise) Su", role: "Visiting student", url: "https://jiayi-elise-su.github.io/", photo: "assets/team/jiayi.jpg" },
+  { group: "visiting", name: "Bo Sun", role: "Research assistant", url: "", photo: "assets/team/bo.jpg" },
+  { group: "visiting", name: "Jiayi (Elise) Su", role: "Research assistant", url: "https://jiayi-elise-su.github.io/", photo: "assets/team/jiayi.jpg" },
   { group: "visiting", name: "Ruhan Gupta", role: "Visiting student", url: "https://ruhangupta.com/", photo: "assets/team/ruhan.jpg" },
   { group: "visiting", name: "Yuewen Gao", role: "Research assistant", url: "https://yuewen-gao.github.io/", photo: "assets/team/yuewen.jpg" },
 

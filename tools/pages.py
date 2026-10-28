@@ -1,6 +1,7 @@
 """Generates the site's HTML pages from one shared header/footer.
 Run from the repo root:  python3 tools/pages.py
-Edit page bodies below; edit people, papers, news and research areas in data/*.js (no rebuild needed).
+Edit page bodies below; edit people, papers, news and research areas in data/*.js, then run this
+script again: every page stamps its CSS, JS and data files with a content hash, so browsers load the new version.
 
 `python3 tools/pages.py --preview DIR` writes a review copy to DIR instead: every page carries a
 "draft redesign" note, and index.html is written as a page fragment for hosts that add their own
@@ -19,7 +20,13 @@ for flag in ("--preview", "--draft"):
         PREVIEW = pathlib.Path(sys.argv[sys.argv.index(flag) + 1]).resolve()
         FRAGMENT = flag == "--preview"
 
-NAV = [("research.html", "Research"), ("people.html", "People"), ("publications.html", "Publications"), ("news.html", "News"), ("join.html", "Join us")]
+def v(path):
+    """Asset URL with a content stamp, so browsers fetch the new file whenever it changes."""
+    import hashlib
+    f = ROOT / path
+    return f"{path}?v={hashlib.md5(f.read_bytes()).hexdigest()[:8]}" if f.exists() else path
+
+NAV = [("people.html", "People"), ("publications.html", "Publications"), ("grants.html", "Grants"), ("news.html", "News"), ("join.html", "Join us")]
 
 def head_tags(full, desc):
     robots = '\n<meta name="robots" content="noindex, nofollow">' if PREVIEW else ""
@@ -32,7 +39,7 @@ def head_tags(full, desc):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap">
-<link rel="stylesheet" href="css/site.css">"""
+<link rel="stylesheet" href="{v('css/site.css')}">"""
 
 def header(current):
     cur = ' aria-current="page"'
@@ -71,16 +78,16 @@ FOOTER = """<footer class="site-footer">
   </div>
 </footer>"""
 
-def page(file, title, desc, slug, main, scripts=("team", "pubs", "members", "news", "research")):
+def page(file, title, desc, slug, main, scripts=("team", "pubs", "members", "news", "research", "grants")):
     full = "NEU HAI" if title is None else f"{title} | NEU HAI"
-    s = "\n".join(f'<script src="data/{n}.js"></script>' for n in scripts)
+    s = "\n".join(f'<script src="{v(f"data/{n}.js")}"></script>' for n in scripts)
     body = f"""{header(file)}
 <main id="main" data-page="{slug}">
 {main.strip()}
 </main>
 {FOOTER}
 {s}
-<script src="js/site.js"></script>"""
+<script src="{v('js/site.js')}"></script>"""
     if FRAGMENT and file == "index.html":
         html = f"{head_tags(full, desc)}\n{body}\n"
     else:
@@ -130,14 +137,16 @@ page("index.html", None,
     </div>
     <figure class="field hud" id="field">
       <div class="field-top readout">
-        <span>Publication field <span class="sep">/</span> <b id="field-n">149</b> papers</span>
+        <span>Publication field</span>
         <span id="aim" aria-hidden="true">Point at the field</span>
       </div>
       <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
-        <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>Health</button>
-        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM agents</button>
-        <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>Learning</button>
-        <button type="button" class="fk k-data" data-topic="data" aria-pressed="false"><span class="key"></span>Data work</button>
+        <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>AI for Healthcare</button>
+        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM Agents &amp; AI Algorithms</button>
+        <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>AI for Learning</button>
+        <button type="button" class="fk k-data" data-topic="data" aria-pressed="false"><span class="key"></span>Data Science</button>
+        <button type="button" class="fk k-community" data-topic="community" aria-pressed="false"><span class="key"></span>Community Engagement</button>
+        <button type="button" class="fk k-other" data-topic="other" aria-pressed="false"><span class="key"></span>Other</button>
       </div>
       <div id="field-plot" role="img" aria-label="Dot chart of the lab’s publications by year, one dot per paper, colored by research area."></div>
       <figcaption id="field-cap" aria-live="polite">One dot per paper. Point at a dot to read it.</figcaption>
@@ -167,7 +176,7 @@ page("index.html", None,
   <div class="wrap">
     <div class="section-head">
       <div><span class="readout" data-readout="areas"></span><h2 id="research-h">What we work on</h2></div>
-      <a class="more" href="research.html">About our research</a>
+      <a class="more" href="publications.html">All publications</a>
     </div>
     <div class="explorer" id="explorer"></div>
   </div>
@@ -183,6 +192,16 @@ page("index.html", None,
   </div>
 </section>
 
+<section class="section tint" aria-labelledby="grants-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout" data-readout="grants"></span><h2 id="grants-h">Grants</h2></div>
+      <a class="more" href="grants.html">All grants</a>
+    </div>
+    <ul class="grant-list compact" id="home-grants"></ul>
+  </div>
+</section>
+
 <section class="section night" aria-labelledby="people-h">
   <div class="wrap">
     <div class="section-head">
@@ -193,37 +212,18 @@ page("index.html", None,
   </div>
 </section>
 
-<section class="section red" aria-labelledby="join-h">
+<section class="section violet" aria-labelledby="join-h">
   <div class="wrap join-band">
     <div>
-      <span class="readout"><span class="blip red"></span>Status <span class="sep">/</span> recruiting</span>
+      <span class="readout"><span class="blip violet"></span>Status <span class="sep">/</span> recruiting</span>
       <h2 id="join-h">Work with us</h2>
       <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
     </div>
     <div class="actions">
-      <a class="btn light" href="join.html">See open positions</a>
+      <a class="btn light" href="join.html#norms">Read the lab norms and apply</a>
     </div>
   </div>
 </section>
-""")
-
-page("research.html", "Research",
- "Research at NEU HAI: AI for health care, AI for learning, LLM agents that simulate people, and human–AI collaboration in data work.",
- "research", """
-<section class="page-head night">
-  <div class="wrap">
-    <h1>Research</h1>
-    <p>We explore, build, and evaluate human-centered AI systems. Each project starts with the people involved and ends with a system tested in their setting.</p>
-    <nav class="toc" aria-label="Research areas">
-      <a class="chip k-health" href="#health"><span class="key"></span>AI for health care</a>
-      <a class="chip k-education" href="#education"><span class="key"></span>AI for learning</a>
-      <a class="chip k-agents" href="#agents"><span class="key"></span>LLM agents</a>
-      <a class="chip k-data" href="#data"><span class="key"></span>Data work</a>
-    </nav>
-  </div>
-</section>
-<div class="wrap" id="research-areas"></div>
-<div style="height:48px"></div>
 """)
 
 page("people.html", "People",
@@ -242,7 +242,7 @@ page("people.html", "People",
       <ul class="faces" id="core"></ul>
     </div>
     <div class="group">
-      <h2 class="subhead">Visiting students and scholars</h2>
+      <h2 class="subhead">Research assistants and visiting students</h2>
       <ul class="faces small" id="visiting"></ul>
     </div>
   </div>
@@ -278,6 +278,24 @@ page("publications.html", "Publications",
 </section>
 """, scripts=("pubs", "members"))
 
+page("grants.html", "Grants",
+ "Grants that fund NEU HAI's research, from NIH, NSF, Microsoft Research, and Northeastern University.",
+ "grants", """
+<section class="page-head night">
+  <div class="wrap">
+    <h1>Grants</h1>
+    <p>Our work is funded by federal, industry, and university grants. These are the projects they support.</p>
+    <p class="readout" id="grant-sum" style="margin-top:22px"></p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:96px">
+  <h2 class="subhead">External grants</h2>
+  <ul class="grant-list" id="grants-ext"></ul>
+  <h2 class="subhead" style="margin-top:64px">Internal and partner grants</h2>
+  <ul class="grant-list" id="grants-int"></ul>
+</section>
+""", scripts=("grants",))
+
 page("news.html", "News",
  "News from NEU HAI: accepted papers, talks, visitors, and grants.",
  "news", """
@@ -290,19 +308,43 @@ page("news.html", "News",
 """, scripts=("news",))
 
 page("join.html", "Join us",
- "Open positions at NEU HAI: PhD students, postdocs, visiting scholars, research scientists, and research interns.",
+ "Join NEU HAI: read the lab norms, then apply as a PhD student, postdoc, visiting scholar, research scientist, or research intern.",
  "join", """
 <section class="page-head night">
   <div class="wrap">
     <h1>Join us</h1>
-    <p>We work on educational AI, health care AI, and LLM agents, often on NSF, NIH, and industry-sponsored projects. If that’s your kind of problem, we’d like to hear from you.</p>
-    <div class="actions" style="margin-top:28px">
-      <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfjXb_M65a0GjRmiRBDuqFBCzDkM1g4OIb1ukdjLhmPK6kaRg/viewform">Fill in the application form</a>
-      <a class="btn" href="mailto:d.wang@northeastern.edu">d.wang@northeastern.edu</a>
+    <p>We work on educational AI, health care AI, and LLM agents, often on NSF, NIH, and industry-sponsored projects. Everyone in the lab works by a shared set of norms, so we ask you to read them before you apply.</p>
+    <ol class="steps" aria-label="How to apply">
+      <li><a href="#norms"><span class="readout">Step 1</span>Read the lab norms</a></li>
+      <li><a href="#agree-box"><span class="readout">Step 2</span>Agree to follow them</a></li>
+      <li><a href="#agree-box"><span class="readout">Step 3</span>Apply through the form</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="wrap norms" id="norms" aria-labelledby="norms-h">
+  <div class="norms-head">
+    <span class="readout" id="norms-version">Lab norms</span>
+    <h2 id="norms-h">NEU-HAI lab norms</h2>
+    <p id="norms-credit"></p>
+  </div>
+  <div class="norms-body" id="norms-body"></div>
+
+  <div class="agree hud" id="agree-box" aria-labelledby="agree-h">
+    <h2 class="visually-hidden" id="agree-h">Agree and apply</h2>
+    <label class="agree-check" for="agree">
+      <input type="checkbox" id="agree">
+      <span>I have read the NEU-HAI lab norms <span id="agree-version"></span>and agree to follow them.</span>
+    </label>
+    <div class="agree-actions">
+      <a class="btn primary" id="apply-btn" href="https://forms.gle/3Qk8DM2HKJmiBVP76" aria-disabled="true">Apply through the form</a>
+      <p class="agree-hint" id="agree-hint" aria-live="polite">Check the box to unlock the application form.</p>
     </div>
   </div>
 </section>
+
 <section class="wrap" style="padding-bottom:96px">
+  <h2 class="subhead" style="margin-top:72px">Who we take, and when</h2>
   <ul class="roles">
     <li>
       <h2>PhD students</h2>
@@ -315,7 +357,7 @@ page("join.html", "Join us",
       <h2>Postdocs, visiting scholars, and research scientists</h2>
       <div>
         <p>If you hold a doctoral degree and work on educational AI, health care AI, or LLM agents, you can join our sponsored projects. You’ll also mentor students and write proposals, which prepares you for a faculty career.</p>
-        <p class="when">Email any time.</p>
+        <p class="when">Apply through the form any time.</p>
       </div>
     </li>
     <li>
@@ -333,8 +375,9 @@ page("join.html", "Join us",
       </div>
     </li>
   </ul>
-  <div class="note">
-    <p>The form sends us an email automatically, so there’s no need to email separately. If the form doesn’t work for you, send your materials to <a href="mailto:d.wang@northeastern.edu">d.wang@northeastern.edu</a>.</p>
+  <div class="note contact">
+    <p>Questions about joining? Email Bingsheng Yao at <a href="mailto:b.yao@northeastern.edu">b.yao@northeastern.edu</a> <button type="button" class="copy" data-copy="b.yao@northeastern.edu">Copy</button></p>
+    <p>The form sends us an email automatically, so there’s no need to email separately.</p>
   </div>
 </section>
-""", scripts=())
+""", scripts=("norms",))

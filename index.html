@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v=6baac41b">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -24,9 +24,9 @@
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="research.html">Research</a>
       <a href="people.html">People</a>
       <a href="publications.html">Publications</a>
+      <a href="grants.html">Grants</a>
       <a href="news.html">News</a>
       <a href="join.html">Join us</a>
     </nav>
@@ -57,14 +57,16 @@
     </div>
     <figure class="field hud" id="field">
       <div class="field-top readout">
-        <span>Publication field <span class="sep">/</span> <b id="field-n">149</b> papers</span>
+        <span>Publication field</span>
         <span id="aim" aria-hidden="true">Point at the field</span>
       </div>
       <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
-        <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>Health</button>
-        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM agents</button>
-        <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>Learning</button>
-        <button type="button" class="fk k-data" data-topic="data" aria-pressed="false"><span class="key"></span>Data work</button>
+        <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>AI for Healthcare</button>
+        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM Agents &amp; AI Algorithms</button>
+        <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>AI for Learning</button>
+        <button type="button" class="fk k-data" data-topic="data" aria-pressed="false"><span class="key"></span>Data Science</button>
+        <button type="button" class="fk k-community" data-topic="community" aria-pressed="false"><span class="key"></span>Community Engagement</button>
+        <button type="button" class="fk k-other" data-topic="other" aria-pressed="false"><span class="key"></span>Other</button>
       </div>
       <div id="field-plot" role="img" aria-label="Dot chart of the lab’s publications by year, one dot per paper, colored by research area."></div>
       <figcaption id="field-cap" aria-live="polite">One dot per paper. Point at a dot to read it.</figcaption>
@@ -94,7 +96,7 @@
   <div class="wrap">
     <div class="section-head">
       <div><span class="readout" data-readout="areas"></span><h2 id="research-h">What we work on</h2></div>
-      <a class="more" href="research.html">About our research</a>
+      <a class="more" href="publications.html">All publications</a>
     </div>
     <div class="explorer" id="explorer"></div>
   </div>
@@ -110,6 +112,16 @@
   </div>
 </section>
 
+<section class="section tint" aria-labelledby="grants-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout" data-readout="grants"></span><h2 id="grants-h">Grants</h2></div>
+      <a class="more" href="grants.html">All grants</a>
+    </div>
+    <ul class="grant-list compact" id="home-grants"></ul>
+  </div>
+</section>
+
 <section class="section night" aria-labelledby="people-h">
   <div class="wrap">
     <div class="section-head">
@@ -120,15 +132,15 @@
   </div>
 </section>
 
-<section class="section red" aria-labelledby="join-h">
+<section class="section violet" aria-labelledby="join-h">
   <div class="wrap join-band">
     <div>
-      <span class="readout"><span class="blip red"></span>Status <span class="sep">/</span> recruiting</span>
+      <span class="readout"><span class="blip violet"></span>Status <span class="sep">/</span> recruiting</span>
       <h2 id="join-h">Work with us</h2>
       <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
     </div>
     <div class="actions">
-      <a class="btn light" href="join.html">See open positions</a>
+      <a class="btn light" href="join.html#norms">Read the lab norms and apply</a>
     </div>
   </div>
 </section>
@@ -147,11 +159,12 @@
     </nav>
   </div>
 </footer>
-<script src="data/team.js"></script>
-<script src="data/pubs.js"></script>
-<script src="data/members.js"></script>
-<script src="data/news.js"></script>
-<script src="data/research.js"></script>
-<script src="js/site.js"></script>
+<script src="data/team.js?v=f79b5597"></script>
+<script src="data/pubs.js?v=5533c9f8"></script>
+<script src="data/members.js?v=80c20779"></script>
+<script src="data/news.js?v=802901f8"></script>
+<script src="data/research.js?v=bd05f840"></script>
+<script src="data/grants.js?v=2a092b00"></script>
+<script src="js/site.js?v=3c76ff36"></script>
 </body>
 </html>
