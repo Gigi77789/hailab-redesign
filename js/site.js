@@ -7,7 +7,7 @@
 
   // Research categories, in chart stack order (adjacent colours validated for colour-blind separation).
   // A paper's first topic is its main one (its dot colour on the home page); the Publications page
-  // shows and filters by all of them. "other" (gray) holds papers that fit none of the areas.
+  // shows and filters by all of them.
   const CATS = [
     ["health", "AI for Healthcare", "AI for Healthcare"],
     ["agents", "LLM Agents", "LLM Agents"],
@@ -16,7 +16,6 @@
     ["collab", "Human-AI Collaboration", "Human-AI Collaboration"],
     ["algo", "AI Algorithms", "AI Algorithms"],
     ["community", "Community Engagement", "Community Engagement"],
-    ["other", "Other", "Other topics"],
   ];
   const TOPICS = Object.fromEntries(CATS.map(([k, short]) => [k, short]));
   const PEER_FREE = new Set(["Preprint"]);
@@ -113,7 +112,7 @@
   // Stack order doubles as the colour-safety order: adjacent hues were validated for colour-blind separation.
   const STACK = CATS.map(([k]) => k);
   const AREA_NAMES = Object.fromEntries(CATS.map(([k, , long]) => [k, long]));
-  const primaryTopic = (p) => (p.topics && p.topics[0]) || "other";
+  const primaryTopic = (p) => (p.topics && p.topics[0]) || "collab";
   const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function countTo(el, to, ms = 500) {

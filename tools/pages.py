@@ -148,7 +148,6 @@ page("index.html", None,
         <button type="button" class="fk k-collab" data-topic="collab" aria-pressed="false"><span class="key"></span>Human-AI Collaboration</button>
         <button type="button" class="fk k-algo" data-topic="algo" aria-pressed="false"><span class="key"></span>AI Algorithms</button>
         <button type="button" class="fk k-community" data-topic="community" aria-pressed="false"><span class="key"></span>Community Engagement</button>
-        <button type="button" class="fk k-other" data-topic="other" aria-pressed="false"><span class="key"></span>Other</button>
       </div>
       <div id="field-plot" role="img" aria-label="Dot chart of the lab’s publications by year, one dot per paper, colored by research area."></div>
       <figcaption id="field-cap" aria-live="polite">One dot per paper. Point at a dot to read it.</figcaption>

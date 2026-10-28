@@ -36,9 +36,9 @@ def save_pubs(head, pubs):
 #   health = AI for Healthcare, education = AI for Learning, agents = LLM Agents, data = Data Science,
 #   collab = Human-AI Collaboration (incl. the human-human collaboration studies it grew from),
 #   algo = AI Algorithms (models and training methods),
-#   community = Community Engagement (workshops, panels, SIGs the lab organized),
-#   other = everything that fits none of them (shown in gray).
-CATEGORIES = ["community", "health", "education", "agents", "data", "collab", "algo", "other"]
+#   community = Community Engagement (workshops, panels, SIGs the lab organized).
+# A paper that fits none of them goes to Human-AI Collaboration (AI Algorithms at an ML venue).
+CATEGORIES = ["community", "health", "education", "agents", "data", "collab", "algo"]
 AREAS = ["health", "education", "data", "agents", "collab", "algo"]  # tie-break order
 DOMAINS = ("health", "education")  # application areas: only count when the title (or venue) names them
 SUBJECTS = ("data", "agents", "collab")  # what a paper studies, as opposed to the algorithms it uses
@@ -48,7 +48,7 @@ RULES = {
     "agents": r"\bagents?\b|agentic|simulat|\bperson(?:a|as|ae)\b|companion|role-play|role-playing|usability|shopping|customer|tool-call|tool-us|a/b testing|harness|voice assistant|conversational (?:agent|assistant)|chatbot|voice user interface|\bvuis?\b|cooking",
     "data": r"automl|auto-?ai|autods|data scien|notebook|annotat|active learning|\blabels?\b|dataset|data work|feature engineering|data-debugging|relational data|visualiz|forecast|code documentation|code summarization|data drift|analytics|data extraction|database|machine learning model|\bml model|ai developers?|automated machine learning",
     "algo": r"fine-?tun|reinforcement|benchmark|transformer|neural|\bgraph\b|adversarial|perturbation|\battack|optimi[sz]|admm|extraction|detection|summarization|in-context|distillation|diffusion|classification|anomaly|prediction|language models?\b|\bllms?\b|retrieval|reasoning|embedding|generation|\brl\b|deep learning|machine learning|\bgnn\b|graph neural",
-    "collab": r"collaborat|human-ai|human-agent|human-robot|teaming|teammate|co-creat|cooperat|trust|explainab|human-in-the-loop|writ\w* together|\bteams?\b|group chat|partner|organizational|enterprise|decision making|decision-making|ai-assisted|second opinion|oversight|shared mental model|mixed-initiative|human.computer integration|answerer",
+    "collab": r"collaborat|human-ai|human-agent|human-robot|teaming|teammate|co-creat|cooperat|trust|explainab|human-in-the-loop|writ\w* together|\bteams?\b|group chat|partner|organizational|enterprise|decision making|decision-making|ai-assisted|second opinion|oversight|shared mental model|mixed-initiative|human.computer integration|answerer|\brobots?\b|anthropomorph",
 }
 HEALTH_VENUES = r"ACM HEALTH|JMIR|Medical Internet|JBHI|Biomedical and Health|npj Digit|Medical Systems|Health Inform|JAMIA|medRxiv"
 ML_VENUES = r"\b(ACL|EMNLP|NAACL|TACL|ICLR|ICML|NeurIPS|KDD|AAAI|ECCV|CVPR|ICDE|IJCAI|PAKDD|COLING)\b"
@@ -94,7 +94,7 @@ def classify(p):
     else:
         main = max(AREAS, key=lambda k: (score[k], -AREAS.index(k)))
         if not (score[main] >= 2 or (score[main] > 0 and not p.get("abs"))):
-            return ["other"]
+            return ["algo" if ml else "collab"]
     # a second category only when the title names it, or the abstract keeps coming back to it;
     # one "LLM" in the title of an HCI paper doesn't make it algorithms work
     second = [k for k in AREAS if k != main and (t[k] or a[k] >= 4) and (k != "algo" or ml or t[k] >= 2 or a[k] >= 4)]

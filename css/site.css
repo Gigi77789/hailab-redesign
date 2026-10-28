@@ -32,7 +32,6 @@
   --t-collab: #d96a26;
   --t-algo: #9085e9;
   --t-community: #d55181;
-  --t-other: #6f7a92;  /* "Other" papers: a muted gray that still reads on the dark ground */
 
   --display: "Michroma", "Eurostile", "Arial Black", sans-serif;
   --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -63,7 +62,6 @@
 .k-collab { --k: var(--t-collab); }
 .k-algo { --k: var(--t-algo); }
 .k-community { --k: var(--t-community); }
-.k-other { --k: var(--t-other); }
 .key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--k); box-shadow: 0 0 8px var(--k); flex: none; }
 
 *, *::before, *::after { box-sizing: border-box; }
