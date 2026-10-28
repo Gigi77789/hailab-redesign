@@ -30,19 +30,25 @@ def save_pubs(head, pubs):
 
 
 # ---------- topics ----------
-# Every paper gets exactly one category, so the categories don't overlap:
-#   health = AI for Healthcare, education = AI for Learning, agents = LLM Agents & AI Algorithms,
-#   data = Data Science, community = Community Engagement (workshops, panels, SIGs the lab organized),
+# Every paper gets a main category (topics[0]: its dot colour on the home page and the area that lists it)
+# and, when the title clearly names a second one, one more (topics[1]); the Publications page shows and
+# filters by both. More than two would mean the categories are too vague to tell papers apart.
+#   health = AI for Healthcare, education = AI for Learning, agents = LLM Agents, data = Data Science,
+#   collab = Human-AI Collaboration (incl. the human-human collaboration studies it grew from),
+#   algo = AI Algorithms (models and training methods),
+#   community = Community Engagement (workshops, panels, SIGs the lab organized),
 #   other = everything that fits none of them (shown in gray).
-CATEGORIES = ["community", "health", "education", "agents", "data", "other"]
-AREAS = ["health", "education", "data", "agents"]  # tie-break order
+CATEGORIES = ["community", "health", "education", "agents", "data", "collab", "algo", "other"]
+AREAS = ["health", "education", "data", "agents", "collab", "algo"]  # tie-break order
+DOMAINS = ("health", "education")  # application areas: only count when the title (or venue) names them
+SUBJECTS = ("data", "agents", "collab")  # what a paper studies, as opposed to the algorithms it uses
 RULES = {
     "health": r"clinic|patient|medical|health|cancer|sepsis|cardio|\bicu\b|intensive care|surg|wound|mental(?! model)|concussion|\behr\b|nurs|hospital|caregiver|symptom|well-being|wellbeing|physician|doctor|depress|covid|postoperative|telehealth|disease|prosocial|parkinson|older adult|serious illness|emergency|tracking data|motor impairment",
     "education": r"child|story|storytelling|fairy ?tale|educat|teacher|student|classroom|reading|\bkids?\b|parent|literacy|learner|\bcourses?\b|academic work|question generation|foreign language|narrative comprehension|school",
-    "agents": r"\bagents?\b|agentic|simulat|persona|role-play|role-playing|usability|shopping|customer|tool-call|tool-us|a/b testing|harness|voice assistant|conversational (?:agent|assistant)|chatbot|voice user interface|\\bvuis?\\b|cooking",
-    "data": r"automl|auto-?ai|autods|data scien|notebook|annotat|active learning|\blabels?\b|dataset|data work|feature engineering|data-debugging|relational data|visualiz|forecast|code documentation|code summarization|data drift|analytics|data extraction|database|machine learning model|\\bml model|ai developers?|data scien\\w*|automated machine learning",
-    "algo": r"fine-?tun|reinforcement|benchmark|transformer|neural|\bgraph\b|adversarial|optimi[sz]|admm|extraction|detection|summarization|in-context|distillation|diffusion|classification|anomaly|prediction|language models?\b|\bllms?\b|retrieval|reasoning|embedding|generation|\brl\b|deep learning|machine learning|\\bgnn\\b|graph neural",
-    "collab": r"collaborat|human-ai|human-agent|teaming|co-creat|conversational|chatbot|voice|trust|explanation|human-in-the-loop|writing|\bteams?\b|cooperat|partner|group|organizational|enterprise|social|community|misinformation|privacy|disclosure|dark pattern|oversight|second opinion|decision making|decision-making|perspective|perception|interview|design|user|stakeholder",
+    "agents": r"\bagents?\b|agentic|simulat|\bperson(?:a|as|ae)\b|companion|role-play|role-playing|usability|shopping|customer|tool-call|tool-us|a/b testing|harness|voice assistant|conversational (?:agent|assistant)|chatbot|voice user interface|\bvuis?\b|cooking",
+    "data": r"automl|auto-?ai|autods|data scien|notebook|annotat|active learning|\blabels?\b|dataset|data work|feature engineering|data-debugging|relational data|visualiz|forecast|code documentation|code summarization|data drift|analytics|data extraction|database|machine learning model|\bml model|ai developers?|automated machine learning",
+    "algo": r"fine-?tun|reinforcement|benchmark|transformer|neural|\bgraph\b|adversarial|perturbation|\battack|optimi[sz]|admm|extraction|detection|summarization|in-context|distillation|diffusion|classification|anomaly|prediction|language models?\b|\bllms?\b|retrieval|reasoning|embedding|generation|\brl\b|deep learning|machine learning|\bgnn\b|graph neural",
+    "collab": r"collaborat|human-ai|human-agent|human-robot|teaming|teammate|co-creat|cooperat|trust|explainab|human-in-the-loop|writ\w* together|\bteams?\b|group chat|partner|organizational|enterprise|decision making|decision-making|ai-assisted|second opinion|oversight|shared mental model|mixed-initiative|human.computer integration|answerer",
 }
 HEALTH_VENUES = r"ACM HEALTH|JMIR|Medical Internet|JBHI|Biomedical and Health|npj Digit|Medical Systems|Health Inform|JAMIA|medRxiv"
 ML_VENUES = r"\b(ACL|EMNLP|NAACL|TACL|ICLR|ICML|NeurIPS|KDD|AAAI|ECCV|CVPR|ICDE|IJCAI|PAKDD|COLING)\b"
@@ -56,32 +62,45 @@ COMMUNITY = [
     "chinese chi 2020 workshop",
     "conversational agents: acting on the wave",
     "hci in china",
+    "towards a diverse, inclusive, accessible and equitable aaai international conference",
 ]
 
-def _scores(p):
+def _hits(p):
     title, abstract = p["t"].lower(), p.get("abs", "").lower()
-    return {k: 3 * len(re.findall(r, title)) + min(len(re.findall(r, abstract)), 4) for k, r in RULES.items()}
+    return ({k: len(re.findall(r, title)) for k, r in RULES.items()},
+            {k: min(len(re.findall(r, abstract)), 4) for k, r in RULES.items()})
 
 def classify(p):
-    if any(norm(p["t"]).startswith(norm(c)) for c in COMMUNITY):
-        return ["community"]
-    sc = _scores(p)
+    """[main] or [main, second]; see the note above CATEGORIES."""
+    t, a = _hits(p)
     venue = p.get("tag", "") + " " + p.get("v", "")
     ml, hci = bool(re.search(ML_VENUES, venue)), bool(re.search(HCI_VENUES, p.get("tag", "")))
-    # method words ("LLM", "prediction") count toward LLM Agents & AI Algorithms only outside HCI venues
-    agents = sc["agents"] + (0 if hci and not ml else sc["algo"]) + (2 if ml else 0)
-    # an application area named in the title (or a health venue) wins: a sepsis model at KDD is healthcare work
-    title_hits = {k: len(re.findall(RULES[k], p["t"].lower())) for k in ("health", "education")}
     if re.search(HEALTH_VENUES, venue):
-        title_hits["health"] += 1
-    domain = [k for k in ("health", "education") if title_hits[k]]
-    if domain:
-        return [max(domain, key=lambda k: (title_hits[k], k == "health"))]
-    cand = {"health": sc["health"], "education": sc["education"], "agents": agents, "data": sc["data"]}
-    best = max(AREAS, key=lambda k: (cand[k], -AREAS.index(k)))
-    if cand[best] >= 2 or (cand[best] > 0 and not p.get("abs")):
-        return [best]
-    return ["other"]
+        t["health"] += 1
+    if hci and not ml:  # at HCI venues "LLM" or "prediction" describes the system, not an algorithms contribution
+        t["algo"] = a["algo"] = 0
+    for k in DOMAINS:
+        a[k] = 0  # "students" or "patients" in an abstract are often just the study's participants
+    # papers at ML venues are algorithms work unless their title says otherwise
+    score = {k: 3 * t[k] + a[k] + (2 if k == "algo" and ml else 0) for k in AREAS}
+    if any(norm(p["t"]).startswith(norm(c)) for c in COMMUNITY):
+        main = "community"
+    elif any(t[k] for k in DOMAINS):
+        # an application area named in the title wins: a sepsis model at KDD is healthcare work
+        main = max(DOMAINS, key=lambda k: (t[k], k == "health"))
+    elif any(t[k] for k in SUBJECTS):
+        # so does a subject named in the title: an RL method for shopping agents is agents work, algorithms second
+        main = max((k for k in SUBJECTS if t[k]), key=lambda k: (score[k], -AREAS.index(k)))
+    else:
+        main = max(AREAS, key=lambda k: (score[k], -AREAS.index(k)))
+        if not (score[main] >= 2 or (score[main] > 0 and not p.get("abs"))):
+            return ["other"]
+    # a second category only when the title names it, or the abstract keeps coming back to it;
+    # one "LLM" in the title of an HCI paper doesn't make it algorithms work
+    second = [k for k in AREAS if k != main and (t[k] or a[k] >= 4) and (k != "algo" or ml or t[k] >= 2 or a[k] >= 4)]
+    if not second:
+        return [main]
+    return [main, max(second, key=lambda k: (3 * t[k] + a[k], -AREAS.index(k)))]
 
 def norm(t):
     return re.sub(r"[^a-z0-9]+", " ", unescape(t).lower().replace("’", "'")).strip()

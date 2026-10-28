@@ -21,7 +21,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -53,7 +53,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -83,7 +84,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -115,7 +117,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"data",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -145,7 +148,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -180,7 +184,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -250,7 +254,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"collab"
 ],
 "abs": "Post-surgery care involves ongoing collaboration between provider teams and patients, which starts from post-surgery hospitalization through home recovery after discharge. While prior HCI research has primarily examined patients’ challenges at home, less is known about how provider teams coordinate discharge preparation and care handoffs, and how breakdowns in communication and care pathways may affect patient recovery. To investigate this gap, we conducted semi-structured interviews with 13 healthcare providers and 4 patients in the context of gastrointestinal (GI) surgery. We found coordination boundaries between in- and out-patient teams, coupled with complex organizational structures within teams, impeded the \"invisible work\" of preparing patients’ home care plans and triaging patient information. For patients, these breakdowns resulted in inadequate preparation for home transition and fragmented self-collected data, both of which undermine timely clinical decision-making. Based on these findings, we outline design opportunities to formalize task ownership and handoffs, contextualize co-temporal signals, and align care plans with home resources.",
 "pre": {
@@ -322,7 +327,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"agents"
 ],
 "abs": "",
 "kind": "conference",
@@ -345,7 +351,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -381,7 +387,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"data"
 ],
 "abs": "",
 "kind": "conference",
@@ -408,7 +415,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "Simulating step-wise human behavior with Large Language Models (LLMs) has become an emerging research direction, enabling applications in various practical domains. While prior methods, including prompting, supervised fine-tuning (SFT), and reinforcement learning (RL), have shown promise in modeling step-wise behavior, they primarily learn a population-level policy without conditioning on a user’s persona, yielding generic rather than personalized simulations. In this work, we pose a critical question: how can LLM agents better simulate personalized user behavior? We introduce Customer-R1, an RL-based method for personalized, step-wise user behavior simulation in online shopping environments. Our policy is conditioned on an explicit persona, and we optimize next-step rationale and action generation via action correctness reward signals. Experiments on the OPeRA dataset emonstrate that Customer-R1 not only significantly outperforms prompting and SFT-based baselines in next-action prediction tasks, but also better matches users’ action distribution, indicating higher fidelity in personalized behavior simulation.",
 "pre": {
@@ -486,7 +494,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -522,7 +531,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "Supervised Fine-Tuning (SFT) on domain-specific datasets is a common approach to adapt Large Language Models (LLMs) to specialized tasks but is often believed to degrade their general capabilities. In this work, we revisit this trade-off and present both empirical and theoretical insights. First, we show that SFT does not always hurt: using a smaller learning rate can substantially mitigate general performance degradation while preserving comparable target-domain performance. We then provide a theoretical analysis that explains these phenomena and further motivates a new method, Token-Adaptive Loss Reweighting (TALR). Building on this, and recognizing that smaller learning rates alone do not fully eliminate general-performance degradation in all cases, we evaluate a range of strategies for reducing general capability loss, including L2 regularization, LoRA, model averaging, FLOW, and our proposed TALR. Experimental results demonstrate that while no method completely eliminates the trade-off, TALR consistently outperforms these baselines in balancing domain-specific gains and general capabilities. Finally, we distill our findings into practical guidelines for adapting LLMs to new domains: (i) using a small learning rate to achieve a favorable trade-off, and (ii) when a stronger balance is further desired, adopt TALR as an effective strategy.",
 "pre": {
@@ -624,6 +633,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"collab",
 "agents"
 ],
 "abs": "",
@@ -660,7 +670,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"collab"
 ],
 "abs": "The dark patterns, deceptive interface designs manipulating user behaviors, have been extensively studied for their effects on human decision-making and autonomy. Yet, with the rising prominence of LLM-powered GUI agents that automate tasks from high-level intents, understanding how dark patterns affect agents is increasingly important. We present a two-phase empirical study examining how agents, human participants, and human-AI teams respond to 16 types of dark patterns across diverse scenarios. Phase 1 highlights that agents often fail to recognize dark patterns, and even when aware, prioritize task completion over protective action. Phase 2 revealed divergent failure modes: humans succumb due to cognitive shortcuts and habitual compliance, while agents falter from procedural blind spots. Human oversight improved avoidance but introduced costs such as attentional tunneling and cognitive load. Our findings show neither humans nor agents are uniformly resilient, and collaboration introduces new vulnerabilities, suggesting design needs for transparency, adjustable autonomy, and oversight.",
 "pre": {
@@ -694,7 +705,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"community"
+"community",
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -800,7 +812,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "Surgical site infection (SSI) is one of the most common and costly healthcare-associated infections and and surgical wound care remains a significant clinical challenge in preventing SSIs and improving patient outcomes. While recent studies have explored the use of deep learning for preliminary surgical wound screening, progress has been hindered by concerns over data privacy and the high costs associated with expert annotation. Currently, no publicly available dataset or benchmark encompasses various types of surgical wounds, resulting in the absence of an open-source Surgical-Wound screening tool. To address this gap: (1) we present SurgWound, the first open-source dataset featuring a diverse array of surgical wound types. It contains 697 surgical wound images annotated by 3 professional surgeons with eight fine-grained clinical attributes. (2) Based on SurgWound, we introduce the first benchmark for surgical wound diagnosis, which includes visual question answering (VQA) and report generation tasks to comprehensively evaluate model performance. (3) Furthermore, we propose a three-stage learning framework, WoundQwen, for surgical wound diagnosis. In the first stage, we employ five independent MLLMs to accurately predict specific surgical wound characteristics. In the second stage, these predictions serve as additional knowledge inputs to two MLLMs responsible for diagnosing outcomes, which assess infection risk and guide subsequent interventions. In the third stage, we train a MLLM that integrates the diagnostic results from the previous two stages to produce a comprehensive report. This three-stage framework can analyze detailed surgical wound characteristics and provide subsequent instructions to patients based on surgical images, paving the way for personalized wound care, timely intervention, and improved patient outcomes.",
 "kind": "conference",
@@ -872,7 +885,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "journal",
@@ -1000,7 +1013,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "journal",
@@ -1057,7 +1071,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1084,7 +1099,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1176,7 +1192,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"data"
 ],
 "abs": "",
 "kind": "conference",
@@ -1301,7 +1318,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"data"
 ],
 "abs": "",
 "pre": {
@@ -1338,7 +1356,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -1368,7 +1387,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -1399,7 +1419,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"collab"
 ],
 "abs": "",
 "pre": {
@@ -1585,7 +1606,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -1737,7 +1759,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"algo"
 ],
 "abs": "In this paper, we study whether language models are affected by learned gender stereotypes during the comprehension of stories. Specifically, we investigate how models respond to gender stereotype perturbations through counterfactual data augmentation. Focusing on Question Answering (QA) tasks in fairytales, we modify the FairytaleQA dataset by swapping gendered character information and introducing counterfactual gender stereotypes during training. This allows us to assess model robustness and examine whether learned biases influence story comprehension. Our results show that models exhibit slight performance drops when faced with gender perturbations in the test set, indicating sensitivity to learned stereotypes. However, when fine-tuned on counterfactual training data, models become more robust to anti-stereotypical narratives. Additionally, we conduct a case study demonstrating how incorporating counterfactual anti-stereotype examples can improve inclusivity in downstream applications.",
 "kind": "workshop",
@@ -1799,7 +1822,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "",
 "kind": "preprint"
@@ -1822,7 +1846,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "Training and evaluation of Reinforcement Learning (RL) web agents have gained increasing attention, yet a scalable and efficient environment that couples realistic and robust browser-side interaction with controllable server-side state at scale is still missing. Existing environments tend to have one or more of the following issues: they overwhelm policy models with excessive and noisy context; they perform actions non-deterministically without waiting for the UI or network to stabilize; or they cannot scale isolated client-server containers effectively for parallel RL rollouts. We propose WEBSERV, an environment that includes 1) a compact, site-agnostic browser environment that balances context and action complexity, and 2) a scalable RL environment via efficient launching and resetting web-servers to enable scalable RL training and evaluation. We evaluate WEBSERV on the shopping CMS and Gitlab tasks in WebArena, achieving state-of-the-art single-prompt success rates while cutting launch latency by ~5x and storage need by ~240x, with a comparable memory footprint, enabling 200+ concurrent containers on a single host.",
 "kind": "workshop",
@@ -1847,7 +1872,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "The emerging large language model role-playing agents (LLM RPAs) aim to simulate individual human behaviors, but the persona fidelity is often undermined by manually-created profiles (e.g., cherry-picked information and personality characteristics) without validating the alignment with the target individuals. To address this limitation, our work introduces the Dynamic Persona Refinement Framework (DPRF). DPRF aims to optimize the alignment of LLM RPAs’ behaviors with those of target individuals by iteratively identifying the cognitive divergence, either through free-form or theory-grounded, structured analysis, between generated behaviors and human ground truth, and refining the persona profile to mitigate these divergences. We evaluate DPRF with five LLMs on four diverse behavior-prediction scenarios: formal debates, social media posts with mental health issues, public interviews, and movie reviews. DPRF can consistently improve behavioral alignment considerably over baseline personas and generalizes across models and scenarios. Our work provides a robust methodology for creating high-fidelity persona profiles and enhancing the validity of downstream applications, such as user simulation, social studies, and personalized AI.",
 "kind": "preprint"
@@ -1869,7 +1895,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"health"
+"health",
+"collab"
 ],
 "abs": "Advanced AI technologies are increasingly integrated into clinical domains to advance patient care. The design and development of clinical AI technologies necessitate seamless collaboration between clinical and technical experts. Yet, such interdisciplinary teams are often unsuccessful, with a lack of systematic analysis of collaboration barriers and coping strategies. This work examines two clinical AI collaborations in the context of speech-language pathology via semi-structured interviews with six clinical and seven technical experts. Using Activity Theory (AT) as our analytical lens, we systematically investigate persistent knowledge gaps in mismatched data coding themes and specialized languages, and also highlight how clinical data can act as boundary objects and human knowledge brokers to alleviate these challenges. Our work underscores the benefits of leveraging analytical frameworks like AT to systematically examine interdisciplinary teams’ collaborative work and provide meaningful insights on best practices in future collaboration.",
 "kind": "preprint"
@@ -1926,7 +1953,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "LLMs have recently demonstrated strong potential in simulating online shopper behavior. Prior work has improved action prediction by applying SFT on action traces with LLM-generated rationales, and by leveraging RL to further enhance reasoning capabilities. Despite these advances, current approaches rely on text-based inputs and overlook the essential role of visual perception in shaping human decision-making during web GUI interactions. In this paper, we investigate the integration of visual information, specifically webpage screenshots, into behavior simulation via VLMs, leveraging OPeRA dataset. By grounding agent decision-making in both textual and visual modalities, we aim to narrow the gap between synthetic agents and real-world users, thereby enabling more cognitively aligned simulations of online shopping behavior. Specifically, we employ SFT for joint action prediction and rationale generation, conditioning on the full interaction context, which comprises action history, past HTML observations, and the current webpage screenshot. To further enhance reasoning capabilities, we integrate RL with a hierarchical reward structure, scaled by a difficulty-aware factor that prioritizes challenging decision points. Empirically, our studies show that incorporating visual grounding yields substantial gains: the combination of text and image inputs improves exact match accuracy by more than 6% over text-only inputs. These results indicate that multi-modal grounding not only boosts predictive accuracy but also enhances simulation fidelity in visually complex environments, which captures nuances of human attention and decision-making that text-only agents often miss. Finally, we revisit the design space of behavior simulation frameworks, identify key methodological limitations, and propose future research directions toward building efficient and effective human behavior simulators.",
 "kind": "preprint"
@@ -1951,7 +1979,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"health"
+"health",
+"collab"
 ],
 "abs": "Serious illness conversations (SICs), discussions between clinical care teams and patients with serious, life-limiting illnesses about their values, goals, and care preferences, are critical for patient-centered care. Without these conversations, patients often receive aggressive interventions that may not align with their goals. Clinical care teams face significant barriers when conducting serious illness conversations with older adult patients in Emergency Department (ED) settings, where most older adult patients lack documented treatment goals. To understand current practices and identify AI support opportunities, we conducted interviews with two domain experts and nine ED clinical care team members. Through thematic analysis, we characterized a four-phase serious illness conversation workflow (identification, preparation, conduction, documentation) and identified key needs and challenges at each stage. Clinical care teams struggle with fragmented EHR data access, time constraints, emotional preparation demands, and documentation burdens. While participants expressed interest in AI tools for information synthesis, conversational support, and automated documentation, they emphasized preserving human connection and clinical autonomy. We present design guidelines for AI tools supporting SIC workflows that fit within existing clinical practices. This work contributes empirical understanding of ED-based serious illness conversations and provides design considerations for AI in high-stakes clinical environments.",
 "kind": "preprint"
@@ -1978,7 +2007,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"agents",
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -2012,7 +2042,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"data"
 ],
 "abs": "Interactive story reading is a common parent-child activity, where parents expect to teach both language skills and real-world knowledge beyond the story. While increasing storytelling and reading systems have been developed for this activity, they often fail to infuse real-world knowledge into the conversation. This limitation can be attributed to the existing question-answering (QA) datasets used for children’s education, upon which the systems are built, failing to capture the nuances of how education experts think when conducting interactive story reading activities. To bridge this gap, we design an annotation framework, empowered by existing knowledge graph to capture experts’ annotations and thinking process, and leverage this framework to construct StorySparkQA dataset, which comprises 5, 868 expert-annotated QA pairs with real-world knowledge. We conduct automated and human expert evaluations across various QA pair generation settings to demonstrate that our StorySparkQA can effectively support models in generating QA pairs that target real-world knowledge beyond story content. StorySparkQA is available at https://huggingface.co/datasets/NEU-HAI/StorySparkQA.",
 "kind": "conference",
@@ -2074,7 +2105,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -2105,7 +2137,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"agents"
 ],
 "abs": "",
 "kind": "conference",
@@ -2169,7 +2202,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2201,7 +2234,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"collab"
 ],
 "abs": "",
 "pre": {
@@ -2267,7 +2301,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "AI assistance in decision-making has become popular, yet people’s inappropriate reliance on AI often leads to unsatisfactory human-AI collaboration performance. In this paper, through three pre-registered, randomized human subject experiments, we explore whether and how the provision of second opinions may affect decision-makers’ behavior and performance in AI-assisted decision-making. We find that if both the AI model’s decision recommendation and a second opinion are always presented together, decision-makers reduce their over-reliance on AI while increase their under-reliance on AI, regardless whether the second opinion is generated by a peer or another AI model. However, if decision-makers have the control to decide when to solicit a peer’s second opinion, we find that their active solicitations of second opinions have the potential to mitigate over-reliance on AI without inducing increased under-reliance in some cases. We conclude by discussing the implications of our findings for promoting effective human-AI collaborations in decision-making.",
 "kind": "conference",
@@ -2294,7 +2328,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"data"
 ],
 "abs": "Despite the promises of ML in education, its adoption in the classroom has surfaced numerous issues regarding fairness, accountability, and transparency, as well as concerns about data privacy and student consent. A root cause of these issues is the lack of understanding of the complex dynamics of education, including teacher-student interactions, collaborative learning, and classroom environments. To overcome these challenges and fully utilize the potential of ML in education, software practitioners need to work closely with educators and students to fully understand the context of the data (the backbone of ML applications) and collaboratively define the ML data specifications. To gain a deeper understanding of such a collaborative process, we conduct ten co-design sessions with ML software practitioners, educators, and students. In the sessions, teachers and students work with ML engineers, UX designers, and legal practitioners to define dataset characteristics for a given ML application. We find that stakeholders contextualize data based on their domain and procedural knowledge, proactively design data requirements to mitigate downstream harms and data reliability concerns, and exhibit role-based collaborative strategies and contribution patterns. Further, we find that beyond a seat at the table, meaningful stakeholder participation in ML requires structured supports: defined processes for continuous iteration and co-evaluation, shared contextual data quality standards, and information scaffolds for both technical and non-technical stakeholders to traverse expertise boundaries.",
 "kind": "conference",
@@ -2322,7 +2357,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2403,7 +2439,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "While most existing works on LLM prompt-engineering focus only on how to select a better set of data samples inside one single prompt input (In-Context Learning or ICL), why can’t we design and leverage multiple prompt inputs together to further improve the LLM performance? In this work, we propose In-Context Sampling (ICS), a low-resource LLM prompt-engineering technique to produce the most confident prediction results by optimizing the construction of multiple ICL prompt inputs. Extensive experiments with two SOTA LLMs (FlanT5-XL and Mistral-7B) on three NLI datasets (e-SNLI, Multi-NLI, and ANLI) illustrate that ICS can consistently enhance LLM’s prediction performance and confidence. An ablation study suggests that a diversity-based ICS strategy may further improve LLM’s performance, which sheds light on a new yet promising future research direction.",
 "kind": "conference",
@@ -2501,7 +2537,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"data"
 ],
 "abs": "",
 "kind": "conference",
@@ -2526,7 +2563,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "Research into AI alignment has grown considerably since the recent introduction of increasingly capable Large Language Models (LLMs). Unfortunately, modern methods of alignment still fail to fully prevent harmful responses when models are deliberately attacked. Such vulnerabilities can lead to LLMs being manipulated into generating hazardous content: from instructions for creating dangerous materials to inciting violence or endorsing unethical behaviors. To help mitigate this issue, we introduce Bergeron: a framework designed to improve the robustness of LLMs against attacks without any additional parameter fine-tuning. Bergeron is organized into two tiers; with a secondary LLM acting as a guardian to the primary LLM. This framework better safeguards the primary model against incoming attacks while monitoring its output for any harmful content. Empirical analysis reviews that by using Bergeron to complement models with existing alignment training, we can significantly improve the robustness and safety of multiple, commonly used commercial and open-source LLMs. Specifically, we found that models integrated with Bergeron are, on average, nearly seven times more resistant to attacks compared to models without such support.",
 "kind": "preprint",
@@ -2574,7 +2611,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "Software engineers are integrating AI assistants into their workflows to enhance productivity and reduce cognitive strain. However, experiences vary significantly, with some engineers finding large language models (LLMs), like ChatGPT, beneficial, while others consider them counterproductive. Researchers also found that ChatGPT’s answers included incorrect information. Given the fact that LLMs are still imperfect, it is important to understand how to best incorporate LLMs into the workflow for software engineering (SE) task completion. Therefore, we conducted an observational study with 22 participants using ChatGPT as a coding assistant in a non-trivial SE task to understand the practices, challenges, and opportunities for using LLMs for SE tasks. We identified the cases where ChatGPT failed, their root causes, and the corresponding mitigation solutions used by users. These findings contribute to the overall understanding and strategies for human-AI interaction on SE tasks. Our study also highlights future research and tooling support directions.",
 "kind": "preprint"
@@ -2601,7 +2638,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"collab"
 ],
 "abs": "Cardiotoxicity induced by cancer treatment has become a major clinical concern, affecting the long-term survival and quality of life of cancer patients. Effective clinical decision-making, including the detection of cancer treatment-induced cardiotoxicity and the monitoring of associated symptoms, remains a challenging task for clinicians. This study investigates the current practices and needs of clinicians in the clinical decision making of cancer treatment-induced cardiotoxicity and explores the potential of digital health technologies to support this process. Through semi-structured interviews with seven clinical experts, we identify a three-step decision-making paradigm: 1) symptom identification, 2) diagnostic testing and specialist collaboration, and 3) clinical decision-making and intervention. Our findings highlight the difficulties of diagnosing cardiotoxicity (absence of unified protocols and high variability in symptoms) and monitoring patient symptoms (lacking accurate and timely patient self-reported symptoms). The clinicians also expressed their need for effective early detection tools that can integrate remote patient monitoring capabilities. Based on these insights, we discuss the importance of understanding the dynamic nature of clinical workflows, and the design considerations for future digital tools to support cancer-treatment-induced cardiotoxicity decision-making.",
 "kind": "preprint",
@@ -2625,7 +2663,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"health"
+"health",
+"agents"
 ],
 "abs": "",
 "kind": "preprint"
@@ -2651,6 +2690,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"collab",
 "agents"
 ],
 "abs": "Theory of Mind (ToM) significantly impacts human collaboration and communication as a crucial capability to understand others. When AI agents with ToM capability collaborate with humans, Mutual Theory of Mind (MToM) arises in such human-AI teams (HATs). The MToM process, which involves interactive communication and ToM-based strategy adjustment, affects the team’s performance and collaboration process. To explore the MToM process, we conducted a mixed-design experiment using a large language model-driven AI agent with ToM and communication modules in a real-time shared-workspace task. We find that the agent’s ToM capability does not significantly impact team performance but enhances human understanding of the agent and the feeling of being understood. Most participants in our study believe verbal communication increases human burden, and the results show that bidirectional communication leads to lower HAT performance. We discuss the results’ implications for designing AI agents that collaborate with humans in real-time shared workspace tasks.",
@@ -2740,7 +2780,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2819,7 +2859,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2876,7 +2916,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"other"
 ],
 "abs": "",
 "kind": "conference",
@@ -2907,7 +2947,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"education"
 ],
 "abs": "",
 "kind": "journal",
@@ -2962,7 +3003,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"algo"
 ],
 "abs": "Large Language Models (LLMs) have demonstrated considerable advances, and several claims have been made about their exceeding human performance. However, in real-world tasks, domain knowledge is often required. Low-resource learning methods like Active Learning (AL) have been proposed to tackle the cost of domain expert annotation, raising this question: Can LLMs surpass compact models trained with expert annotations in domain-specific tasks? In this work, we conduct an empirical experiment on four datasets from three different domains comparing SOTA LLMs with small models trained on expert annotations with AL. We found that small models can outperform GPT-3.5 with a few hundreds of labeled data, and they achieve higher or similar performance with GPT-4 despite that they are hundreds time smaller. Based on these findings, we posit that LLM predictions can be used as a warmup method in real-world applications and human experts remain indispensable in tasks involving data annotation driven by domain-specific knowledge.",
 "kind": "preprint"
@@ -2985,7 +3027,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"community"
+"community",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3063,7 +3106,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"health"
+"health",
+"algo"
 ],
 "abs": "",
 "kind": "preprint"
@@ -3109,7 +3153,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3167,7 +3211,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3196,7 +3240,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3223,7 +3268,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3252,7 +3298,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3282,7 +3329,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3315,7 +3363,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"data"
 ],
 "abs": "",
 "kind": "conference",
@@ -3340,7 +3389,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3365,7 +3414,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3441,7 +3490,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint"
@@ -3466,7 +3515,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3490,7 +3539,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -3512,7 +3562,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint"
@@ -3541,7 +3591,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3577,7 +3627,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -3608,7 +3658,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3722,7 +3772,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"data",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3746,7 +3797,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3775,7 +3826,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"agents"
 ],
 "abs": "",
 "kind": "conference",
@@ -3834,7 +3886,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3913,7 +3966,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"data",
+"algo"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4097,7 +4151,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"health"
+"health",
+"agents"
 ],
 "abs": "",
 "kind": "journal",
@@ -4121,7 +4176,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"agents"
 ],
 "abs": "",
 "kind": "journal",
@@ -4144,7 +4200,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -4247,7 +4303,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"other"
+"community"
 ],
 "abs": "",
 "kind": "conference"
@@ -4295,7 +4351,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4350,7 +4407,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4373,7 +4430,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4405,7 +4463,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"data",
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -4437,7 +4496,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4466,7 +4526,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"community"
+"community",
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4571,7 +4632,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -4599,7 +4660,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference"
@@ -4623,7 +4685,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4650,7 +4713,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -4676,7 +4739,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -4731,7 +4794,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "pre": {
@@ -4792,7 +4855,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"community"
+"community",
+"agents"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4819,7 +4883,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"community"
+"community",
+"education"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4847,7 +4912,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4879,7 +4945,7 @@ window.HAI_PUBS = [
 },
 {
 "y": 2018,
-"t": "All work and no play?",
+"t": "All Work and No Play? Conversations with a Question-and-Answer Chatbot in the Wild",
 "a": [
 "Q Vera Liao",
 "Muhammed Mas-ud Hussain",
@@ -4899,7 +4965,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"agents"
 ],
 "abs": "",
 "kind": "conference",
@@ -4971,7 +5037,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4992,7 +5059,7 @@ window.HAI_PUBS = [
 },
 "award": "Best Paper Honorable Mention",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5013,7 +5080,8 @@ window.HAI_PUBS = [
 },
 "award": "Best Paper Award",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5037,7 +5105,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5060,7 +5129,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"education"
+"education",
+"collab"
 ],
 "abs": "",
 "kind": "journal",
@@ -5083,7 +5153,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5103,7 +5173,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"other"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5147,7 +5217,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"data",
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -5169,7 +5240,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"education"
+"education",
+"collab"
 ],
 "abs": "",
 "kind": "conference"

@@ -6,12 +6,15 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // Research categories, in chart stack order (adjacent colours validated for colour-blind separation).
-  // Each paper has exactly one; "other" (gray) holds papers that fit none of the areas.
+  // A paper's first topic is its main one (its dot colour on the home page); the Publications page
+  // shows and filters by all of them. "other" (gray) holds papers that fit none of the areas.
   const CATS = [
     ["health", "AI for Healthcare", "AI for Healthcare"],
-    ["agents", "LLM Agents & AI Algorithms", "LLM Agents & AI Algorithms"],
+    ["agents", "LLM Agents", "LLM Agents"],
     ["education", "AI for Learning", "AI for Learning"],
     ["data", "Data Science", "Data Science"],
+    ["collab", "Human-AI Collaboration", "Human-AI Collaboration"],
+    ["algo", "AI Algorithms", "AI Algorithms"],
     ["community", "Community Engagement", "Community Engagement"],
     ["other", "Other", "Other topics"],
   ];
@@ -139,7 +142,7 @@
     const years = Array.from({ length: y1 - y0 + 1 }, (_, i) => y0 + i);
     const cols = years.map((y) => PUBS.map((p, i) => ({ p, i, t: primaryTopic(p) }))
       .filter((d) => d.p.y === y)
-      .sort((a, b) => STACK.indexOf(a.t) - STACK.indexOf(b.t) || STACK.indexOf((a.p.topics || [])[1]) - STACK.indexOf((b.p.topics || [])[1])));
+      .sort((a, b) => STACK.indexOf(a.t) - STACK.indexOf(b.t)));
 
     const PER_ROW = 2, PITCH = 17, R = 6.5, GAP = 8;
     const colW = PER_ROW * PITCH, step = colW + GAP;
@@ -157,7 +160,7 @@
         const sx = Math.random() * (W + 120) - 60;
         const sy = Math.random() * (H + 80) - H * 0.9;
         dots.push({ ...d, tx, ty, x: REDUCED ? tx : sx, y: REDUCED ? ty : sy, cx: tx, cy: ty, sx, sy, r: R, delay: ci * 85 + row * 30 + Math.random() * 120, phase: Math.random() * 6.28 });
-        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" transform="translate(${tx} ${ty})"><circle class="hit" r="${PITCH / 2 + 0.5}"/><g class="dot"><circle r="${R}"/>${(d.p.topics || [])[1] ? `<path class="half k-${d.p.topics[1]}" d="M0 ${-R}A${R} ${R} 0 0 1 0 ${R}Z"/>` : ""}</g></g></a>`;
+        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" transform="translate(${tx} ${ty})"><circle class="hit" r="${PITCH / 2 + 0.5}"/><g class="dot"><circle r="${R}"/></g></g></a>`;
       });
       const y = years[ci];
       if (y % 5 === 0 || ci === 0 || ci === years.length - 1) {
@@ -181,23 +184,23 @@
     const groups = [...svg.querySelectorAll(".d")];
     const circles = groups.map((g) => g.querySelector(".dot"));
 
-    // legend counts
+    // legend counts the dots, i.e. papers by main topic; the Publications list also includes second topics
     const counts = {};
     const tagged = {};
     dots.forEach((d) => {
       counts[d.t] = (counts[d.t] || 0) + 1;
       (d.p.topics || []).forEach((t) => (tagged[t] = (tagged[t] || 0) + 1));
     });
-    // legend shows every paper carrying the tag, not just those whose main tag it is
-    document.querySelectorAll("#legend .fk").forEach((b) => b.insertAdjacentHTML("beforeend", ` <span class="n">${tagged[b.dataset.topic] || 0}</span>`));
+    document.querySelectorAll("#legend .fk").forEach((b) => b.insertAdjacentHTML("beforeend", ` <span class="n">${counts[b.dataset.topic] || 0}</span>`));
 
     // caption with a live count
     const setCaption = (topic) => {
       const prev = +(cap.querySelector(".cnt")?.textContent || 0);
       if (topic) {
-        const main = counts[topic] || 0, also = (tagged[topic] || 0) - main;
-        cap.innerHTML = `<b class="cnt">${prev}</b> papers in ${esc(TOPICS[topic])}. <a href="publications.html#${topic}">See the list</a>`;
-        countTo(cap.querySelector(".cnt"), tagged[topic] || 0);
+        const main = counts[topic] || 0, all = tagged[topic] || 0;
+        const more = all > main ? `See all ${all} papers tagged with it` : "See the list";
+        cap.innerHTML = `<b class="cnt">${prev}</b> papers in ${esc(TOPICS[topic])}. <a href="publications.html#${topic}">${more}</a>`;
+        countTo(cap.querySelector(".cnt"), main);
       } else {
         cap.innerHTML = `<b class="cnt">${prev}</b> papers since ${y0}, one dot each. Point at a dot to read it.`;
         countTo(cap.querySelector(".cnt"), PUBS.length);
@@ -237,7 +240,7 @@
           groups[n].setAttribute("transform", `translate(${d.cx.toFixed(1)} ${d.cy.toFixed(1)})`);
         }
         // size: dim when another area is in focus, swell near the cursor
-        let target = focus && !(d.p.topics || []).includes(focus) ? R * 0.7 : R;
+        let target = focus && d.t !== focus ? R * 0.7 : R;
         if (pointer && d.x === d.tx) {
           const dist = Math.hypot(d.tx - pointer.x, d.ty - pointer.y);
           if (dist < LENS) target *= 1 + 0.6 * Math.pow(1 - dist / LENS, 2);
@@ -262,7 +265,7 @@
     let pinned = null, lastPointer = "mouse";
     const showTip = (n, pin) => {
       const d = dots[n], p = d.p;
-      const tagList = (p.topics || []).map((t) => `<span class="ptag k-${t}"><span class="key"></span>${esc(TOPICS[t])}</span>`).join("");
+      const tagList = `<span class="ptag k-${d.t}"><span class="key"></span>${esc(TOPICS[d.t])}</span>`;
       tip.innerHTML = `<div class="tip-meta"><span class="tag">${esc(p.tag)}</span>${p.y}</div><div class="tip-tags">${tagList}</div>
         <a class="tip-title" href="${esc(primaryLink(p))}" tabindex="${pin ? 0 : -1}">${esc(p.t)}</a>`;
       const fr = fig.getBoundingClientRect(), dr = circles[n].getBoundingClientRect();
@@ -321,9 +324,7 @@
       focus = t;
       if (t) { fig.dataset.focus = t; fig.style.setProperty("--fk", `var(--t-${t})`); } else delete fig.dataset.focus;
       groups.forEach((g, n) => {
-        const ts = dots[n].p.topics || [];
-        g.classList.toggle("on", !!t && ts[0] === t);
-        g.classList.toggle("also", !!t && ts[0] !== t && ts.includes(t));
+        g.classList.toggle("on", !!t && dots[n].t === t);
       });
       legend.querySelectorAll(".fk").forEach((b) => b.classList.toggle("on", b.dataset.topic === t));
       setCaption(t);

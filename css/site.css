@@ -254,13 +254,11 @@ p { margin: 0 0 1em; }
 
 .field svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: manipulation; }
 .field .dot { fill: var(--k); transition: opacity 0.25s; }
-.field .dot .half { fill: var(--k); }
 .field .hit { fill: transparent; cursor: crosshair; }
 .field a:focus-visible .dot { stroke: var(--ink); stroke-width: 2; }
 .field[data-focus] .d .dot { opacity: 0.12; }
 /* while a category is in focus, every paper carrying it stays lit; the rest dim */
 .field[data-focus] .d.on .dot { opacity: 1; }
-.field[data-focus] .d.also .dot { opacity: 1; }
 .field .yr { fill: var(--slate); font: 500 12px var(--mono); letter-spacing: 0.05em; }
 .field .base { stroke: var(--signal); stroke-opacity: .45; stroke-width: 1; }
 .field .scan { fill: url(#scan-grad); pointer-events: none; }
