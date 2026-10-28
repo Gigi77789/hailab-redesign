@@ -2675,6 +2675,42 @@ window.HAI_PUBS = [
 "imgSrcUrl": "https://arxiv.org/html/2401.13799v1/1forAll.png"
 },
 {
+"y": 2024,
+"t": "Talk2Care: Facilitating Asynchronous Patient-Provider Communication with Large-Language-Model",
+"a": [
+"Ziqi Yang",
+"Xuhai Xu",
+"Bingsheng Yao",
+"Shao Zhang",
+"Ethan Rogers",
+"Stephen Intille",
+"Nawar Shara",
+"Dakuo Wang",
+"others"
+],
+"v": "Proceedings of the AAAI Symposium Series",
+"tag": "AAAI 2024",
+"links": {
+"AAAI": "https://doi.org/10.1609/aaaiss.v4i1.31785",
+"arXiv": "https://arxiv.org/abs/2309.09357"
+},
+"award": "",
+"topics": [
+"health"
+],
+"abs": "",
+"kind": "conference",
+"img": "assets/papers/2309.09357.jpg",
+"imgFrom": "figure1",
+"imgSrcUrl": "https://arxiv.org/html/2309.09357v5/figures/SystemOverview.png",
+"pre": {
+"v": "arXiv preprint",
+"tag": "Preprint",
+"y": 2023
+},
+"venueUrl": "https://doi.org/10.1609/aaaiss.v4i1.31785"
+},
+{
 "y": 2023,
 "t": "‘Don’t Get Too Technical with Me’: A Discourse Structure-Based Framework for Automatic Science Journalism",
 "a": [
@@ -2993,35 +3029,6 @@ window.HAI_PUBS = [
 "abs": "",
 "kind": "conference",
 "venueUrl": "https://doi.org/10.2196/46427"
-},
-{
-"y": 2023,
-"t": "Talk2Care: Facilitating Asynchronous Patient-Provider Communication with Large-Language-Model",
-"a": [
-"Ziqi Yang",
-"Xuhai Xu",
-"Bingsheng Yao",
-"Shao Zhang",
-"Ethan Rogers",
-"Stephen Intille",
-"Nawar Shara",
-"Dakuo Wang",
-"others"
-],
-"v": "arXiv preprint",
-"tag": "Preprint",
-"links": {
-"arXiv": "https://arxiv.org/abs/2309.09357"
-},
-"award": "",
-"topics": [
-"health"
-],
-"abs": "",
-"kind": "preprint",
-"img": "assets/papers/2309.09357.jpg",
-"imgFrom": "figure1",
-"imgSrcUrl": "https://arxiv.org/html/2309.09357v5/figures/SystemOverview.png"
 },
 {
 "y": 2023,
