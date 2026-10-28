@@ -142,7 +142,7 @@ page("index.html", None,
       </div>
       <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
         <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>AI for Healthcare</button>
-        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM Agents</button>
+        <button type="button" class="fk k-agents" data-topic="agents" aria-pressed="false"><span class="key"></span>LLM Agents for Human Simulation</button>
         <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>AI for Learning</button>
         <button type="button" class="fk k-data" data-topic="data" aria-pressed="false"><span class="key"></span>Data Science</button>
         <button type="button" class="fk k-collab" data-topic="collab" aria-pressed="false"><span class="key"></span>Human-AI Collaboration</button>

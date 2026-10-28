@@ -10,7 +10,7 @@
   // shows and filters by all of them.
   const CATS = [
     ["health", "AI for Healthcare", "AI for Healthcare"],
-    ["agents", "LLM Agents", "LLM Agents"],
+    ["agents", "LLM Agents for Human Simulation", "LLM Agents for Human Simulation"],
     ["education", "AI for Learning", "AI for Learning"],
     ["data", "Data Science", "Data Science"],
     ["collab", "Human-AI Collaboration", "Human-AI Collaboration"],

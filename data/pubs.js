@@ -148,7 +148,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -328,7 +327,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -457,7 +456,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -633,8 +632,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -670,7 +668,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "collab"
 ],
 "abs": "The dark patterns, deceptive interface designs manipulating user behaviors, have been extensively studied for their effects on human decision-making and autonomy. Yet, with the rising prominence of LLM-powered GUI agents that automate tasks from high-level intents, understanding how dark patterns affect agents is increasingly important. We present a two-phase empirical study examining how agents, human participants, and human-AI teams respond to 16 types of dark patterns across diverse scenarios. Phase 1 highlights that agents often fail to recognize dark patterns, and even when aware, prioritize task completion over protective action. Phase 2 revealed divergent failure modes: humans succumb due to cognitive shortcuts and habitual compliance, while agents falter from procedural blind spots. Human oversight improved avoidance but introduced costs such as attentional tunneling and cognitive load. Our findings show neither humans nor agents are uniformly resilient, and collaboration introduces new vulnerabilities, suggesting design needs for transparency, adjustable autonomy, and oversight.",
@@ -856,7 +853,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -917,7 +914,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -955,7 +952,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -987,7 +984,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1013,7 +1010,6 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -1039,7 +1035,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1071,7 +1067,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -1099,7 +1094,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "collab"
 ],
 "abs": "",
@@ -1133,7 +1127,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1163,7 +1157,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1256,7 +1250,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1283,7 +1277,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "Metaphors play a critical role in shaping user experiences with Voice User Interfaces (VUIs), yet existing designs often rely on static, human-centric metaphors that fail to adapt to diverse contexts and user needs. This paper introduces Metaphor-Fluid Design, a novel approach that dynamically adjusts metaphorical representations based on conversational use-contexts. We compare this approach to a Default VUI, which characterizes the present implementation of commercial VUIs commonly designed around the persona of an assistant, offering a uniform interaction style across contexts. In Study 1 (N=130), metaphors were mapped to four key use-contexts-commands, information seeking, sociality, and error recovery-along the dimensions of formality and hierarchy, revealing distinct preferences for task-specific metaphorical designs. Study 2 (N=91) evaluates a Metaphor-Fluid VUI against a Default VUI, showing that the Metaphor-Fluid VUI enhances perceived intention to adopt, enjoyment, and likability by aligning better with user expectations for different contexts. However, individual differences in metaphor preferences highlight the need for personalization. These findings challenge the one-size-fits-all paradigm of VUI design and demonstrate the potential of Metaphor-Fluid Design to create more adaptive and engaging human-AI interactions.",
 "kind": "conference",
@@ -1419,7 +1413,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "collab"
 ],
 "abs": "",
@@ -1635,7 +1628,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -1846,7 +1839,6 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "Training and evaluation of Reinforcement Learning (RL) web agents have gained increasing attention, yet a scalable and efficient environment that couples realistic and robust browser-side interaction with controllable server-side state at scale is still missing. Existing environments tend to have one or more of the following issues: they overwhelm policy models with excessive and noisy context; they perform actions non-deterministically without waiting for the UI or network to stabilize; or they cannot scale isolated client-server containers effectively for parallel RL rollouts. We propose WEBSERV, an environment that includes 1) a compact, site-agnostic browser environment that balances context and action complexity, and 2) a scalable RL environment via efficient launching and resetting web-servers to enable scalable RL training and evaluation. We evaluate WEBSERV on the shopping CMS and Gitlab tasks in WebArena, achieving state-of-the-art single-prompt success rates while cutting launch latency by ~5x and storage need by ~240x, with a comparable memory footprint, enabling 200+ concurrent containers on a single host.",
@@ -2138,7 +2130,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -2270,7 +2262,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "pre": {
@@ -2384,7 +2376,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -2490,7 +2482,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -2664,7 +2656,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "preprint"
@@ -2690,8 +2682,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab",
-"agents"
+"collab"
 ],
 "abs": "Theory of Mind (ToM) significantly impacts human collaboration and communication as a crucial capability to understand others. When AI agents with ToM capability collaborate with humans, Mutual Theory of Mind (MToM) arises in such human-AI teams (HATs). The MToM process, which involves interactive communication and ToM-based strategy adjustment, affects the team’s performance and collaboration process. To explore the MToM process, we conducted a mixed-design experiment using a large language model-driven AI agent with ToM and communication modules in a real-time shared-workspace task. We find that the agent’s ToM capability does not significantly impact team performance but enhances human understanding of the agent and the feeling of being understood. Most participants in our study believe verbal communication increases human burden, and the results show that bidirectional communication leads to lower HAT performance. We discuss the results’ implications for designing AI agents that collaborate with humans in real-time shared workspace tasks.",
 "kind": "preprint",
@@ -3183,7 +3174,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3830,7 +3821,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4155,7 +4146,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "journal",
@@ -4180,7 +4171,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "journal",
@@ -4859,7 +4850,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "community",
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4939,7 +4930,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4968,7 +4959,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"collab"
 ],
 "abs": "",
 "kind": "conference",

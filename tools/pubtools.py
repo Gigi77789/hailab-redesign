@@ -33,9 +33,11 @@ def save_pubs(head, pubs):
 # Every paper gets a main category (topics[0]: its dot colour on the home page and the area that lists it)
 # and, when the title clearly names a second one, one more (topics[1]); the Publications page shows and
 # filters by both. More than two would mean the categories are too vague to tell papers apart.
-#   health = AI for Healthcare, education = AI for Learning, agents = LLM Agents, data = Data Science,
-#   collab = Human-AI Collaboration (incl. the human-human collaboration studies it grew from),
-#   algo = AI Algorithms (models and training methods),
+#   health = AI for Healthcare, education = AI for Learning, data = Data Science,
+#   agents = LLM Agents for Human Simulation (agents that stand in for real customers, users, and judges),
+#   collab = Human-AI Collaboration (incl. people using chatbots and voice assistants, and the
+#            human-human collaboration studies it grew from),
+#   algo = AI Algorithms (models and training methods, including for agents and tool use),
 #   community = Community Engagement (workshops, panels, SIGs the lab organized).
 # A paper that fits none of them goes to Human-AI Collaboration (AI Algorithms at an ML venue).
 CATEGORIES = ["community", "health", "education", "agents", "data", "collab", "algo"]
@@ -45,10 +47,10 @@ SUBJECTS = ("data", "agents", "collab")  # what a paper studies, as opposed to t
 RULES = {
     "health": r"clinic|patient|medical|health|cancer|sepsis|cardio|\bicu\b|intensive care|surg|wound|mental(?! model)|concussion|\behr\b|nurs|hospital|caregiver|symptom|well-being|wellbeing|physician|doctor|depress|covid|postoperative|telehealth|disease|prosocial|parkinson|older adult|serious illness|emergency|tracking data|motor impairment",
     "education": r"child|story|storytelling|fairy ?tale|educat|teacher|student|classroom|reading|\bkids?\b|parent|literacy|learner|\bcourses?\b|academic work|question generation|foreign language|narrative comprehension|school",
-    "agents": r"\bagents?\b|agentic|simulat|\bperson(?:a|as|ae)\b|companion|role-play|role-playing|usability|shopping|customer|tool-call|tool-us|a/b testing|harness|voice assistant|conversational (?:agent|assistant)|chatbot|voice user interface|\bvuis?\b|cooking",
+    "agents": r"simulat|\bperson(?:a|as|ae)\b|role-play|role-playing|humanoid|customer|shopper|shopping|usability|a/b testing|as-judge",
     "data": r"automl|auto-?ai|autods|data scien|notebook|annotat|active learning|\blabels?\b|dataset|data work|feature engineering|data-debugging|relational data|visualiz|forecast|code documentation|code summarization|data drift|analytics|data extraction|database|machine learning model|\bml model|ai developers?|automated machine learning",
-    "algo": r"fine-?tun|reinforcement|benchmark|transformer|neural|\bgraph\b|adversarial|perturbation|\battack|optimi[sz]|admm|extraction|detection|summarization|in-context|distillation|diffusion|classification|anomaly|prediction|language models?\b|\bllms?\b|retrieval|reasoning|embedding|generation|\brl\b|deep learning|machine learning|\bgnn\b|graph neural",
-    "collab": r"collaborat|human-ai|human-agent|human-robot|teaming|teammate|co-creat|cooperat|trust|explainab|human-in-the-loop|writ\w* together|\bteams?\b|group chat|partner|organizational|enterprise|decision making|decision-making|ai-assisted|second opinion|oversight|shared mental model|mixed-initiative|human.computer integration|answerer|\brobots?\b|anthropomorph",
+    "algo": r"fine-?tun|reinforcement|benchmark|transformer|neural|\bgraph\b|adversarial|perturbation|\battack|optimi[sz]|admm|extraction|detection|summarization|in-context|distillation|diffusion|classification|anomaly|prediction|language models?\b|\bllms?\b|retrieval|reasoning|embedding|generation|\brl\b|deep learning|machine learning|\bgnn\b|graph neural|agentic|autonomous|tool-call|tool-us|harness|self-evolv|multi-agent workflow|single agent|agent firm",
+    "collab": r"collaborat|human-ai|human-agent|human-robot|teaming|teammate|co-creat|cooperat|trust|explainab|human-in-the-loop|writ\w* together|\bteams?\b|group chat|partner|organizational|enterprise|decision making|decision-making|ai-assisted|second opinion|oversight|shared mental model|mixed-initiative|human.computer integration|answerer|\brobots?\b|anthropomorph|voice assistant|voice user interface|\bvuis?\b|conversational (?:agent|assistant)|chatbot|companion|embodi|facilitation",
 }
 HEALTH_VENUES = r"ACM HEALTH|JMIR|Medical Internet|JBHI|Biomedical and Health|npj Digit|Medical Systems|Health Inform|JAMIA|medRxiv"
 ML_VENUES = r"\b(ACL|EMNLP|NAACL|TACL|ICLR|ICML|NeurIPS|KDD|AAAI|ECCV|CVPR|ICDE|IJCAI|PAKDD|COLING)\b"
@@ -89,7 +91,7 @@ def classify(p):
         # an application area named in the title wins: a sepsis model at KDD is healthcare work
         main = max(DOMAINS, key=lambda k: (t[k], k == "health"))
     elif any(t[k] for k in SUBJECTS):
-        # so does a subject named in the title: an RL method for shopping agents is agents work, algorithms second
+        # so does a subject named in the title: RL for simulating shoppers is simulation work, algorithms second
         main = max((k for k in SUBJECTS if t[k]), key=lambda k: (score[k], -AREAS.index(k)))
     else:
         main = max(AREAS, key=lambda k: (score[k], -AREAS.index(k)))
