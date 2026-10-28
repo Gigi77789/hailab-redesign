@@ -1249,6 +1249,38 @@ window.HAI_PUBS = [
 "imgSrcUrl": "https://arxiv.org/html/2605.03882v2/teaser.png"
 },
 {
+"y": 2026,
+"t": "Toward Metaphor-Fluid Conversation Design for Voice User Interfaces",
+"a": [
+"Smit Desai",
+"Jessie Chin",
+"Dakuo Wang",
+"Benjamin Cowan",
+"Michael Twidale"
+],
+"v": "ACM Conference on Conversational User Interfaces (CUI)",
+"tag": "CUI 2026",
+"links": {
+"ACM DL": "https://doi.org/10.1145/3816046.3816223",
+"arXiv": "https://arxiv.org/abs/2502.11554"
+},
+"award": "",
+"topics": [
+"agents"
+],
+"abs": "Metaphors play a critical role in shaping user experiences with Voice User Interfaces (VUIs), yet existing designs often rely on static, human-centric metaphors that fail to adapt to diverse contexts and user needs. This paper introduces Metaphor-Fluid Design, a novel approach that dynamically adjusts metaphorical representations based on conversational use-contexts. We compare this approach to a Default VUI, which characterizes the present implementation of commercial VUIs commonly designed around the persona of an assistant, offering a uniform interaction style across contexts. In Study 1 (N=130), metaphors were mapped to four key use-contexts-commands, information seeking, sociality, and error recovery-along the dimensions of formality and hierarchy, revealing distinct preferences for task-specific metaphorical designs. Study 2 (N=91) evaluates a Metaphor-Fluid VUI against a Default VUI, showing that the Metaphor-Fluid VUI enhances perceived intention to adopt, enjoyment, and likability by aligning better with user expectations for different contexts. However, individual differences in metaphor preferences highlight the need for personalization. These findings challenge the one-size-fits-all paradigm of VUI design and demonstrate the potential of Metaphor-Fluid Design to create more adaptive and engaging human-AI interactions.",
+"kind": "conference",
+"img": "assets/papers/2502.11554.jpg",
+"imgFrom": "teaser",
+"imgSrcUrl": "https://arxiv.org/html/2502.11554v3/mfd.png",
+"pre": {
+"v": "Preprint",
+"tag": "Preprint",
+"y": 2025
+},
+"venueUrl": "https://doi.org/10.1145/3816046.3816223"
+},
+{
 "y": 2025,
 "t": "Vital Insight: Assisting Experts’ Context-Driven Sensemaking of Multi-modal Personal Tracking Data Using Visualization and Human-in-the-Loop LLM",
 "a": [
@@ -1697,9 +1729,10 @@ window.HAI_PUBS = [
 "Dakuo Wang",
 "Kai-Wei Chang"
 ],
-"v": "Preprint",
-"tag": "Preprint",
+"v": "Workshop on Trustworthy NLP (TrustNLP)",
+"tag": "TrustNLP Workshop 2025",
 "links": {
+"ACL Anthology": "https://doi.org/10.18653/v1/2025.trustnlp-main.29",
 "arXiv": "https://arxiv.org/abs/2310.10865"
 },
 "award": "",
@@ -1707,35 +1740,16 @@ window.HAI_PUBS = [
 "education"
 ],
 "abs": "In this paper, we study whether language models are affected by learned gender stereotypes during the comprehension of stories. Specifically, we investigate how models respond to gender stereotype perturbations through counterfactual data augmentation. Focusing on Question Answering (QA) tasks in fairytales, we modify the FairytaleQA dataset by swapping gendered character information and introducing counterfactual gender stereotypes during training. This allows us to assess model robustness and examine whether learned biases influence story comprehension. Our results show that models exhibit slight performance drops when faced with gender perturbations in the test set, indicating sensitivity to learned stereotypes. However, when fine-tuned on counterfactual training data, models become more robust to anti-stereotypical narratives. Additionally, we conduct a case study demonstrating how incorporating counterfactual anti-stereotype examples can improve inclusivity in downstream applications.",
-"kind": "preprint",
+"kind": "workshop",
 "img": "assets/papers/2310.10865.jpg",
 "imgFrom": "figure1",
-"imgSrcUrl": "https://arxiv.org/html/2310.10865v3/main_boy_tables/FairytaleQA.jpg"
-},
-{
-"y": 2025,
-"t": "Toward Metaphor-Fluid Conversation Design for Voice User Interfaces",
-"a": [
-"Smit Desai",
-"Jessie Chin",
-"Dakuo Wang",
-"Benjamin Cowan",
-"Michael Twidale"
-],
+"imgSrcUrl": "https://arxiv.org/html/2310.10865v3/main_boy_tables/FairytaleQA.jpg",
+"pre": {
 "v": "Preprint",
 "tag": "Preprint",
-"links": {
-"arXiv": "https://arxiv.org/abs/2502.11554"
+"y": 2025
 },
-"award": "",
-"topics": [
-"agents"
-],
-"abs": "Metaphors play a critical role in shaping user experiences with Voice User Interfaces (VUIs), yet existing designs often rely on static, human-centric metaphors that fail to adapt to diverse contexts and user needs. This paper introduces Metaphor-Fluid Design, a novel approach that dynamically adjusts metaphorical representations based on conversational use-contexts. We compare this approach to a Default VUI, which characterizes the present implementation of commercial VUIs commonly designed around the persona of an assistant, offering a uniform interaction style across contexts. In Study 1 (N=130), metaphors were mapped to four key use-contexts-commands, information seeking, sociality, and error recovery-along the dimensions of formality and hierarchy, revealing distinct preferences for task-specific metaphorical designs. Study 2 (N=91) evaluates a Metaphor-Fluid VUI against a Default VUI, showing that the Metaphor-Fluid VUI enhances perceived intention to adopt, enjoyment, and likability by aligning better with user expectations for different contexts. However, individual differences in metaphor preferences highlight the need for personalization. These findings challenge the one-size-fits-all paradigm of VUI design and demonstrate the potential of Metaphor-Fluid Design to create more adaptive and engaging human-AI interactions.",
-"kind": "preprint",
-"img": "assets/papers/2502.11554.jpg",
-"imgFrom": "teaser",
-"imgSrcUrl": "https://arxiv.org/html/2502.11554v3/mfd.png"
+"venueUrl": "https://doi.org/10.18653/v1/2025.trustnlp-main.29"
 },
 {
 "y": 2025,
@@ -2481,7 +2495,7 @@ window.HAI_PUBS = [
 "Varun Mishra"
 ],
 "v": "Proceedings of the AAAI Symposium Series",
-"tag": "AAAI Symposium",
+"tag": "AAAI Symposium 2024",
 "links": {
 "AAAI": "https://doi.org/10.1609/aaaiss.v4i1.31790"
 },
@@ -2689,7 +2703,7 @@ window.HAI_PUBS = [
 "others"
 ],
 "v": "Proceedings of the AAAI Symposium Series",
-"tag": "AAAI 2024",
+"tag": "AAAI Symposium 2024",
 "links": {
 "AAAI": "https://doi.org/10.1609/aaaiss.v4i1.31785",
 "arXiv": "https://arxiv.org/abs/2309.09357"

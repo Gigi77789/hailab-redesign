@@ -24,6 +24,7 @@ from pubtools import ROOT, load_pubs, openalex, save_pubs
 OUT = ROOT / "assets" / "papers"
 UA = {"User-Agent": "neuhai-site/1.0 (lab website figure fetcher; contact b.yao@northeastern.edu)"}
 PAUSE = 3.2
+RECENT = time.localtime().tm_year - 1  # papers from last year on may still gain an arXiv version
 
 
 def fetch(url):
@@ -72,7 +73,7 @@ def main():
         if p.get("imgManual") or (p.get("img") and not refresh):
             continue
         aid = arxiv_id(p)
-        if not aid:
+        if not aid and p["y"] >= RECENT:
             hit = openalex(p["t"])
             time.sleep(0.3)
             m = hit and re.search(r"(\d{4}\.\d{4,5})", hit.get("arxiv") or "")

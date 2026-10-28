@@ -40,7 +40,7 @@ def main():
         if dry:
             continue
         p["pre"] = {"v": p.get("v", ""), "tag": "Preprint", "y": p.get("y")}
-        p.update({"v": pub["venue"], "tag": tag, "y": year, "kind": "conference"})
+        p.update({"v": pub["venue"], "tag": tag, "y": year, "kind": "workshop" if "Workshop" in tag else "conference"})
         if pub.get("url"):
             p.setdefault("links", {})["Paper"] = pub["url"]
         if hit.get("arxiv"):

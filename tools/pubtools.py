@@ -89,7 +89,13 @@ def norm(t):
 def ratio(a, b):
     return difflib.SequenceMatcher(None, a, b).ratio()
 
+_exhausted = set()  # hosts that said their quota is used up for today; skip them for the rest of the run
+
+
 def get_json(url, tries=4):
+    host = urllib.parse.urlparse(url).netloc
+    if host in _exhausted:
+        return None
     for i in range(tries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "neuhai-site/1.0 (+https://hailab.io)"})
@@ -97,10 +103,15 @@ def get_json(url, tries=4):
                 return json.load(r)
         except urllib.error.HTTPError as e:
             wait = int(e.headers.get("Retry-After") or 0) or 10 * (i + 1)
+            if e.code == 429 and (wait > 60 or e.headers.get("X-RateLimit-Remaining") == "0"):
+                # OpenAlex allows about 100 searches a day without an API key; waiting won't help today
+                print(f"    {host} quota used up for today, skipping further lookups there", file=sys.stderr)
+                _exhausted.add(host)
+                return None
             if e.code != 429 or i == tries - 1:
                 print(f"    lookup failed: {e}", file=sys.stderr)
                 return None
-            time.sleep(min(wait, 60))
+            time.sleep(wait)
         except Exception as e:
             if i == tries - 1:
                 print(f"    lookup failed: {e}", file=sys.stderr)
@@ -108,6 +119,7 @@ def get_json(url, tries=4):
             time.sleep(5)
 
 VENUE_RULES = [  # (pattern on venue text, tag stem, include year)
+    (r"TrustNLP|Trustworthy NLP", "TrustNLP Workshop", True), (r"Conversational User Interfaces", "CUI", True),
     (r"Extended Abstracts|CHI EA", "CHI EA", True), (r"Special Interest", "CHI SIG", True),
     (r"Findings of the Association for Computational Linguistics: (ACL|EMNLP|NAACL)", None, True),
     (r"CHI Conference|CHI[’']|\bCHI\b|Human Factors in Computing", "CHI", True),
@@ -117,7 +129,7 @@ VENUE_RULES = [  # (pattern on venue text, tag stem, include year)
     (r"Designing Interactive Systems|DIS[’']", "DIS", True), (r"Transactions of the Association for Computational Linguistics", "TACL", True),
     (r"Annual Meeting of the Association for Computational Linguistics|\bACL[’' ]", "ACL", True),
     (r"Empirical Methods in Natural Language|EMNLP", "EMNLP", True), (r"North American Chapter|NAACL", "NAACL", True),
-    (r"PAKDD", "PAKDD Workshop", True), (r"ICLR", "ICLR", True), (r"KDD|Knowledge Discovery and Data Mining", "KDD", True), (r"AAAI", "AAAI", True),
+    (r"PAKDD", "PAKDD Workshop", True), (r"ICLR", "ICLR", True), (r"KDD|Knowledge Discovery and Data Mining", "KDD", True), (r"AAAI Symposium|AAAI (Spring|Fall) Symposium", "AAAI Symposium", True), (r"AAAI", "AAAI", True),
     (r"ECCV|Computer Vision - ECCV", "ECCV", True), (r"PacificVis|Pacific Visualization", "PacificVis", True),
     (r"International Journal of Human-Computer Studies", "IJHCS", True), (r"Trans\. on Computer-Human Interaction|TOCHI", "TOCHI", True),
     (r"Journal of Medical Internet Research", "JMIR", True), (r"Journal of Medical Systems", "J. Med. Syst.", True),
