@@ -452,7 +452,8 @@ window.HAI_PUBS = [
 "v": "ACL’2026",
 "tag": "ACL 2026",
 "links": {
-"ACL Anthology": "https://doi.org/10.18653/v1/2026.acl-long.2037"
+"ACL Anthology": "https://doi.org/10.18653/v1/2026.acl-long.2037",
+"arXiv": "https://arxiv.org/abs/2601.20144"
 },
 "award": "",
 "topics": [
@@ -461,7 +462,10 @@ window.HAI_PUBS = [
 "abs": "",
 "kind": "conference",
 "cv": "C74",
-"venueUrl": "https://doi.org/10.18653/v1/2026.acl-long.2037"
+"venueUrl": "https://doi.org/10.18653/v1/2026.acl-long.2037",
+"img": "assets/papers/2601.20144.png",
+"imgFrom": "figure1",
+"imgSrcUrl": "https://arxiv.org/html/2601.20144v3/utils/firstpage.png"
 },
 {
 "y": 2026,
@@ -846,9 +850,10 @@ window.HAI_PUBS = [
 "Suhang Wang",
 "Hanqing Lu"
 ],
-"v": "arXiv preprint",
-"tag": "Preprint",
+"v": "Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+"tag": "EMNLP 2026",
 "links": {
+"ACL Anthology": "https://doi.org/10.18653/2026.emnlp-main.2326",
 "arXiv": "https://arxiv.org/abs/2605.30621"
 },
 "award": "",
@@ -856,11 +861,17 @@ window.HAI_PUBS = [
 "algo"
 ],
 "abs": "",
-"kind": "preprint",
+"kind": "conference",
 "src": "scholar",
 "img": "assets/papers/2605.30621.jpg",
 "imgFrom": "figure1",
-"imgSrcUrl": "https://arxiv.org/html/2605.30621v1/fig_overview_harness_self_evolution.png"
+"imgSrcUrl": "https://arxiv.org/html/2605.30621v1/fig_overview_harness_self_evolution.png",
+"pre": {
+"v": "arXiv preprint",
+"tag": "Preprint",
+"y": 2026
+},
+"venueUrl": "https://doi.org/10.18653/2026.emnlp-main.2326"
 },
 {
 "y": 2026,
@@ -945,9 +956,10 @@ window.HAI_PUBS = [
 "Jingrui He",
 "Hanqing Lu"
 ],
-"v": "arXiv preprint",
-"tag": "Preprint",
+"v": "Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+"tag": "EMNLP 2026",
 "links": {
+"ACL Anthology": "https://doi.org/10.18653/2026.emnlp-main.969",
 "arXiv": "https://arxiv.org/abs/2608.15071"
 },
 "award": "",
@@ -955,11 +967,17 @@ window.HAI_PUBS = [
 "algo"
 ],
 "abs": "",
-"kind": "preprint",
+"kind": "conference",
 "src": "scholar",
 "img": "assets/papers/2608.15071.jpg",
 "imgFrom": "figure1",
-"imgSrcUrl": "https://arxiv.org/html/2608.15071v2/teaser.png"
+"imgSrcUrl": "https://arxiv.org/html/2608.15071v2/teaser.png",
+"pre": {
+"v": "arXiv preprint",
+"tag": "Preprint",
+"y": 2026
+},
+"venueUrl": "https://doi.org/10.18653/2026.emnlp-main.969"
 },
 {
 "y": 2026,
