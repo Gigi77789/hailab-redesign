@@ -49,7 +49,7 @@ def header(current):
     if PREVIEW:
         note = """
 <div class="draft-note"><div class="wrap">Draft redesign for review. The lab’s current site is <a href="https://hailab.io/">hailab.io</a>.</div></div>"""
-    return f"""<a class="skip" href="#main">Skip to content</a>{note}
+    return f"""<a class="skip" href="#main">Skip to content</a><div class="scroll-line" aria-hidden="true"></div>{note}
 <header class="site-header">
   <div class="wrap">
     <a class="lockup" href="index.html" aria-label="NEU HAI home">
@@ -114,6 +114,7 @@ page("index.html", None,
  "home", f"""
 <h1 class="visually-hidden">NEU HAI, the Human-Centered AI Lab at Northeastern University</h1>
 <section class="intro" aria-label="About the lab">
+  <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
     <p class="intro-lead">We study how people and AI work together, and design AI systems that collaborate with clinicians, patients, data scientists, teachers, and families in the real world.</p>
   </div>

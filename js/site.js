@@ -134,7 +134,7 @@
         const x = ci * step + (j % PER_ROW) * PITCH + PITCH / 2;
         const y = H - Math.floor(j / PER_ROW) * PITCH - PITCH / 2;
         dots.push(d);
-        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" transform="translate(${x} ${y})"><circle class="hit" r="${PITCH / 2}"/><circle class="dot" r="${R}"/></g></a>`;
+        marks += `<a href="${esc(primaryLink(d.p))}" tabindex="-1"><g class="d k-${d.t}" data-n="${dots.length - 1}" style="--d:${ci * 70 + Math.floor(j / PER_ROW) * 16}ms" transform="translate(${x} ${y})"><circle class="hit" r="${PITCH / 2}"/><circle class="dot" r="${R}"/></g></a>`;
       }));
       // year labels are HTML, so they keep their size when the chart scales down; narrow charts drop every other one
       const labels = years.map((y, ci) => {
@@ -293,6 +293,102 @@
       <dl class="grant-ids">${withIds.map(([k, ids]) => `<div><dt>${esc(k)}</dt><dd>${ids.map(esc).join(", ")}</dd></div>`).join("")}${others.length ? `<div><dt>Other sponsors</dt><dd>${others.map(esc).join(", ")}</dd></div>` : ""}</dl>`;
   }
 
+  /* ---------- version 1: future layer ---------- */
+  const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // a thin line along the top shows how far down the page you are
+  const line = $(".scroll-line");
+  if (line) {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      line.style.setProperty("--p", max > 0 ? Math.min(1, scrollY / max) : 0);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    onScroll();
+  }
+
+  // the lab statement assembles word by word
+  const lead = $(".intro-lead");
+  if (lead) {
+    lead.setAttribute("aria-label", lead.textContent);
+    lead.innerHTML = lead.textContent.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true" style="--i:${i}">${esc(w)}</span>`).join(" ");
+  }
+
+  // a slow network of points behind the statement, drawn toward the pointer
+  function mesh(canvas) {
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d"), host = canvas.parentElement;
+    let w = 0, h = 0, pts = [], pointer = null, live = true;
+    const COLORS = ["109,92,232", "0,163,180"];
+    const size = () => {
+      const dpr = Math.min(2, devicePixelRatio || 1);
+      w = host.clientWidth; h = host.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.min(90, Math.round((w * h) / 9000));
+      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, c: COLORS[Math.random() < 0.5 ? 0 : 1], r: 1 + Math.random() * 1.6 }));
+    };
+    const LINK = 130;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of pts) {
+        if (!REDUCED) {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < -20) p.x = w + 20; if (p.x > w + 20) p.x = -20;
+          if (p.y < -20) p.y = h + 20; if (p.y > h + 20) p.y = -20;
+          if (pointer) { const dx = pointer.x - p.x, dy = pointer.y - p.y, d = Math.hypot(dx, dy); if (d < 160) { p.x += dx * 0.004; p.y += dy * 0.004; } }
+        }
+      }
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < LINK) { ctx.strokeStyle = `rgba(${a.c},${(1 - d / LINK) * 0.22})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+        }
+      }
+      for (const p of pts) { ctx.fillStyle = `rgba(${p.c},.55)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
+      if (!REDUCED && live && !document.hidden) requestAnimationFrame(draw);
+    };
+    size();
+    addEventListener("resize", () => { size(); if (REDUCED) draw(); });
+    host.addEventListener("pointermove", (e) => { const r = host.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+    host.addEventListener("pointerleave", () => (pointer = null));
+    if ("IntersectionObserver" in window) new IntersectionObserver((es) => { const was = live; live = es[0].isIntersecting; if (live && !was && !REDUCED) requestAnimationFrame(draw); }).observe(host);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden && live && !REDUCED) requestAnimationFrame(draw); });
+    requestAnimationFrame(draw);
+  }
+
+  // things arrive as they scroll into view; siblings follow one another
+  function reveal() {
+    const groups = [".block-head", ".page-head h1", ".page-head p", ".latest", ".ex-item", ".ex-panel", ".grant-lead", ".grant-ids > div", ".faces > li", ".join-band > *",
+      ".people-grid > li", ".pi > *", ".alumni > li", ".news-list > li", ".cal > div", ".steps > li", ".roles > li", ".year-block", ".gallery-empty", ".pubs-tools", ".norms-head"];
+    const els = [...document.querySelectorAll(groups.join(","))];
+    const field = $("#field");
+    if (REDUCED || !("IntersectionObserver" in window)) { field && field.classList.add("in", "settled"); return; }
+    els.forEach((el) => {
+      const sib = [...el.parentElement.children].filter((c) => c.matches(groups.join(",")));
+      el.style.setProperty("--i", Math.min(sib.indexOf(el), 8));
+      if (!el.matches(".block-head")) el.classList.add("rv");
+    });
+    // check positions on scroll (works even where IntersectionObserver is throttled)
+    let pending = els.slice(), fieldDone = !field, t = 0;
+    const check = () => {
+      t = 0;
+      const edge = innerHeight * 0.94;
+      pending = pending.filter((el) => { if (el.getBoundingClientRect().top < edge) { el.classList.add("in"); return false; } return true; });
+      if (!fieldDone && field.getBoundingClientRect().top < innerHeight * 0.75) {
+        fieldDone = true;
+        field.classList.add("in");
+        setTimeout(() => field.classList.add("settled"), 2400);
+      }
+      if (!pending.length && fieldDone) { removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); }
+    };
+    const onScroll = () => { if (!t) t = setTimeout(check, 60); };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    check();
+  }
+
   /* ---------- pages ---------- */
   const page = ($("[data-page]") || document.body).dataset.page;
 
@@ -304,6 +400,7 @@
     }
     renderField();
     renderExplorer($("#explorer"));
+    mesh($("#mesh"));
     const gs = $("#grant-summary");
     if (gs) gs.innerHTML = grantSummaryHTML();
 
@@ -469,4 +566,5 @@
 
     sync(); render();
   }
+  reveal();
 })();
