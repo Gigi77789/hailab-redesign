@@ -29,6 +29,27 @@
     });
   }
 
+  /* ---------- light and dark ---------- */
+  // tools/pages.py sets data-theme before paint; this button flips it and remembers the choice
+  const root = document.documentElement;
+  const themeBtn = $(".theme-toggle");
+  const syncThemeBtn = () => themeBtn && themeBtn.setAttribute("aria-pressed", String(root.dataset.theme === "dark"));
+  const setTheme = (t, save) => {
+    root.classList.add("theming");
+    root.dataset.theme = t;
+    syncThemeBtn();
+    setTimeout(() => root.classList.remove("theming"), 450);
+    if (save) try { localStorage.setItem("hai-theme", t); } catch (_) { /* storage blocked */ }
+  };
+  if (!root.dataset.theme) root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  syncThemeBtn();
+  if (themeBtn) themeBtn.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark", true));
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem("hai-theme"); } catch (_) { /* storage blocked */ }
+    if (!saved) setTheme(e.matches ? "dark" : "light", false);
+  });
+
   /* ---------- helpers ---------- */
   const norm = (n) => n.toLowerCase().replace(/\(.*?\)|[‘’'"“”]\w+[‘’'"“”]/g, " ").replace(/[^a-z\s-]/g, "").replace(/\s+/g, " ").trim();
   const MEMBERS = new Set((window.HAI_MEMBERS || []).map(norm));
@@ -311,7 +332,7 @@
     if (!canvas) return;
     const ctx = canvas.getContext("2d"), host = canvas.parentElement;
     let w = 0, h = 0, pts = [], pointer = null, live = true;
-    const COLORS = ["109,92,232", "0,163,180"];
+    const COLORS = ["109,92,232", "0,163,180"], DARK = ["150,132,255", "40,200,215"];
     const size = () => {
       const dpr = Math.min(2, devicePixelRatio || 1);
       const box = canvas.getBoundingClientRect();
@@ -319,10 +340,11 @@
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const n = Math.min(90, Math.round((w * h) / 9000));
-      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, c: COLORS[Math.random() < 0.5 ? 0 : 1], r: 1 + Math.random() * 1.6 }));
+      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, c: Math.random() < 0.5 ? 0 : 1, r: 1 + Math.random() * 1.6 }));
     };
     const LINK = 130;
     const draw = () => {
+      const dark = root.dataset.theme === "dark";
       ctx.clearRect(0, 0, w, h);
       for (const p of pts) {
         if (!REDUCED) {
@@ -335,10 +357,10 @@
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
           const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < LINK) { ctx.strokeStyle = `rgba(${a.c},${(1 - d / LINK) * 0.22})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+          if (d < LINK) { ctx.strokeStyle = `rgba(${dark ? DARK[a.c] : COLORS[a.c]},${(1 - d / LINK) * (dark ? 0.3 : 0.22)})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
         }
       }
-      for (const p of pts) { ctx.fillStyle = `rgba(${p.c},.55)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
+      for (const p of pts) { ctx.fillStyle = `rgba(${dark ? DARK[p.c] : COLORS[p.c]},${dark ? 0.7 : 0.55})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
       if (!REDUCED && live && !document.hidden) requestAnimationFrame(draw);
     };
     size();

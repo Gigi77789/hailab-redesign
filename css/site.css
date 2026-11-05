@@ -82,9 +82,9 @@ p { margin: 0 0 1em; }
 /* ---------- header ---------- */
 
 .site-header { position: relative; background: var(--page); }
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 84px; padding-block: 14px; }
+.site-header .wrap { display: flex; align-items: center; justify-content: flex-end; gap: 8px 12px; min-height: 84px; padding-block: 14px; }
 
-.lockup { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--ink); }
+.lockup { display: flex; align-items: center; gap: 16px; margin-right: auto; text-decoration: none; color: var(--ink); }
 .lockup:hover { color: var(--ink); }
 .lockup-mark { font-size: var(--fs-xl); font-weight: 700; letter-spacing: 0.01em; line-height: 1; white-space: nowrap; }
 .lockup-name { font-size: var(--fs-sm); line-height: 1.35; color: var(--ink-2); border-left: 1px solid var(--rule-2); padding-left: 16px; }
@@ -96,7 +96,7 @@ p { margin: 0 0 1em; }
 
 .nav-toggle { display: none; font: inherit; }
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .nav-toggle {
     display: inline-flex; align-items: center; font: inherit; font-size: var(--fs-base); font-weight: 500;
     background: var(--page); border: 1px solid var(--rule-2); border-radius: var(--radius); color: var(--ink); padding: 8px 14px; cursor: pointer;
@@ -128,7 +128,7 @@ p { margin: 0 0 1em; }
 
 .section { padding-block: clamp(48px, 6vw, 72px); }
 /* gray bands fade in and out instead of starting at a hard edge */
-.band { background: linear-gradient(to bottom, rgba(245, 246, 248, 0), var(--band) 160px, var(--band) calc(100% - 160px), rgba(245, 246, 248, 0)); }
+.band { background: linear-gradient(to bottom, transparent, var(--band) 160px, var(--band) calc(100% - 160px), transparent); }
 .block-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 24px; }
 .block-head h2 { font-size: var(--fs-xl); font-weight: 700; letter-spacing: -0.01em; }
 
@@ -365,7 +365,7 @@ a.face:hover .face-name { color: var(--accent); text-decoration: underline; }
 
 /* ---------- join ---------- */
 
-.join { background: linear-gradient(to bottom, rgba(243, 241, 249, 0), var(--wash) 140px); }
+.join { background: linear-gradient(to bottom, transparent, var(--wash) 140px); }
 .join-band { display: grid; gap: 20px 64px; align-items: center; }
 @media (min-width: 860px) { .join-band { grid-template-columns: minmax(0, 1fr) auto; } }
 .join-band h2 { font-size: var(--fs-xl); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
@@ -455,9 +455,9 @@ main[data-page="home"]::after {
 .intro-lead .l2 { font-weight: 700; background: linear-gradient(100deg, var(--accent) 10%, var(--glow-a) 45%, var(--glow-b) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
 
 /* dots in a lighter tint of each area colour; full colour when you point at one or pick its area */
-.field .dot { fill: color-mix(in srgb, var(--k) 58%, #fff); }
+.field .dot { fill: color-mix(in srgb, var(--k) var(--dot-k, 58%), var(--dot-base, #fff)); }
 .field .d.hover .dot, .field[data-focus] .d.on .dot { fill: var(--k); }
-.fk .key { background: color-mix(in srgb, var(--k) 58%, #fff); }
+.fk .key { background: color-mix(in srgb, var(--k) var(--dot-k, 58%), var(--dot-base, #fff)); }
 
 /* panels carry a hairline gradient edge */
 .ex-panel, .news-scroll {
@@ -525,7 +525,7 @@ main:not([data-page="home"])::after {
 }
 .person:hover {
   transform: translateY(-5px);
-  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 30%), rgba(109, 92, 232, .10), transparent 70%) padding-box, linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, rgba(109, 92, 232, .5), rgba(0, 163, 180, .4)) border-box;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 30%), rgba(109, 92, 232, .10), transparent 70%) padding-box, linear-gradient(var(--page), var(--page)) padding-box, linear-gradient(135deg, rgba(109, 92, 232, .5), rgba(0, 163, 180, .4)) border-box;
   box-shadow: 0 18px 40px rgba(75, 61, 143, .12);
 }
 .person .face-photo { position: relative; border-radius: 14px; background: linear-gradient(135deg, #ece9fb, #e2f3f5); }
@@ -535,3 +535,68 @@ main:not([data-page="home"])::after {
 
 .gallery figure img { transition: transform .6s cubic-bezier(.2, .8, .2, 1), box-shadow .6s; }
 .gallery figure:hover img { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(75, 61, 143, .14); }
+
+/* ---------- theme switch ---------- */
+.theme-toggle {
+  display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; padding: 0; cursor: pointer;
+  color: var(--ink); background: transparent; border: 1px solid var(--rule-2); border-radius: 999px;
+  transition: border-color .3s, background-color .3s, transform .3s;
+}
+.theme-toggle:hover { border-color: var(--accent); background: var(--wash); }
+.theme-toggle svg { grid-area: 1 / 1; width: 19px; height: 19px; transition: transform .5s cubic-bezier(.2, .8, .2, 1), opacity .3s; }
+.theme-toggle .i-sun { opacity: 0; transform: rotate(-90deg) scale(.6); }
+[data-theme="dark"] .theme-toggle .i-moon { opacity: 0; transform: rotate(90deg) scale(.6); }
+[data-theme="dark"] .theme-toggle .i-sun { opacity: 1; transform: none; }
+/* colours glide from one theme to the other instead of snapping */
+.theming, .theming *, .theming *::before, .theming *::after { transition: background-color .4s ease, color .4s ease, border-color .4s ease, fill .4s ease !important; }
+
+/* ---------- dark theme ----------
+   A deep ink-blue night instead of white, the same violet-to-teal light, and research colours re-validated
+   for colour-blind separation and 3:1 contrast on the dark ground. Still four text colours: ink, gray, violet, white on buttons. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0f1220;
+  --band: #151a2c;
+  --ink: #e7e9f1;
+  --ink-2: #9aa1b5;
+  --rule: #252b40;
+  --rule-2: #3a4159;
+  --accent: #ab9dff;
+  --accent-2: #c7bdff;
+  --wash: #161a31;
+  --t-health: #36a457;
+  --t-algo: #5b93f0;
+  --t-education: #bf8616;
+  --t-hac: #1aa3a3;
+  --t-collab: #dc6b35;
+  --t-community: #a96ac4;
+  --glow-a: #8b7bff;
+  --glow-b: #22c3d3;
+  --dot-k: 82%;
+  --dot-base: var(--page);
+}
+[data-theme="dark"] .site-header { background: rgba(15, 18, 32, .72); }
+[data-theme="dark"] main[data-page="home"]::before {
+  background: radial-gradient(45% 420px at 18% 220px, rgba(124, 104, 255, .22), transparent 75%), radial-gradient(45% 420px at 82% 380px, rgba(0, 180, 200, .16), transparent 75%), linear-gradient(to bottom, #15173a, rgba(15, 18, 32, 0));
+}
+[data-theme="dark"] main:not([data-page="home"])::before {
+  background: radial-gradient(40% 300px at 12% 80px, rgba(124, 104, 255, .18), transparent 75%), radial-gradient(40% 300px at 88% 180px, rgba(0, 180, 200, .13), transparent 75%), linear-gradient(to bottom, #141633, rgba(15, 18, 32, 0));
+}
+[data-theme="dark"] main::after { background-image: radial-gradient(circle, rgba(171, 157, 255, .16) 1px, transparent 1.5px); }
+[data-theme="dark"] .btn { background: linear-gradient(120deg, #6553dc, #3a6ccc); }
+[data-theme="dark"] .btn:hover { background: linear-gradient(120deg, #7766ea, #4a7cdc); }
+[data-theme="dark"] .ex-ind {
+  background: linear-gradient(rgba(24, 28, 50, .92), rgba(24, 28, 50, .92)) padding-box, linear-gradient(135deg, rgba(139, 123, 255, .65), rgba(34, 195, 211, .5)) border-box;
+  box-shadow: 0 10px 34px rgba(110, 90, 255, .16);
+}
+[data-theme="dark"] .ex-panel, [data-theme="dark"] .news-scroll {
+  background: linear-gradient(var(--page), var(--page)) padding-box, linear-gradient(135deg, rgba(139, 123, 255, .5), rgba(34, 195, 211, .4)) border-box;
+}
+/* paper figures are drawn for white paper, so they keep a light card */
+[data-theme="dark"] .ex-fig .screen, [data-theme="dark"] .pub-thumb { background: #f1f2f6; border-color: transparent; }
+[data-theme="dark"] .face-photo { background: #1c2136; }
+[data-theme="dark"] .person .face-photo { background: linear-gradient(135deg, #241f4a, #10323a); }
+[data-theme="dark"] .person:hover { box-shadow: 0 18px 44px rgba(0, 0, 0, .45), 0 0 0 1px rgba(139, 123, 255, .15); }
+[data-theme="dark"] .tip { box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
+[data-theme="dark"] .draft-note { background: #2a2412; border-bottom-color: #4a3f1c; }
+[data-theme="dark"] img { filter: brightness(.94); }

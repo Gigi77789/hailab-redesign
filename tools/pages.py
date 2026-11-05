@@ -30,7 +30,10 @@ NAV = [("index.html", "Home"), ("people.html", "Lab members"), ("publications.ht
 
 def head_tags(full, desc):
     robots = '\n<meta name="robots" content="noindex, nofollow">' if PREVIEW else ""
+    # the theme is set before the page paints: the visitor's saved choice, else their system setting
+    theme = '<script>(function(){var t;try{t=localStorage.getItem("hai-theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t})()</script>'
     return f"""<title>{full}</title>{robots}
+{theme}
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{full}">
@@ -60,6 +63,7 @@ def header(current):
     <nav class="nav" id="nav" aria-label="Main">
       {links}
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg></button>
   </div>
 </header>"""
 
@@ -116,7 +120,7 @@ page("index.html", None,
 <section class="intro" aria-label="About the lab">
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
-    <p class="intro-lead"><span class="l1">Designing AI and human-AI interaction</span> <span class="l2">so people and AI work well together.</span></p>
+    <p class="intro-lead"><span class="l1">Designing AI systems and interactions</span> <span class="l2">that work effectively for and with people.</span></p>
   </div>
 </section>
 
