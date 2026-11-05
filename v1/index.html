@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEU HAI</title>
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){var t;try{t=localStorage.getItem("hai-theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t})()</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="NEU HAI is the Human-Centered AI Lab at Northeastern University, led by Prof. Dakuo Wang. We study how people and AI work together, and design AI systems that collaborate with people in health care, education, and data science.">
+<meta property="og:title" content="NEU HAI">
+<meta property="og:description" content="NEU HAI is the Human-Centered AI Lab at Northeastern University, led by Prof. Dakuo Wang. We study how people and AI work together, and design AI systems that collaborate with people in health care, education, and data science.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="css/site.css?v=647bb36b">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="scroll-line" aria-hidden="true"></div>
+<div class="draft-note"><div class="wrap">Draft redesign for review. The lab’s current site is <a href="https://hailab.io/">hailab.io</a>.</div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="lockup" href="index.html" aria-label="NEU HAI home">
+      <span class="lockup-mark">NEU HAI</span>
+      <span class="lockup-name">Human-Centered AI Lab<br>Northeastern University</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="people.html">Lab members</a>
+      <a href="publications.html">Publications</a>
+      <a href="culture.html">Lab culture</a>
+      <a href="news.html">News</a>
+      <a href="join.html">Join us</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg></button>
+  </div>
+</header>
+<main id="main" data-page="home">
+<h1 class="visually-hidden">NEU HAI, the Human-Centered AI Lab at Northeastern University</h1>
+<section class="intro" aria-label="About the lab">
+  <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="intro-lead"><span class="l1">Designing AI systems and interactions</span> <span class="l2">that work effectively for and with people.</span></p>
+  </div>
+</section>
+
+<section class="overview" aria-label="Publications and news">
+  <div class="wrap overview-grid">
+    <div>
+      <div class="block-head">
+        <h2 id="pubs-h">Publications</h2>
+        <a class="more" href="publications.html">All publications</a>
+      </div>
+      <figure class="field" id="field" aria-labelledby="pubs-h">
+        <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
+          <button type="button" class="fk k-health" data-topic="health" aria-pressed="false"><span class="key"></span>AI for Healthcare</button>
+          <button type="button" class="fk k-algo" data-topic="algo" aria-pressed="false"><span class="key"></span>LLMs and AI Agents</button>
+          <button type="button" class="fk k-education" data-topic="education" aria-pressed="false"><span class="key"></span>AI for Learning</button>
+          <button type="button" class="fk k-hac" data-topic="hac" aria-pressed="false"><span class="key"></span>Human-Agent Collaboration</button>
+          <button type="button" class="fk k-collab" data-topic="collab" aria-pressed="false"><span class="key"></span>Human-AI Collaboration</button>
+          <button type="button" class="fk k-community" data-topic="community" aria-pressed="false"><span class="key"></span>Community Engagement</button>
+        </div>
+        <div class="field-plot" id="field-plot" role="img" aria-label="Dot chart of the lab’s publications by year, one dot per paper, colored by main research area."></div>
+        <div class="tip" id="tip" role="status"></div>
+      </figure>
+    </div>
+    <aside class="latest" aria-labelledby="latest-h">
+      <div class="block-head">
+        <h2 id="latest-h">Latest news</h2>
+        <a class="more" href="news.html">All news</a>
+      </div>
+      <ol class="news-scroll" id="latest" tabindex="0" aria-label="All news, newest first"></ol>
+    </aside>
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="research-h">
+  <div class="wrap">
+    <div class="block-head"><h2 id="research-h">Research areas</h2></div>
+    <div class="explorer" id="explorer"></div>
+  </div>
+</section>
+
+
+<section class="section" aria-labelledby="people-h">
+  <div class="wrap">
+    <div class="block-head">
+      <h2 id="people-h">Lab members</h2>
+      <a class="more" href="people.html">Visitors and alumni</a>
+    </div>
+    <ul class="faces home" id="faces"></ul>
+  </div>
+</section>
+
+<section class="section join" aria-labelledby="join-h">
+  <div class="wrap join-band">
+    <div>
+      <h2 id="join-h">Work with us</h2>
+      <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
+    </div>
+    <a class="btn" href="join.html">Join us</a>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <span class="lockup-mark">NEU HAI</span>
+      <address>Human-Centered AI Lab<br>Northeastern University, Boston, Massachusetts</address>
+    </div>
+    <nav class="foot-links" aria-label="Elsewhere">
+      <a href="mailto:d.wang@northeastern.edu">d.wang@northeastern.edu</a>
+      <a href="https://github.com/neuhai">GitHub</a>
+      <a href="https://twitter.com/dakuowang">X</a>
+      <a href="https://www.northeastern.edu/">Northeastern</a>
+    </nav>
+  </div>
+</footer>
+<script src="data/team.js?v=51a38765"></script>
+<script src="data/pubs.js?v=857f2874"></script>
+<script src="data/members.js?v=80c20779"></script>
+<script src="data/news.js?v=ad63711b"></script>
+<script src="data/research.js?v=3466b6de"></script>
+<script src="js/site.js?v=7f501b8f"></script>
+</body>
+</html>
