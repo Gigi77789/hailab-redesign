@@ -42,8 +42,10 @@
     return p.venueUrl || l.Paper || l.arXiv || l.PDF || l.Web || l.Project || "https://scholar.google.com/scholar?q=" + encodeURIComponent('"' + p.t + '"');
   };
 
+  // "2026-01" shows as "Jan 2026"; a date with only a year ("2026") shows as the year
   const fmtMonth = (d) => {
     const [y, m] = d.split("-").map(Number);
+    if (!m) return String(y);
     return new Date(y, m - 1, 1).toLocaleDateString("en-US", { month: "short", year: "numeric" });
   };
 

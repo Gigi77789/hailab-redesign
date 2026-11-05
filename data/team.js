@@ -16,7 +16,7 @@ window.HAI_PI = {
 };
 
 window.HAI_TEAM = [
-  { group: "core", name: "Bingsheng ‘Arthur’ Yao", role: "Associate Research Scientist", url: "https://bingshengyao.com", photo: "", bio: "Works where NLP meets HCI, on AI for health care and education." },
+  { group: "core", name: "Bingsheng ‘Arthur’ Yao", role: "Associate Research Scientist", url: "https://bingshengyao.com", photo: "assets/team/bingsheng.jpg", bio: "Works where NLP meets HCI, on AI for health care and education." },
   { group: "core", name: "Yao Du", role: "Research Scientist", url: "https://dornsife.usc.edu/ccls/yao-du/", photo: "assets/team/yaodu.jpg", bio: "Speech-language pathologist at USC, building tools for communication disorders." },
   { group: "core", name: "Jia Zhang", role: "Research Scientist", url: "", photo: "assets/team/jia.jpg", bio: "Neurologist (M.D.) on brain aging and stroke, interested in HCI for mental health." },
   { group: "core", name: "Jiaju Chen", role: "PhD student", url: "https://malcolm-chen.github.io/", photo: "assets/team/jiaju.jpg", bio: "Builds LLM tools for children’s learning and studies how people work with agents." },

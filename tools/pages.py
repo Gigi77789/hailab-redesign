@@ -116,7 +116,7 @@ page("index.html", None,
 <section class="intro" aria-label="About the lab">
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
-    <p class="intro-lead"><span class="l1">Designing AI systems and interactions</span> <span class="l2">that work well with people.</span></p>
+    <p class="intro-lead"><span class="l1">Designing AI and human-AI interaction</span> <span class="l2">so people and AI work well together.</span></p>
   </div>
 </section>
 
@@ -260,7 +260,7 @@ page("join.html", "Join us",
 <section class="page-head">
   <div class="wrap">
     <h1>Join us</h1>
-    <p>We work on educational AI, health care AI, and LLM agents, often on NSF, NIH, and industry-sponsored projects. Everyone in the lab works by a shared set of norms, so we ask you to read them before you apply.</p>
+    <p>Everyone in the lab works by a shared set of norms, so please read them before you apply. You’ll find the application form at the end of the norms.</p>
   </div>
 </section>
 
@@ -310,7 +310,7 @@ page("join.html", "Join us",
     </li>
   </ul>
   <div class="note contact">
-    <p>Questions about joining? Email Bingsheng Yao at <a href="mailto:b.yao@northeastern.edu">b.yao@northeastern.edu</a> <button type="button" class="copy" data-copy="b.yao@northeastern.edu">Copy</button></p>
+    <p>Questions about joining? Read the <a href="https://www.bingshengyao.com/prospective/">frequently asked questions</a>.</p>
     <p>The form sends us an email automatically, so there’s no need to email separately.</p>
   </div>
 </section>
