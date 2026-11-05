@@ -112,7 +112,6 @@
     // the legend counts dots, i.e. papers by main area
     const counts = {};
     PUBS.forEach((p) => { const t = primaryTopic(p); counts[t] = (counts[t] || 0) + 1; });
-    legend.querySelectorAll(".fk").forEach((b) => b.insertAdjacentHTML("beforeend", ` <span class="n">${counts[b.dataset.topic] || 0}</span>`));
 
     const PER_ROW = 2, PITCH = 14, R = 5.5, GAP = 10, PAD = 4;
     let dots = [], focus = "", locked = "", hoverN = -1, pinned = null, lastPointer = "mouse";
@@ -308,13 +307,6 @@
     onScroll();
   }
 
-  // the lab statement assembles word by word
-  const lead = $(".intro-lead");
-  if (lead) {
-    lead.setAttribute("aria-label", lead.textContent);
-    lead.innerHTML = lead.textContent.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true" style="--i:${i}">${esc(w)}</span>`).join(" ");
-  }
-
   // a slow network of points behind the statement, drawn toward the pointer
   function mesh(canvas) {
     if (!canvas) return;
@@ -323,7 +315,8 @@
     const COLORS = ["109,92,232", "0,163,180"];
     const size = () => {
       const dpr = Math.min(2, devicePixelRatio || 1);
-      w = host.clientWidth; h = host.clientHeight;
+      const box = canvas.getBoundingClientRect();
+      w = box.width; h = box.height;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const n = Math.min(90, Math.round((w * h) / 9000));
@@ -351,7 +344,7 @@
     };
     size();
     addEventListener("resize", () => { size(); if (REDUCED) draw(); });
-    host.addEventListener("pointermove", (e) => { const r = host.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+    host.addEventListener("pointermove", (e) => { const r = canvas.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; });
     host.addEventListener("pointerleave", () => (pointer = null));
     if ("IntersectionObserver" in window) new IntersectionObserver((es) => { const was = live; live = es[0].isIntersecting; if (live && !was && !REDUCED) requestAnimationFrame(draw); }).observe(host);
     document.addEventListener("visibilitychange", () => { if (!document.hidden && live && !REDUCED) requestAnimationFrame(draw); });

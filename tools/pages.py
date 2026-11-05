@@ -38,7 +38,7 @@ def head_tags(full, desc):
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="{v('css/site.css')}">"""
 
 def header(current):
@@ -116,7 +116,7 @@ page("index.html", None,
 <section class="intro" aria-label="About the lab">
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
-    <p class="intro-lead">We study how people and AI work together, and design AI systems that collaborate with clinicians, patients, data scientists, teachers, and families in the real world.</p>
+    <p class="intro-lead"><span class="l1">Designing AI systems that</span> <span class="l2">work together with people.</span></p>
   </div>
 </section>
 
