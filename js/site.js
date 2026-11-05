@@ -248,7 +248,6 @@
       `<button class="ex-item k-${a.topic}" role="tab" id="ex-t-${a.id}" aria-controls="ex-p-${a.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">
         <span class="ex-no" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
         <span class="ex-text"><span class="ex-name">${esc(a.name)}</span><span class="ex-short">${esc(a.short)}</span></span>
-        <span class="ex-sig" aria-hidden="true"></span>
       </button>`).join("")}</div>
     <div class="ex-stage">${areas.map((a, i) => {
       const latest = PUBS.filter((p) => primaryTopic(p) === a.topic).slice(0, 4);
