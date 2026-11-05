@@ -53,7 +53,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -84,7 +83,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -117,7 +115,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "algo"
 ],
 "abs": "",
@@ -210,7 +207,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "With the growing availability of quantitative forecasts from various sources, effectively communicating these multiple forecasts has become increasingly crucial. Recent advances have explored using Multiple-Forecast Visualizations (MFVs) to display multiple time-series forecasts. However, how to systematically sample from a pool of disparate forecasts to create MFVs that effectively facilitate decision-making requires further investigation. To address this challenge, we examine two cluster-based sampling strategies for creating MFVs and three designs for visualizing them to assist people in decision-making with forecasts. Through two online studies (Experiment 1 n = 711 and Experiment 2 n = 400) and over 15 decision-making-related metrics, we evaluated participants’ perceptions of eight visualization designs using historical COVID-19 forecasts as a test bed. Our findings revealed that one sampling method significantly enhanced participants’ ability to predict future outcomes, thereby reducing their surprise when confronted with the actual outcomes. Importantly, since no approach excels in all metrics, we advise choosing different visualization designs based on communication goals. Furthermore, qualitative response data demonstrate a correlation between response consistency and people’s inclination to extrapolate from the forecast segment of the visualization. This research offers insights into how to improve visualizations of multiple forecasts using an automated and empirically validated technique for selecting forecasts that outperform common techniques on several key metrics and reduce overplotting.",
 "kind": "conference",
@@ -327,7 +324,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -386,8 +383,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -414,7 +410,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "Simulating step-wise human behavior with Large Language Models (LLMs) has become an emerging research direction, enabling applications in various practical domains. While prior methods, including prompting, supervised fine-tuning (SFT), and reinforcement learning (RL), have shown promise in modeling step-wise behavior, they primarily learn a population-level policy without conditioning on a user’s persona, yielding generic rather than personalized simulations. In this work, we pose a critical question: how can LLM agents better simulate personalized user behavior? We introduce Customer-R1, an RL-based method for personalized, step-wise user behavior simulation in online shopping environments. Our policy is conditioned on an explicit persona, and we optimize next-step rationale and action generation via action correctness reward signals. Experiments on the OPeRA dataset emonstrate that Customer-R1 not only significantly outperforms prompting and SFT-based baselines in next-action prediction tasks, but also better matches users’ action distribution, indicating higher fidelity in personalized behavior simulation.",
@@ -493,7 +488,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -632,6 +626,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "",
@@ -668,6 +663,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "The dark patterns, deceptive interface designs manipulating user behaviors, have been extensively studied for their effects on human decision-making and autonomy. Yet, with the rising prominence of LLM-powered GUI agents that automate tasks from high-level intents, understanding how dark patterns affect agents is increasingly important. We present a two-phase empirical study examining how agents, human participants, and human-AI teams respond to 16 types of dark patterns across diverse scenarios. Phase 1 highlights that agents often fail to recognize dark patterns, and even when aware, prioritize task completion over protective action. Phase 2 revealed divergent failure modes: humans succumb due to cognitive shortcuts and habitual compliance, while agents falter from procedural blind spots. Human oversight improved avoidance but introduced costs such as attentional tunneling and cognitive load. Our findings show neither humans nor agents are uniformly resilient, and collaboration introduces new vulnerabilities, suggesting design needs for transparency, adjustable autonomy, and oversight.",
@@ -703,7 +699,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "community",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "abstract",
@@ -737,7 +733,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "abstract",
@@ -1094,6 +1090,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "",
@@ -1187,7 +1184,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -1221,7 +1218,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1250,7 +1247,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "preprint",
@@ -1277,7 +1274,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "Metaphors play a critical role in shaping user experiences with Voice User Interfaces (VUIs), yet existing designs often rely on static, human-centric metaphors that fail to adapt to diverse contexts and user needs. This paper introduces Metaphor-Fluid Design, a novel approach that dynamically adjusts metaphorical representations based on conversational use-contexts. We compare this approach to a Default VUI, which characterizes the present implementation of commercial VUIs commonly designed around the persona of an assistant, offering a uniform interaction style across contexts. In Study 1 (N=130), metaphors were mapped to four key use-contexts-commands, information seeking, sociality, and error recovery-along the dimensions of formality and hierarchy, revealing distinct preferences for task-specific metaphorical designs. Study 2 (N=91) evaluates a Metaphor-Fluid VUI against a Default VUI, showing that the Metaphor-Fluid VUI enhances perceived intention to adopt, enjoyment, and likability by aligning better with user expectations for different contexts. However, individual differences in metaphor preferences highlight the need for personalization. These findings challenge the one-size-fits-all paradigm of VUI design and demonstrate the potential of Metaphor-Fluid Design to create more adaptive and engaging human-AI interactions.",
 "kind": "conference",
@@ -1313,7 +1310,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"data"
+"collab"
 ],
 "abs": "",
 "pre": {
@@ -1381,7 +1378,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -1413,6 +1409,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "",
@@ -1628,7 +1625,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -1695,7 +1692,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "Usability testing is a fundamental yet challenging research method for user experience (UX) researchers to evaluate a web design. Recent advances in Large Language Model-simulated Agent (LLM Agent) research inspired us to design UXAgent to support UX researchers in evaluating and reiterating their usability testing study design before they conduct the real human-subject study. Our system features an LLM Agent module and a universal browser connector module so that UX researchers can automatically generate thousands of simulated users to test the target website. The system can generate UX study results in qualitative (e.g., interviewing how an agent thinks), quantitative (e.g., # of actions), and video recording formats for UX researchers to analyze. Through a heuristic user evaluation with five UX researchers, participants praised the innovation of our system but also expressed concerns about the future of UX study with LLM Agents1.",
 "kind": "abstract",
@@ -1864,7 +1861,6 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "The emerging large language model role-playing agents (LLM RPAs) aim to simulate individual human behaviors, but the persona fidelity is often undermined by manually-created profiles (e.g., cherry-picked information and personality characteristics) without validating the alignment with the target individuals. To address this limitation, our work introduces the Dynamic Persona Refinement Framework (DPRF). DPRF aims to optimize the alignment of LLM RPAs’ behaviors with those of target individuals by iteratively identifying the cognitive divergence, either through free-form or theory-grounded, structured analysis, between generated behaviors and human ground truth, and refining the persona profile to mitigate these divergences. We evaluate DPRF with five LLMs on four diverse behavior-prediction scenarios: formal debates, social media posts with mental health issues, public interviews, and movie reviews. DPRF can consistently improve behavioral alignment considerably over baseline personas and generalizes across models and scenarios. Our work provides a robust methodology for creating high-fidelity persona profiles and enhancing the validity of downstream applications, such as user simulation, social studies, and personalized AI.",
@@ -1945,8 +1941,8 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
-"algo"
+"algo",
+"collab"
 ],
 "abs": "LLMs have recently demonstrated strong potential in simulating online shopper behavior. Prior work has improved action prediction by applying SFT on action traces with LLM-generated rationales, and by leveraging RL to further enhance reasoning capabilities. Despite these advances, current approaches rely on text-based inputs and overlook the essential role of visual perception in shaping human decision-making during web GUI interactions. In this paper, we investigate the integration of visual information, specifically webpage screenshots, into behavior simulation via VLMs, leveraging OPeRA dataset. By grounding agent decision-making in both textual and visual modalities, we aim to narrow the gap between synthetic agents and real-world users, thereby enabling more cognitively aligned simulations of online shopping behavior. Specifically, we employ SFT for joint action prediction and rationale generation, conditioning on the full interaction context, which comprises action history, past HTML observations, and the current webpage screenshot. To further enhance reasoning capabilities, we integrate RL with a hierarchical reward structure, scaled by a difficulty-aware factor that prioritizes challenging decision points. Empirically, our studies show that incorporating visual grounding yields substantial gains: the combination of text and image inputs improves exact match accuracy by more than 6% over text-only inputs. These results indicate that multi-modal grounding not only boosts predictive accuracy but also enhances simulation fidelity in visually complex environments, which captures nuances of human attention and decision-making that text-only agents often miss. Finally, we revisit the design space of behavior simulation frameworks, identify key methodological limitations, and propose future research directions toward building efficient and effective human behavior simulators.",
 "kind": "preprint"
@@ -1999,7 +1995,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents",
 "algo"
 ],
 "abs": "",
@@ -2035,7 +2030,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"data"
+"algo"
 ],
 "abs": "Interactive story reading is a common parent-child activity, where parents expect to teach both language skills and real-world knowledge beyond the story. While increasing storytelling and reading systems have been developed for this activity, they often fail to infuse real-world knowledge into the conversation. This limitation can be attributed to the existing question-answering (QA) datasets used for children’s education, upon which the systems are built, failing to capture the nuances of how education experts think when conducting interactive story reading activities. To bridge this gap, we design an annotation framework, empowered by existing knowledge graph to capture experts’ annotations and thinking process, and leverage this framework to construct StorySparkQA dataset, which comprises 5, 868 expert-annotated QA pairs with real-world knowledge. We conduct automated and human expert evaluations across various QA pair generation settings to demonstrate that our StorySparkQA can effectively support models in generating QA pairs that target real-world knowledge beyond story content. StorySparkQA is available at https://huggingface.co/datasets/NEU-HAI/StorySparkQA.",
 "kind": "conference",
@@ -2097,7 +2092,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -2130,7 +2124,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -2262,6 +2256,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "",
@@ -2321,7 +2316,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"data"
+"collab"
 ],
 "abs": "Despite the promises of ML in education, its adoption in the classroom has surfaced numerous issues regarding fairness, accountability, and transparency, as well as concerns about data privacy and student consent. A root cause of these issues is the lack of understanding of the complex dynamics of education, including teacher-student interactions, collaborative learning, and classroom environments. To overcome these challenges and fully utilize the potential of ML in education, software practitioners need to work closely with educators and students to fully understand the context of the data (the backbone of ML applications) and collaboratively define the ML data specifications. To gain a deeper understanding of such a collaborative process, we conduct ten co-design sessions with ML software practitioners, educators, and students. In the sessions, teachers and students work with ML engineers, UX designers, and legal practitioners to define dataset characteristics for a given ML application. We find that stakeholders contextualize data based on their domain and procedural knowledge, proactively design data requirements to mitigate downstream harms and data reliability concerns, and exhibit role-based collaborative strategies and contribution patterns. Further, we find that beyond a seat at the table, meaningful stakeholder participation in ML requires structured supports: defined processes for continuous iteration and co-evaluation, shared contextual data quality standards, and information scaffolds for both technical and non-technical stakeholders to traverse expertise boundaries.",
 "kind": "conference",
@@ -2376,7 +2371,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "abstract",
@@ -2482,7 +2477,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "preprint",
@@ -2505,7 +2500,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference"
@@ -2530,7 +2525,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2581,7 +2576,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"agents"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2656,7 +2651,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "preprint"
@@ -2682,6 +2677,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
+"hac",
 "collab"
 ],
 "abs": "Theory of Mind (ToM) significantly impacts human collaboration and communication as a crucial capability to understand others. When AI agents with ToM capability collaborate with humans, Mutual Theory of Mind (MToM) arises in such human-AI teams (HATs). The MToM process, which involves interactive communication and ToM-based strategy adjustment, affects the team’s performance and collaboration process. To explore the MToM process, we conducted a mixed-design experiment using a large language model-driven AI agent with ToM and communication modules in a real-time shared-workspace task. We find that the agent’s ToM capability does not significantly impact team performance but enhances human understanding of the agent and the feeling of being understood. Most participants in our study believe verbal communication increases human burden, and the results show that bidirectional communication leads to lower HAT performance. We discuss the results’ implications for designing AI agents that collaborate with humans in real-time shared workspace tasks.",
@@ -2800,7 +2796,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -2880,7 +2876,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -2994,7 +2990,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
+"collab",
 "algo"
 ],
 "abs": "Large Language Models (LLMs) have demonstrated considerable advances, and several claims have been made about their exceeding human performance. However, in real-world tasks, domain knowledge is often required. Low-resource learning methods like Active Learning (AL) have been proposed to tackle the cost of domain expert annotation, raising this question: Can LLMs surpass compact models trained with expert annotations in domain-specific tasks? In this work, we conduct an empirical experiment on four datasets from three different domains comparing SOTA LLMs with small models trained on expert annotations with AL. We found that small models can outperform GPT-3.5 with a few hundreds of labeled data, and they achieve higher or similar performance with GPT-4 despite that they are hundreds time smaller. Based on these findings, we posit that LLM predictions can be used as a warmup method in real-world applications and human experts remain indispensable in tasks involving data annotation driven by domain-specific knowledge.",
@@ -3232,7 +3228,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -3259,7 +3255,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -3355,7 +3350,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3434,7 +3429,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "journal",
@@ -3531,7 +3526,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -3680,7 +3674,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "conference",
@@ -3714,7 +3708,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3766,7 +3760,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "algo"
 ],
 "abs": "",
@@ -3821,7 +3814,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -3880,7 +3873,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -3906,7 +3898,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3934,7 +3926,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -3960,7 +3952,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "algo"
 ],
 "abs": "",
@@ -3990,7 +3981,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4015,7 +4006,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4041,7 +4032,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4096,7 +4087,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"algo"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4146,7 +4137,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "health",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "journal",
@@ -4171,7 +4162,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "education",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "journal",
@@ -4222,7 +4213,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -4269,7 +4260,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "preprint",
@@ -4323,7 +4314,7 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference"
@@ -4345,7 +4336,6 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -4371,7 +4361,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4424,7 +4414,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -4457,7 +4446,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "algo"
 ],
 "abs": "",
@@ -4490,7 +4478,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -4551,7 +4538,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4654,8 +4641,8 @@ window.HAI_PUBS = [
 "links": {},
 "award": "",
 "topics": [
-"data",
-"collab"
+"collab",
+"algo"
 ],
 "abs": "",
 "kind": "conference"
@@ -4679,7 +4666,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -4823,7 +4809,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data"
+"collab"
 ],
 "abs": "",
 "kind": "conference",
@@ -4850,7 +4836,7 @@ window.HAI_PUBS = [
 "award": "",
 "topics": [
 "community",
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "abstract",
@@ -4906,7 +4892,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -4930,7 +4915,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -4959,7 +4944,7 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"collab"
+"hac"
 ],
 "abs": "",
 "kind": "conference",
@@ -5074,7 +5059,6 @@ window.HAI_PUBS = [
 },
 "award": "Best Paper Award",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",
@@ -5211,7 +5195,6 @@ window.HAI_PUBS = [
 },
 "award": "",
 "topics": [
-"data",
 "collab"
 ],
 "abs": "",

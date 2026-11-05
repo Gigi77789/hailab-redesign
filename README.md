@@ -9,22 +9,23 @@ Most updates only touch a file in `data/`. After editing one by hand, run `pytho
 | To change | Edit |
 | --- | --- |
 | News | `data/news.js` (newest first) |
-| People, roles, photos | `data/team.js` (photos go in `assets/team/`, square-ish, about 640px) |
+| People, roles, photos, short intros | `data/team.js` (photos go in `assets/team/`, square-ish, about 640px; `bio` is one or two sentences) |
 | Papers | `data/pubs.js` (newest first; `tag` is the short venue shown in the pill) |
 | Lab members bolded in author lists | `data/members.js` |
 | Research areas on the home page | `data/research.js` (each area shows its 4 newest papers automatically) |
-| Grants | `data/grants.js` (funded only; pending proposals and amounts stay off the site) |
+| Grants (count and award numbers on the home page) | `data/grants.js` (funded only; pending proposals, amounts, and PI roles stay off the site) |
+| Lab culture page: activities and photo gallery | `data/culture.js` (photos go in `assets/culture/`) |
 | Lab norms on the Join us page | `data/norms.js` (bump `version` so people agree again) |
 
 ## Publications
 
 Each paper has a main category and at most one more in `topics` (`["health", "agents"]`). The main one colours its dot on the home page and puts it under that area; the Publications page shows both and its filters find a paper by either.
-Categories: `health` (AI for Healthcare), `education` (AI for Learning), `agents` (LLM Agents for Human Simulation: agents that stand in for real customers, users, and judges), `data` (Data Science), `collab` (Human-AI Collaboration, including people using chatbots and voice assistants and the human-human collaboration studies it grew from), `algo` (AI Algorithms: models and training methods, including for agents and tool use), and `community` (Community Engagement: workshops, panels, and SIGs the lab organized). A paper that fits none of them goes to `collab` (`algo` at an ML venue), so there is no Other.
+Categories: `health` (AI for Healthcare), `education` (AI for Learning), `hac` (Human-Agent Collaboration: people working and talking with LLM agents, chatbots, and voice assistants), `collab` (Human-AI Collaboration: people working with AI, including data science work and the human-human collaboration studies it grew from), `algo` (LLMs and AI Agents: building and training language models and agents, including agents that simulate real users), and `community` (Community Engagement: workshops, panels, and SIGs the lab organized). A paper that fits none of them goes to `collab` (`algo` at an ML venue), so there is no Other.
 Categories are assigned automatically from the title, abstract, and venue: an application area named in the title is the main one, then a subject (human simulation, data science, collaboration), then algorithms. After changing the rules in `tools/pubtools.py`, run `python3 tools/retag.py`. Set `"topicsManual": true` on a paper to keep categories you set by hand.
 
 - **New CV.** `python3 tools/import_cv.py path/to/CV.docx` merges the CV's journal, conference, abstract, and book entries into `data/pubs.js`. Venues and years come from the CV; matching papers keep their full author names, links, and abstracts; new papers get full author names from OpenAlex. Add `--dry-run` to preview.
 - **Venue links.** `python3 tools/venue_links.py` finds each published paper's official page (ACM DL, ACL Anthology, IEEE, OpenReview) on Crossref and OpenAlex and makes it the title link. Set `"venueUrl"` by hand for any it can't find.
-- **Figures.** `python3 tools/fetch_figures.py` gives papers without a figure the first figure from their arXiv version (papers with no arXiv figure show no image). Set `"imgManual": true` on a paper to keep a figure you picked.
+- **Figures.** `python3 tools/fetch_figures.py` gives papers without a figure the teaser or first figure from their arXiv version. `python3 tools/pdf_figures.py` then looks at the first page of each remaining paper’s open PDF and cuts out the graphic above the “Figure 1” caption; check the new images in `assets/papers/`, then run it with `--apply`. Papers with neither show no image. Set `"imgManual": true` on a paper to keep a figure you picked.
 - **Preprints that get accepted.** `python3 tools/update_venues.py` looks up every "Preprint" on OpenAlex and, when a published version exists, swaps in the conference or journal name and year (the preprint details stay under `pre`). `.github/workflows/update-venues.yml` runs it every Monday once the repo is on GitHub, commits any change, and redeploys.
 
 Page text (hero, Join us, section headings) lives in `tools/pages.py`. After editing it, regenerate the HTML:

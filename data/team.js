@@ -1,5 +1,6 @@
 // Lab roster. Leave photo empty to show initials instead.
 // group: "core" (staff + PhD students), "visiting", "alumni"
+// bio: one or two sentences on the People page: research interests, background, or a fun fact
 window.HAI_PI = {
   name: "Dakuo Wang",
   title: "Associate Professor",
@@ -13,19 +14,19 @@ window.HAI_PI = {
 };
 
 window.HAI_TEAM = [
-  { group: "core", name: "Bingsheng ‘Arthur’ Yao", role: "Associate Research Scientist", url: "https://bingshengyao.com", photo: "" },
-  { group: "core", name: "Jia Zhang", role: "Research Scientist", url: "", photo: "assets/team/jia.jpg" },
-  { group: "core", name: "Yao Du", role: "Research Scientist", url: "https://dornsife.usc.edu/ccls/yao-du/", photo: "assets/team/yaodu.jpg" },
-  { group: "core", name: "Jiaju Chen", role: "PhD student", url: "https://malcolm-chen.github.io/", photo: "assets/team/jiaju.jpg" },
-  { group: "core", name: "Jingfei Huang", role: "PhD student", url: "https://www.jingfeihuang.com/research", photo: "assets/team/jingfei.jpg" },
-  { group: "core", name: "Menglin Zhao", role: "PhD student", url: "https://gigi77789.github.io/my_website/", photo: "assets/team/menglin.jpg" },
-  { group: "core", name: "Yuxuan Lu", role: "PhD student", url: "https://yuxuan.lu", photo: "assets/team/yuxuan.jpg" },
-  { group: "core", name: "Ziyi Wang", role: "PhD student", url: "https://ziyiii0-0.github.io/", photo: "assets/team/ziyi.jpg" },
+  { group: "core", name: "Bingsheng ‘Arthur’ Yao", role: "Associate Research Scientist", url: "https://bingshengyao.com", photo: "", bio: "Works where NLP meets HCI on use-inspired AI: human-centered systems with domain-specific language technology that support collaboration in medicine, health care, and education. PhD in Computer Science from Rensselaer Polytechnic Institute." },
+  { group: "core", name: "Jia Zhang", role: "Research Scientist", url: "", photo: "assets/team/jia.jpg", bio: "Holds an M.D. in Neurology, with clinical expertise in brain aging, cognitive impairment, and stroke. Interested in HCI research on mental health." },
+  { group: "core", name: "Yao Du", role: "Research Scientist", url: "https://dornsife.usc.edu/ccls/yao-du/", photo: "assets/team/yaodu.jpg", bio: "Bilingual speech-language pathologist and Clinical Assistant Professor at USC’s Keck School of Medicine. Designs and evaluates web, mobile, and voice technology for children and adults with communication and cognitive disorders." },
+  { group: "core", name: "Jiaju Chen", role: "PhD student", url: "https://malcolm-chen.github.io/", photo: "assets/team/jiaju.jpg", bio: "Designs human-centered NLP applications, from personalized LLM-powered systems for children’s education to datasets that test whether LLMs write age-appropriate content. Lately studies how people and LLM agents collaborate." },
+  { group: "core", name: "Jingfei Huang", role: "PhD student", url: "https://www.jingfeihuang.com/research", photo: "assets/team/jingfei.jpg", bio: "Designs human-centered multimodal AI systems for health care, the workplace, and creative work, with a throughline interest in how people and agents collaborate, grounded in a background in design." },
+  { group: "core", name: "Menglin Zhao", role: "PhD student", url: "https://gigi77789.github.io/my_website/", photo: "assets/team/menglin.jpg", bio: "PhD student in Computer Science, advised by Prof. Dakuo Wang." },
+  { group: "core", name: "Yuxuan Lu", role: "PhD student", url: "https://yuxuan.lu", photo: "assets/team/yuxuan.jpg", bio: "Works on natural language processing and HCI, especially training, running, and using LLM agents that simulate human behavior." },
+  { group: "core", name: "Ziyi Wang", role: "PhD student", url: "https://ziyiii0-0.github.io/", photo: "assets/team/ziyi.jpg", bio: "Works on natural language processing, with a focus on LLM agents. Also the proud owner of a very cute cat named Cakecake." },
 
-  { group: "visiting", name: "Bo Sun", role: "Research assistant", url: "", photo: "assets/team/bo.jpg" },
-  { group: "visiting", name: "Jiayi (Elise) Su", role: "Research assistant", url: "https://jiayi-elise-su.github.io/", photo: "assets/team/jiayi.jpg" },
-  { group: "visiting", name: "Ruhan Gupta", role: "Visiting student", url: "https://ruhangupta.com/", photo: "assets/team/ruhan.jpg" },
-  { group: "visiting", name: "Yuewen Gao", role: "Research assistant", url: "https://yuewen-gao.github.io/", photo: "assets/team/yuewen.jpg" },
+  { group: "visiting", name: "Bo Sun", role: "Research assistant", url: "", photo: "assets/team/bo.jpg", bio: "Master’s student in Computer Science at Northeastern, interested in natural language processing and human-AI interaction." },
+  { group: "visiting", name: "Jiayi (Elise) Su", role: "Research assistant", url: "https://jiayi-elise-su.github.io/", photo: "assets/team/jiayi.jpg", bio: "Master’s student working at the intersection of HCI, AI, and health, mostly asking whether the AI actually helps anyone." },
+  { group: "visiting", name: "Ruhan Gupta", role: "Visiting student", url: "https://ruhangupta.com/", photo: "assets/team/ruhan.jpg", bio: "High-school student from central Texas building accessible AI systems for education, drawing on learning platforms that serve thousands of students worldwide." },
+  { group: "visiting", name: "Yuewen Gao", role: "Research assistant", url: "https://yuewen-gao.github.io/", photo: "assets/team/yuewen.jpg", bio: "Undergraduate at Nanjing University, interested in human-AI collaboration, co-creation, and visualization." },
 
   { group: "alumni", name: "Chengyou Xu", role: "Master’s student", url: "https://www.linkedin.com/in/cheney-xu/" },
   { group: "alumni", name: "Jiachen Li", role: "PhD student", url: "https://jiachen-li.com" },
