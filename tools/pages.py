@@ -26,7 +26,7 @@ def v(path):
     f = ROOT / path
     return f"{path}?v={hashlib.md5(f.read_bytes()).hexdigest()[:8]}" if f.exists() else path
 
-NAV = [("people.html", "People"), ("publications.html", "Publications"), ("culture.html", "Lab culture"), ("news.html", "News"), ("join.html", "Join us")]
+NAV = [("index.html", "Home"), ("people.html", "Lab members"), ("publications.html", "Publications"), ("culture.html", "Lab culture"), ("news.html", "News"), ("join.html", "Join us")]
 
 def head_tags(full, desc):
     robots = '\n<meta name="robots" content="noindex, nofollow">' if PREVIEW else ""
@@ -78,7 +78,7 @@ FOOTER = """<footer class="site-footer">
   </div>
 </footer>"""
 
-def page(file, title, desc, slug, main, scripts=("team", "pubs", "members", "news", "research", "grants")):
+def page(file, title, desc, slug, main, scripts=("team", "pubs", "members", "news", "research")):
     full = "NEU HAI" if title is None else f"{title} | NEU HAI"
     s = "\n".join(f'<script src="{v(f"data/{n}.js")}"></script>' for n in scripts)
     body = f"""{header(file)}
@@ -116,7 +116,7 @@ page("index.html", None,
 <section class="intro" aria-label="About the lab">
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
-    <p class="intro-lead"><span class="l1">Designing AI systems that</span> <span class="l2">work together with people.</span></p>
+    <p class="intro-lead"><span class="l1">Designing AI systems and interactions</span> <span class="l2">that work well with people.</span></p>
   </div>
 </section>
 
@@ -157,19 +157,11 @@ page("index.html", None,
   </div>
 </section>
 
-<section class="section" aria-labelledby="grants-h">
-  <div class="wrap">
-    <div class="block-head">
-      <h2 id="grants-h">Grants</h2>
-    </div>
-    <div class="grant-summary" id="grant-summary"></div>
-  </div>
-</section>
 
-<section class="section band" aria-labelledby="people-h">
+<section class="section" aria-labelledby="people-h">
   <div class="wrap">
     <div class="block-head">
-      <h2 id="people-h">People</h2>
+      <h2 id="people-h">Lab members</h2>
       <a class="more" href="people.html">Visitors and alumni</a>
     </div>
     <ul class="faces home" id="faces"></ul>
@@ -182,34 +174,31 @@ page("index.html", None,
       <h2 id="join-h">Work with us</h2>
       <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
     </div>
-    <a class="btn" href="join.html#norms">Read the lab norms and apply</a>
+    <a class="btn" href="join.html">Join us</a>
   </div>
 </section>
 """)
 
-page("people.html", "People",
- "The people of NEU HAI, Northeastern University's Human-Centered AI Lab: faculty, research scientists, PhD students, visitors, and alumni.",
+page("people.html", "Lab members",
+ "The members of NEU HAI, Northeastern University's Human-Centered AI Lab: faculty, research scientists, PhD students, visitors, and alumni.",
  "people", """
 <section class="page-head">
-  <div class="wrap"><h1>People</h1></div>
+  <div class="wrap"><h1>Lab members</h1></div>
 </section>
-<section class="section" style="padding-top:0" aria-label="Lab director">
-  <div class="wrap pi" id="pi"></div>
-</section>
-<section class="section band">
-  <div class="wrap">
-    <div class="group">
-      <h2 class="subhead">Research scientists and PhD students</h2>
-      <ul class="people-grid" id="core"></ul>
-    </div>
-    <div class="group">
-      <h2 class="subhead">Research assistants and visiting students</h2>
-      <ul class="people-grid" id="visiting"></ul>
-    </div>
+<section class="wrap members">
+  <div class="group">
+    <h2 class="subhead">Faculty and research scientists</h2>
+    <ul class="people-grid" id="faculty"></ul>
   </div>
-</section>
-<section class="section">
-  <div class="wrap">
+  <div class="group">
+    <h2 class="subhead">PhD students</h2>
+    <ul class="people-grid" id="phd"></ul>
+  </div>
+  <div class="group">
+    <h2 class="subhead">Research assistants and visiting students</h2>
+    <ul class="people-grid" id="visiting"></ul>
+  </div>
+  <div class="group">
     <h2 class="subhead">Alumni</h2>
     <ul class="alumni" id="alumni"></ul>
   </div>
@@ -245,14 +234,10 @@ page("culture.html", "Lab culture",
 <section class="page-head">
   <div class="wrap">
     <h1>Lab culture</h1>
-    <p>What a week in the lab looks like, and photos from our meetings, trips, and celebrations.</p>
+    <p>Photos from our lab meetings, conference trips, and celebrations.</p>
   </div>
 </section>
-<section class="wrap" aria-labelledby="rhythm-h">
-  <h2 class="subhead" id="rhythm-h">Regular activities</h2>
-  <dl class="cal" id="activities"></dl>
-</section>
-<section class="wrap" style="padding-block:56px 96px" aria-labelledby="gallery-h">
+<section class="wrap" style="padding-bottom:96px" aria-labelledby="gallery-h">
   <h2 class="subhead" id="gallery-h">Gallery</h2>
   <div class="gallery" id="gallery"></div>
 </section>
@@ -276,11 +261,6 @@ page("join.html", "Join us",
   <div class="wrap">
     <h1>Join us</h1>
     <p>We work on educational AI, health care AI, and LLM agents, often on NSF, NIH, and industry-sponsored projects. Everyone in the lab works by a shared set of norms, so we ask you to read them before you apply.</p>
-    <ol class="steps" aria-label="How to apply">
-      <li><a href="#norms">Read the lab norms</a></li>
-      <li><a href="#agree-box">Agree to follow them</a></li>
-      <li><a href="#agree-box">Apply through the form</a></li>
-    </ol>
   </div>
 </section>
 
@@ -292,16 +272,8 @@ page("join.html", "Join us",
   </div>
   <div class="norms-body" id="norms-body"></div>
 
-  <div class="agree" id="agree-box" aria-labelledby="agree-h">
-    <h2 class="visually-hidden" id="agree-h">Agree and apply</h2>
-    <label class="agree-check" for="agree">
-      <input type="checkbox" id="agree">
-      <span>I have read the NEU-HAI lab norms <span id="agree-version"></span>and agree to follow them.</span>
-    </label>
-    <div class="agree-actions">
-      <a class="btn" id="apply-btn" href="https://forms.gle/3Qk8DM2HKJmiBVP76" aria-disabled="true">Apply through the form</a>
-      <p class="agree-hint" id="agree-hint" aria-live="polite">Check the box to unlock the application form.</p>
-    </div>
+  <div class="apply-end">
+    <a class="btn" href="https://forms.gle/3Qk8DM2HKJmiBVP76" target="_blank" rel="noopener">Apply through the form</a>
   </div>
 </section>
 

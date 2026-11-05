@@ -214,57 +214,67 @@
   }
 
   /* ---------- research areas (home) ---------- */
+  // Left: the areas as tabs, with a glass marker that slides to the chosen one.
+  // Right: the area's newest papers; the chosen paper opens its figure right above its title.
+  const shortAuthors = (a) => (a.length > 6 ? a.slice(0, 6).join(", ") + ", et al." : a.join(", "));
+
   function renderExplorer(host) {
     const areas = window.HAI_AREAS || [];
     if (!host || !areas.length) return;
-    host.innerHTML = `<div class="ex-list" role="tablist" aria-label="Research areas">${areas.map((a, i) =>
+    host.innerHTML = `<div class="ex-list" role="tablist" aria-label="Research areas"><span class="ex-ind k-${areas[0].topic}" aria-hidden="true"></span>${areas.map((a, i) =>
       `<button class="ex-item k-${a.topic}" role="tab" id="ex-t-${a.id}" aria-controls="ex-p-${a.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">
-        <span class="ex-name">${esc(a.name)}</span>
-        <span class="ex-short">${esc(a.short)}</span>
+        <span class="ex-no" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+        <span class="ex-text"><span class="ex-name">${esc(a.name)}</span><span class="ex-short">${esc(a.short)}</span></span>
+        <span class="ex-sig" aria-hidden="true"></span>
       </button>`).join("")}</div>
     <div class="ex-stage">${areas.map((a, i) => {
       const latest = PUBS.filter((p) => primaryTopic(p) === a.topic).slice(0, 4);
       return `<div class="ex-panel" role="tabpanel" id="ex-p-${a.id}" aria-labelledby="ex-t-${a.id}"${i ? " hidden" : ""}>
-        <div class="ex-feature"></div>
         <ol class="ex-papers" aria-label="Newest papers in ${esc(a.name)}">${latest.map((p, j) => {
           const links = Object.entries(p.links || {}).map(([k, u]) => `<a href="${esc(u)}">${esc(k)}</a>`).join("")
             || `<a href="${esc(primaryLink(p))}">Find the paper</a>`;
-          return `<li${j === 0 ? ' class="on"' : ""}><button type="button" class="ex-paper" data-i="${PUBS.indexOf(p)}" aria-pressed="${j === 0}">
-            <span class="ex-paper-title">${esc(p.t)}</span>
-            <span class="ex-paper-meta">${tagHTML(p)}${/\d{4}/.test(p.tag) ? "" : p.y}</span>
-          </button><p class="pub-links ex-row-links">${links}</p></li>`;
+          const fig = p.img ? `<a class="screen" href="${esc(primaryLink(p))}" tabindex="-1"><img src="${esc(p.img)}" alt="Figure from “${esc(p.t)}”" loading="lazy"></a>` : "";
+          return `<li${j === 0 ? ' class="on"' : ""}>
+            <div class="ex-open ex-fig"><div>${fig}</div></div>
+            <button type="button" class="ex-paper" aria-expanded="${j === 0}">
+              <span class="ex-paper-title">${esc(p.t)}</span>
+              <span class="ex-paper-meta">${tagHTML(p)}${/\d{4}/.test(p.tag) ? "" : " " + p.y}</span>
+              <span class="ex-authors">${esc(shortAuthors(p.a))}</span>
+            </button>
+            <div class="ex-open"><div><p class="pub-links ex-row-links">${links}</p></div></div>
+          </li>`;
         }).join("")}</ol>
         <a class="more" href="publications.html#${a.topic}">All papers in ${esc(a.name)}</a>
       </div>`;
     }).join("")}</div>`;
 
-    // the selected paper shows its figure (when it has one) and, in its row, its links
-    const feature = (panel, p) => {
-      panel.querySelector(".ex-feature").innerHTML = p.img
-        ? `<figure><a class="screen" href="${esc(primaryLink(p))}"><img src="${esc(p.img)}" alt="Figure from “${esc(p.t)}”" loading="lazy"></a></figure>`
-        : "";
-      panel.querySelectorAll(".ex-paper").forEach((b) => {
-        const on = +b.dataset.i === PUBS.indexOf(p);
-        b.setAttribute("aria-pressed", String(on));
-        b.parentElement.classList.toggle("on", on);
-      });
-    };
-    host.querySelectorAll(".ex-panel").forEach((panel) => {
-      const first = panel.querySelector(".ex-paper");
-      if (first) feature(panel, PUBS[+first.dataset.i]);
-      panel.addEventListener("click", (e) => {
+    host.querySelectorAll(".ex-papers").forEach((list) => {
+      list.addEventListener("click", (e) => {
         const b = e.target.closest(".ex-paper");
-        if (b) feature(panel, PUBS[+b.dataset.i]);
+        if (!b) return;
+        list.querySelectorAll(".ex-paper").forEach((x) => {
+          const on = x === b;
+          x.setAttribute("aria-expanded", String(on));
+          x.parentElement.classList.toggle("on", on);
+        });
       });
     });
 
     const tabs = [...host.querySelectorAll(".ex-item")];
     const panels = [...host.querySelectorAll(".ex-panel")];
+    const ind = host.querySelector(".ex-ind");
     let cur = 0;
+    const place = () => {
+      const t = tabs[cur];
+      ind.style.transform = `translateY(${t.offsetTop}px)`;
+      ind.style.height = t.offsetHeight + "px";
+      ind.className = `ex-ind k-${areas[cur].topic}`;
+    };
     const select = (i, focusTab) => {
       cur = (i + tabs.length) % tabs.length;
       tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(j === cur)); t.tabIndex = j === cur ? 0 : -1; });
       panels.forEach((p, j) => (p.hidden = j !== cur));
+      place();
       if (focusTab) tabs[cur].focus();
     };
     tabs.forEach((t, i) => {
@@ -274,22 +284,9 @@
         if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); select(cur - 1, true); }
       });
     });
-  }
-
-  /* ---------- grants ---------- */
-  const GRANTS = window.HAI_GRANTS || [];
-  // home: the number of grants and their award numbers, grouped by sponsor; no titles or amounts
-  function grantSummaryHTML() {
-    const by = new Map();
-    GRANTS.forEach((g) => {
-      const k = g.sponsor.split(" / ")[0];
-      if (!by.has(k)) by.set(k, []);
-      if (g.award) by.get(k).push(g.award);
-    });
-    const withIds = [...by].filter(([, ids]) => ids.length).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
-    const others = [...by].filter(([, ids]) => !ids.length).map(([k]) => k);
-    return `<p class="grant-lead">Our research is supported by ${GRANTS.length} funded grants.</p>
-      <dl class="grant-ids">${withIds.map(([k, ids]) => `<div><dt>${esc(k)}</dt><dd>${ids.map(esc).join(", ")}</dd></div>`).join("")}${others.length ? `<div><dt>Other sponsors</dt><dd>${others.map(esc).join(", ")}</dd></div>` : ""}</dl>`;
+    place();
+    addEventListener("resize", place);
+    if (document.fonts) document.fonts.ready.then(place);
   }
 
   /* ---------- version 1: future layer ---------- */
@@ -353,8 +350,8 @@
 
   // things arrive as they scroll into view; siblings follow one another
   function reveal() {
-    const groups = [".block-head", ".page-head h1", ".page-head p", ".latest", ".ex-item", ".ex-panel", ".grant-lead", ".grant-ids > div", ".faces > li", ".join-band > *",
-      ".people-grid > li", ".pi > *", ".alumni > li", ".news-list > li", ".cal > div", ".steps > li", ".roles > li", ".year-block", ".gallery-empty", ".pubs-tools", ".norms-head"];
+    const groups = [".block-head", ".page-head h1", ".page-head p", ".latest", ".ex-list", ".ex-stage", ".faces > li", ".join-band > *", ".subhead",
+      ".people-grid > li", ".alumni > li", ".news-list > li", ".roles > li", ".year-block", ".gallery-empty", ".gallery figure", ".pubs-tools", ".norms-head", ".apply-end"];
     const els = [...document.querySelectorAll(groups.join(","))];
     const field = $("#field");
     if (REDUCED || !("IntersectionObserver" in window)) { field && field.classList.add("in", "settled"); return; }
@@ -394,8 +391,6 @@
     renderField();
     renderExplorer($("#explorer"));
     mesh($("#mesh"));
-    const gs = $("#grant-summary");
-    if (gs) gs.innerHTML = grantSummaryHTML();
 
     const faces = $("#faces");
     if (faces) {
@@ -407,8 +402,7 @@
   }
 
   if (page === "culture") {
-    const C = window.HAI_CULTURE || { activities: [], photos: [] };
-    $("#activities").innerHTML = C.activities.map(([name, when, text]) => `<div><dt>${esc(name)}<span class="cal-when">${esc(when)}</span></dt><dd>${esc(text)}</dd></div>`).join("");
+    const C = window.HAI_CULTURE || { photos: [] };
     $("#gallery").innerHTML = C.photos.length
       ? C.photos.map((ph) => `<figure><img src="${esc(ph.src)}" alt="${esc(ph.caption)}" loading="lazy"><figcaption>${ph.date ? `<time datetime="${esc(ph.date)}">${fmtMonth(ph.date)}</time>` : ""}${esc(ph.caption)}</figcaption></figure>`).join("")
       : `<div class="gallery-empty"><p>Photos from lab meetings, conference trips, and celebrations will appear here soon.</p></div>`;
@@ -437,7 +431,6 @@
     const body = $("#norms-body");
     if (N && body) {
       $("#norms-version").textContent = `Version of ${N.version}`;
-      $("#agree-version").textContent = `(version ${N.version}) `;
       $("#norms-credit").innerHTML = `Everyone in the lab works by these norms. Inspired by ${esc(N.inspiredBy.by)}’s <a href="${esc(N.inspiredBy.url)}">${esc(N.inspiredBy.text)}</a>.`;
       body.innerHTML = `
         <ol class="norm-list">${N.norms.map((n) => `<li>${n}</li>`).join("")}</ol>
@@ -448,50 +441,27 @@
         <ol class="start-list">${N.gettingStarted.map((n) => `<li>${n}</li>`).join("")}</ol>`;
     }
 
-    // the application link stays locked until the norms are accepted; the choice is remembered per browser
-    const box = $("#agree"), btn = $("#apply-btn"), hint = $("#agree-hint");
-    const KEY = "hai-norms-agreed";
-    const setAgreed = (on) => {
-      btn.setAttribute("aria-disabled", String(!on));
-      btn.tabIndex = on ? 0 : -1;
-      hint.textContent = on ? "Thanks. The form opens in a new tab." : "Check the box to unlock the application form.";
-      $("#agree-box").classList.toggle("ok", on);
-    };
-    let saved = "";
-    try { saved = localStorage.getItem(KEY) || ""; } catch (_) { /* storage blocked */ }
-    if (N && saved === N.version) box.checked = true;
-    setAgreed(box.checked);
-    box.addEventListener("change", () => {
-      setAgreed(box.checked);
-      try { box.checked ? localStorage.setItem(KEY, N.version) : localStorage.removeItem(KEY); } catch (_) { /* storage blocked */ }
-    });
-    btn.addEventListener("click", (e) => {
-      if (btn.getAttribute("aria-disabled") === "true") {
-        e.preventDefault();
-        hint.textContent = "Please read the norms above and check the box first.";
-        $("#agree-box").classList.remove("nudge"); void btn.offsetWidth; $("#agree-box").classList.add("nudge");
-        box.focus();
-      }
-    });
-    btn.target = "_blank";
-    btn.rel = "noopener";
   }
 
   if (page === "people") {
     const pi = window.HAI_PI;
-    $("#pi").innerHTML = `
-      <div class="pi-photo"><img src="${esc(pi.photo)}" alt="Portrait of ${esc(pi.name)}" width="270" height="270"></div>
-      <div>
-        <h2>${esc(pi.name)}</h2>
-        <p class="pi-title">${esc(pi.title)}, Khoury College of Computer Sciences and College of Arts, Media and Design</p>
-        <div class="pi-bio">${pi.bio.map((b) => `<p>${esc(b)}</p>`).join("")}</div>
-        <p class="pi-links"><a href="${esc(pi.url)}">Personal website</a><a href="mailto:${esc(pi.email)}">${esc(pi.email)}</a></p>
-      </div>`;
     const team = window.HAI_TEAM || [];
-    $("#core").innerHTML = team.filter((m) => m.group === "core").map(personHTML).join("");
+    const core = team.filter((m) => m.group === "core");
+    const faculty = [{ name: pi.name, role: pi.role, photo: pi.photo, url: pi.url, bio: pi.short }].concat(core.filter((m) => /scientist/i.test(m.role)));
+    $("#faculty").innerHTML = faculty.map(personHTML).join("");
+    $("#phd").innerHTML = core.filter((m) => /phd/i.test(m.role)).map(personHTML).join("");
     $("#visiting").innerHTML = team.filter((m) => m.group === "visiting").map(personHTML).join("");
     $("#alumni").innerHTML = team.filter((m) => m.group === "alumni").map((m) =>
       `<li>${m.url ? `<a class="n" href="${esc(m.url)}">${esc(m.name)}</a>` : `<span class="n">${esc(m.name)}</span>`}<span class="r">${esc(m.role)}</span></li>`).join("");
+
+    // a soft light follows the pointer across each card
+    document.addEventListener("pointermove", (e) => {
+      const c = e.target.closest && e.target.closest(".person");
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+      c.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
+    }, { passive: true });
   }
 
   if (page === "news") {
