@@ -353,13 +353,6 @@ a.face:hover .face-name { color: var(--accent); text-decoration: underline; }
 
 /* ---------- lab culture ---------- */
 
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-.gallery figure { margin: 0; }
-.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); background: var(--band); }
-.gallery figcaption { margin-top: 8px; font-size: var(--fs-sm); color: var(--ink-2); }
-.gallery figcaption time { display: block; font-weight: 600; color: var(--muted); }
-.gallery-empty { grid-column: 1 / -1; padding: 32px; border: 1px dashed var(--rule-2); border-radius: var(--radius); color: var(--ink-2); max-width: 44em; }
-.gallery-empty p:last-child { margin: 0; }
 
 /* ---------- join ---------- */
 
@@ -530,8 +523,6 @@ main:not([data-page="home"])::after {
 .person:hover .face-photo img { transform: scale(1.05); }
 .person-bio { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 
-.gallery figure img { transition: transform .6s cubic-bezier(.2, .8, .2, 1), box-shadow .6s; }
-.gallery figure:hover img { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(75, 61, 143, .14); }
 
 /* ---------- theme switch ---------- */
 .theme-toggle {
@@ -597,3 +588,55 @@ main:not([data-page="home"])::after {
 [data-theme="dark"] .tip { box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
 [data-theme="dark"] .draft-note { background: #2a2412; border-bottom-color: #4a3f1c; }
 [data-theme="dark"] img { filter: brightness(.94); }
+
+/* ---------- lab culture: photo wall ----------
+   Prints on a wall: a white border, a strip of violet-teal tape, a slight tilt. They settle and "develop"
+   from gray to colour as they scroll in, straighten when pointed at, and open large on click. */
+.wall-filters { margin-bottom: 8px; }
+.wall { list-style: none; margin: 32px 0 0; padding: 0; columns: 3 300px; column-gap: 32px; }
+.print {
+  position: relative; display: inline-block; width: 100%; break-inside: avoid; margin: 0 0 36px; padding: 10px 10px 4px;
+  background: var(--page); border-radius: 6px; transform: rotate(var(--r));
+  box-shadow: 0 1px 2px rgba(28, 33, 48, .06), 0 12px 30px rgba(28, 33, 48, .10);
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s;
+}
+.print::before {
+  content: ""; position: absolute; z-index: 1; top: -10px; left: 50%; width: 88px; height: 22px; border-radius: 2px;
+  transform: translateX(-50%) rotate(calc(var(--r) * -1.5));
+  background: linear-gradient(120deg, rgba(109, 92, 232, .32), rgba(0, 163, 180, .30)); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+}
+.print:hover { z-index: 2; transform: rotate(0deg) translateY(-6px) scale(1.03); box-shadow: 0 26px 54px rgba(75, 61, 143, .20); }
+.print-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 3px; }
+.print img { width: 100%; height: auto; border-radius: 3px; }
+.print-cap { margin: 9px 4px 7px; font-size: var(--fs-sm); line-height: 1.45; color: var(--ink-2); }
+.print[hidden] { display: none; }
+
+.lightbox { padding: 0; border: 0; background: transparent; max-width: none; max-height: none; overflow: visible; }
+.lightbox::backdrop { background: rgba(10, 12, 24, .84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.lightbox figure { margin: 0; }
+.lightbox img { display: block; width: auto; height: auto; max-width: min(88vw, 1200px); max-height: 80vh; margin: 0 auto; border-radius: 8px; filter: none; }
+.lightbox figcaption { margin-top: 14px; text-align: center; color: #fff; font-size: var(--fs-base); }
+.lb-btn {
+  position: fixed; display: grid; place-items: center; width: 48px; height: 48px; padding: 0 0 4px; border-radius: 50%; cursor: pointer;
+  font: inherit; font-size: var(--fs-xl); line-height: 1; color: #fff; background: rgba(255, 255, 255, .10); border: 1px solid rgba(255, 255, 255, .35);
+}
+.lb-btn:hover { background: rgba(255, 255, 255, .22); }
+.lb-prev, .lb-next { top: 50%; transform: translateY(-50%); }
+.lb-prev { left: max(16px, 2vw); }
+.lb-next { right: max(16px, 2vw); }
+.lb-close { top: 16px; right: max(16px, 2vw); }
+
+[data-theme="dark"] .print { background: #1a1e33; box-shadow: 0 14px 34px rgba(0, 0, 0, .45); }
+[data-theme="dark"] .print:hover { box-shadow: 0 26px 54px rgba(0, 0, 0, .55), 0 0 0 1px rgba(139, 123, 255, .25); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .print.rv { opacity: 0; transform: translateY(56px) rotate(calc(var(--r) * 4)) scale(.94); transition: opacity .7s ease, transform 1s cubic-bezier(.2, .8, .2, 1), box-shadow .5s; transition-delay: calc(var(--k, 0) * 120ms); }
+  .print.rv.in { opacity: 1; transform: rotate(var(--r)); }
+  .print.rv.in:hover { transform: rotate(0deg) translateY(-6px) scale(1.03); transition-delay: 0s; }
+  .print.rv img { filter: grayscale(1) brightness(1.12) contrast(.9); transition: filter 1.6s ease; transition-delay: calc(var(--k, 0) * 120ms + 350ms); }
+  .print.rv.in img { filter: none; }
+  .print.shuffle { animation: deal .6s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(var(--j, 0) * 45ms); }
+  @keyframes deal { from { opacity: 0; transform: translateY(26px) rotate(calc(var(--r) * 3)) scale(.95); } to { opacity: 1; transform: rotate(var(--r)); } }
+  .lightbox[open] img { animation: lb-in .45s cubic-bezier(.2, .8, .2, 1); }
+  @keyframes lb-in { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+}

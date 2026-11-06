@@ -1,8 +1,8 @@
 // News, newest first. `html` may contain links. `date` is "YYYY-MM", or just "YYYY" when the month isn't known.
 window.HAI_NEWS = [
   { date: "2026-09", html: "Welcome to our new PhD student, Zihan Xue, who joins the lab this fall." },
-  { date: "2026-09", html: "Our project “BEACON: Bilingual AI to Enhance Caregivers’ Comprehension of Older Patients’ Clinical Course in Critical Care” is funded by the NIH National Institute on Aging (R01AG097565)." },
-  { date: "2026-07", html: "Our project “MindGuard: Early Prediction of Post-Concussion Mental Health Sequelae in Youth with a Multimodal AI System” is funded by the NIH (R01HD120364)." },
+  { date: "2026-09", html: "Our project “BEACON: Bilingual AI to Enhance Caregivers’ Comprehension of Older Patients’ Clinical Course in Critical Care” is funded by the NIH National Institute on Aging." },
+  { date: "2026-07", html: "Our project “MindGuard: Early Prediction of Post-Concussion Mental Health Sequelae in Youth with a Multimodal AI System” is funded by the NIH." },
   { date: "2026-04", html: "Four papers accepted to the ACL 2026 main conference: “Can LLM Agents Simulate Multi-Turn Human Behavior?”, “Multi-Agent-as-Judge”, “OPeRA”, and “Trajectory2Task”. See you in San Diego." },
   { date: "2026-04", html: "Two more papers in Findings of ACL 2026: <a href=\"https://doi.org/10.18653/v1/2026.findings-acl.443\">“Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning”</a> and <a href=\"https://doi.org/10.18653/v1/2026.findings-acl.1344\">“On-Policy Self-Distillation for Efficient Diffusion Language Models”</a>." },
   { date: "2026-01", html: "Seven papers accepted to CHI 2026, including <a href=\"https://doi.org/10.1145/3772318.3791960\">collaboration breakdowns in post-surgery care</a>, <a href=\"https://doi.org/10.1145/3772318.3791301\">AI support for serious illness conversations</a>, the <a href=\"https://doi.org/10.1145/3772318.3790529\">MIND</a> dashboard for mental health clinicians, and <a href=\"https://doi.org/10.1145/3772318.3791568\">GUI agents facing dark patterns</a>. See you in Barcelona." },

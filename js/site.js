@@ -374,7 +374,7 @@
   // things arrive as they scroll into view; siblings follow one another
   function reveal() {
     const groups = [".block-head", ".page-head h1", ".page-head p", ".latest", ".ex-list", ".ex-stage", ".faces > li", ".join-band > *", ".subhead",
-      ".people-grid > li", ".alumni > li", ".news-list > li", ".roles > li", ".year-block", ".gallery-empty", ".gallery figure", ".pubs-tools", ".norms-head", ".apply-end"];
+      ".people-grid > li", ".alumni > li", ".news-list > li", ".roles > li", ".year-block", ".print", ".pubs-tools", ".norms-head", ".apply-end"];
     const els = [...document.querySelectorAll(groups.join(","))];
     const field = $("#field");
     if (REDUCED || !("IntersectionObserver" in window)) { field && field.classList.add("in", "settled"); return; }
@@ -425,10 +425,49 @@
   }
 
   if (page === "culture") {
-    const C = window.HAI_CULTURE || { photos: [] };
-    $("#gallery").innerHTML = C.photos.length
-      ? C.photos.map((ph) => `<figure><img src="${esc(ph.src)}" alt="${esc(ph.caption)}" loading="lazy"><figcaption>${ph.date ? `<time datetime="${esc(ph.date)}">${fmtMonth(ph.date)}</time>` : ""}${esc(ph.caption)}</figcaption></figure>`).join("")
-      : `<div class="gallery-empty"><p>Photos from lab meetings, conference trips, and celebrations will appear here soon.</p></div>`;
+    // a photo wall: polaroid-like prints, slightly tilted, that settle as they scroll in;
+    // chips filter by kind, and a click opens the photo large
+    const C = window.HAI_CULTURE || { kinds: [], photos: [] };
+    const wall = $("#wall"), chips = $("#wall-filters");
+    const TILT = [-2.2, 1.4, -0.8, 2, -1.6, 0.9, 1.8, -1.2];
+    wall.innerHTML = C.photos.map((ph, i) => `<li class="print" data-cat="${esc(ph.cat)}" style="--r:${TILT[i % TILT.length]}deg;--k:${i % 3}">
+        <button type="button" class="print-btn" data-i="${i}" aria-label="Open photo: ${esc(ph.caption)}">
+          <img src="${esc(ph.src)}" alt="${esc(ph.caption)}" width="${ph.w}" height="${ph.h}" loading="lazy">
+        </button>
+        <p class="print-cap">${esc(ph.caption)}</p>
+      </li>`).join("");
+    chips.innerHTML = [["", "All"], ...C.kinds].map(([k, label]) =>
+      `<button type="button" class="chip" data-cat="${k}" aria-pressed="${k === ""}">${esc(label)}</button>`).join("");
+    chips.addEventListener("click", (e) => {
+      const b = e.target.closest(".chip");
+      if (!b) return;
+      chips.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+      let n = 0;
+      wall.querySelectorAll(".print").forEach((li) => {
+        const show = !b.dataset.cat || li.dataset.cat === b.dataset.cat;
+        li.hidden = !show;
+        li.classList.remove("shuffle");
+        if (show) { li.style.setProperty("--j", n++); void li.offsetWidth; li.classList.add("shuffle"); }
+      });
+    });
+
+    // lightbox
+    const box = $("#lightbox"), img = $("#lb-img"), cap = $("#lb-cap");
+    let cur = 0;
+    const visible = () => [...wall.querySelectorAll(".print:not([hidden]) .print-btn")].map((b) => +b.dataset.i);
+    const show = (i) => { cur = i; const ph = C.photos[i]; img.src = ph.src; img.alt = ph.caption; cap.textContent = ph.caption; };
+    const step = (d) => { const v = visible(); show(v[(v.indexOf(cur) + d + v.length) % v.length]); };
+    wall.addEventListener("click", (e) => {
+      const b = e.target.closest(".print-btn");
+      if (!b || !box.showModal) return;
+      show(+b.dataset.i);
+      box.showModal();
+    });
+    $("#lb-prev").addEventListener("click", () => step(-1));
+    $("#lb-next").addEventListener("click", () => step(1));
+    $("#lb-close").addEventListener("click", () => box.close());
+    box.addEventListener("click", (e) => { if (e.target === box) box.close(); });
+    box.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft") step(-1); if (e.key === "ArrowRight") step(1); });
   }
 
   /* ---------- copy buttons (mail links don't open everywhere) ---------- */

@@ -233,18 +233,24 @@ page("publications.html", "Publications",
 """, scripts=("pubs", "members"))
 
 page("culture.html", "Lab culture",
- "Life at NEU HAI: lab meetings, reading groups, conference trips, and the people behind the papers.",
+ "Life at NEU HAI: conference trips, talks and posters, and the things we make and eat together.",
  "culture", """
 <section class="page-head">
   <div class="wrap">
     <h1>Lab culture</h1>
-    <p>Photos from our lab meetings, conference trips, and celebrations.</p>
+    <p>Conference trips, talks and posters, and the things we make and eat together.</p>
   </div>
 </section>
-<section class="wrap" style="padding-bottom:96px" aria-labelledby="gallery-h">
-  <h2 class="subhead" id="gallery-h">Gallery</h2>
-  <div class="gallery" id="gallery"></div>
+<section class="wrap" style="padding-bottom:96px" aria-label="Photo wall">
+  <div class="filters wall-filters" id="wall-filters" role="group" aria-label="Show photos of"></div>
+  <ul class="wall" id="wall"></ul>
 </section>
+<dialog class="lightbox" id="lightbox" aria-label="Photo">
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photo">‹</button>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next photo">›</button>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
+</dialog>
 """, scripts=("culture",))
 
 page("news.html", "News",

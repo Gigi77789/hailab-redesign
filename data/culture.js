@@ -1,13 +1,27 @@
-// Lab culture page: regular activities, and a photo gallery.
-// To add a photo: put the image in assets/culture/ (JPEG, about 1600px on the long side), then add
-//   { src: "assets/culture/chi2025-yokohama.jpg", caption: "The lab at CHI 2025 in Yokohama", date: "2025-04" }
-// to `photos`. Newest first. Only use photos everyone in them is happy to have online.
+// Lab culture page: a photo wall, filterable by kind.
+// To add a photo: put the image in assets/culture/ (JPEG, about 1400px on the long side), then add a line to `photos`:
+//   { src: "assets/culture/name.jpg", w: 1400, h: 1050, cat: "life", caption: "What is happening" }
+// w and h are the image's pixel size (keeps the wall from jumping while photos load); cat is one of the keys in `kinds`.
+// Only use photos everyone in them is happy to have online.
 window.HAI_CULTURE = {
-  activities: [
-    ["Group meetings", "Weekly", "The whole lab meets every Wednesday, in person in West Village H and on Zoom, to share progress and give each other feedback."],
-    ["Project meetings", "Weekly", "Each project team meets once a week to go deep on its research."],
-    ["Writing workshops", "Before deadlines", "We review and edit each other’s paper drafts together, so every submission gets a lab-wide read."],
-    ["Conferences", "Through the year", "We travel to present our work together: CHI 2025 in Yokohama, NeurIPS 2025 and ACL 2026 in San Diego."]
-  ],
-  photos: []
+  kinds: [["conferences", "Conferences"], ["talks", "Talks and posters"], ["life", "Lab life"]],
+  photos: [
+    { src: "assets/culture/chi2025-yokohama.jpg", w: 1400, h: 1050, cat: "conferences", caption: "The lab at CHI 2025 in Yokohama" },
+    { src: "assets/culture/pottery-finished-mugs.jpg", w: 1400, h: 1050, cat: "life", caption: "Mugs from our pottery night, glazed and fired" },
+    { src: "assets/culture/chi2024-bingsheng-talk.jpg", w: 933, h: 1400, cat: "talks", caption: "Bingsheng presenting at CHI 2024 in Honolulu" },
+    { src: "assets/culture/zongzi.jpg", w: 1400, h: 1050, cat: "life", caption: "Wrapping zongzi together for the Dragon Boat Festival" },
+    { src: "assets/culture/emnlp2024-team.jpg", w: 1353, h: 1400, cat: "conferences", caption: "At EMNLP 2024 in Miami" },
+    { src: "assets/culture/chi2024-turtles.jpg", w: 1400, h: 787, cat: "conferences", caption: "Sea turtle friends at CHI 2024" },
+    { src: "assets/culture/emnlp2024-jiaju-poster.jpg", w: 1050, h: 1400, cat: "talks", caption: "Jiaju presenting StorySparkQA at EMNLP 2024" },
+    { src: "assets/culture/yakitori-night.jpg", w: 1400, h: 1050, cat: "life", caption: "Yakitori night" },
+    { src: "assets/culture/chi2024-reception.jpg", w: 1400, h: 933, cat: "conferences", caption: "An evening reception at CHI 2024" },
+    { src: "assets/culture/mountain-trip.jpg", w: 1400, h: 1050, cat: "life", caption: "A day in the mountains" },
+    { src: "assets/culture/community-gathering.jpg", w: 1400, h: 1050, cat: "conferences", caption: "A community gathering at a conference" },
+    { src: "assets/culture/halloween.jpg", w: 1400, h: 1050, cat: "life", caption: "Halloween night out" },
+    { src: "assets/culture/emnlp2024-poster-session.jpg", w: 1400, h: 1050, cat: "talks", caption: "Between posters at EMNLP 2024" },
+    { src: "assets/culture/chi2024-lab-dinner.jpg", w: 1400, h: 1050, cat: "conferences", caption: "Lab dinner in Honolulu during CHI 2024" },
+    { src: "assets/culture/pottery-drying.jpg", w: 1400, h: 1050, cat: "life", caption: "Freshly made mugs, waiting for the kiln" },
+    { src: "assets/culture/reception-remarks.jpg", w: 1050, h: 1400, cat: "talks", caption: "Dakuo speaking at a conference reception" },
+    { src: "assets/culture/emnlp2024-dakuo-bingsheng.jpg", w: 1400, h: 1050, cat: "conferences", caption: "Dakuo and Bingsheng at EMNLP 2024" }
+  ]
 };
