@@ -1,6 +1,6 @@
 // News, newest first. `html` may contain links. `date` is "YYYY-MM", or just "YYYY" when the month isn't known.
 window.HAI_NEWS = [
-  { date: "2026-09", html: "Welcome to our new PhD student, Zihan Xue, who joins the lab this fall." },
+  { date: "2026-09", html: "Welcome to our new PhD students, Zihan Xue, <a href=\"https://malcolm-chen.github.io/\">Jiaju Chen</a>, and <a href=\"https://www.jingfeihuang.com/research\">Jingfei Huang</a>, who join the lab this fall." },
   { date: "2026-09", html: "Our project “BEACON: Bilingual AI to Enhance Caregivers’ Comprehension of Older Patients’ Clinical Course in Critical Care” is funded by the NIH National Institute on Aging." },
   { date: "2026-07", html: "Our project “MindGuard: Early Prediction of Post-Concussion Mental Health Sequelae in Youth with a Multimodal AI System” is funded by the NIH." },
   { date: "2026-04", html: "Four papers accepted to the ACL 2026 main conference: “Can LLM Agents Simulate Multi-Turn Human Behavior?”, “Multi-Agent-as-Judge”, “OPeRA”, and “Trajectory2Task”. See you in San Diego." },
