@@ -23,6 +23,7 @@ window.HAI_TEAM = [
   { group: "core", name: "Jingfei Huang", role: "PhD student", url: "https://www.jingfeihuang.com/research", photo: "assets/team/jingfei.jpg", bio: "Designs multimodal AI for health care, work, and creativity, drawing on a background in design." },
   { group: "core", name: "Menglin Zhao", role: "PhD student", url: "https://gigi77789.github.io/my_website/", photo: "assets/team/menglin.jpg", bio: "PhD student in Computer Science, advised by Prof. Dakuo Wang." },
   { group: "core", name: "Yuxuan Lu", role: "PhD student", url: "https://yuxuan.lu", photo: "assets/team/yuxuan.jpg", bio: "Trains, runs, and studies LLM agents that simulate how people behave." },
+  { group: "core", name: "Zihan Xue", role: "First-year PhD student", url: "", photo: "", bio: "" },
   { group: "core", name: "Ziyi Wang", role: "PhD student", url: "https://ziyiii0-0.github.io/", photo: "assets/team/ziyi.jpg", bio: "Works on NLP with a focus on LLM agents. Proud owner of a very cute cat named Cakecake." },
 
   { group: "visiting", name: "Bo Sun", role: "Research assistant", url: "", photo: "assets/team/bo.jpg", bio: "Master’s student at Northeastern, interested in NLP and human-AI interaction." },
