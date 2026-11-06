@@ -15,13 +15,13 @@ window.HAI_CULTURE = {
     { src: "assets/culture/emnlp2024-jiaju-poster.jpg", w: 1050, h: 1400, cat: "talks", caption: "Jiaju presenting StorySparkQA at EMNLP 2024" },
     { src: "assets/culture/yakitori-night.jpg", w: 1400, h: 1050, cat: "life", caption: "Yakitori night" },
     { src: "assets/culture/chi2024-reception.jpg", w: 1400, h: 933, cat: "conferences", caption: "An evening reception at CHI 2024" },
-    { src: "assets/culture/mountain-trip.jpg", w: 1400, h: 1050, cat: "life", caption: "A day in the mountains" },
-    { src: "assets/culture/community-gathering.jpg", w: 1400, h: 1050, cat: "conferences", caption: "A community gathering at a conference" },
+    { src: "assets/culture/mountain-trip.jpg", w: 1400, h: 1050, cat: "life", caption: "A day in the mountains during HCIC" },
+    { src: "assets/culture/community-gathering.jpg", w: 1400, h: 1050, cat: "conferences", caption: "Northeastern Night during CHI 2026 in Barcelona, Spain" },
     { src: "assets/culture/halloween.jpg", w: 1400, h: 1050, cat: "life", caption: "Halloween night out" },
     { src: "assets/culture/emnlp2024-poster-session.jpg", w: 1400, h: 1050, cat: "talks", caption: "Between posters at EMNLP 2024" },
     { src: "assets/culture/chi2024-lab-dinner.jpg", w: 1400, h: 1050, cat: "conferences", caption: "Lab dinner in Honolulu during CHI 2024" },
     { src: "assets/culture/pottery-drying.jpg", w: 1400, h: 1050, cat: "life", caption: "Freshly made mugs, waiting for the kiln" },
-    { src: "assets/culture/reception-remarks.jpg", w: 1050, h: 1400, cat: "talks", caption: "Dakuo speaking at a conference reception" },
+    { src: "assets/culture/reception-remarks.jpg", w: 1050, h: 1400, cat: "talks", caption: "Dakuo speaking at Northeastern Night during CHI 2025 in Yokohama, Japan" },
     { src: "assets/culture/emnlp2024-dakuo-bingsheng.jpg", w: 1400, h: 1050, cat: "conferences", caption: "Dakuo and Bingsheng at EMNLP 2024" }
   ]
 };
