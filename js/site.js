@@ -419,7 +419,7 @@
     if (faces) {
       const pi = window.HAI_PI;
       const people = [{ name: pi.name, role: "Lab director", photo: pi.photo, url: pi.url }]
-        .concat((window.HAI_TEAM || []).filter((m) => m.group === "core"));
+        .concat((window.HAI_TEAM || []).filter((m) => m.section === "faculty" || m.section === "phd"));
       faces.innerHTML = people.map(faceHTML).join("");
     }
   }
@@ -508,12 +508,11 @@
   if (page === "people") {
     const pi = window.HAI_PI;
     const team = window.HAI_TEAM || [];
-    const core = team.filter((m) => m.group === "core");
-    const faculty = [{ name: pi.name, role: pi.role, photo: pi.photo, url: pi.url, bio: pi.short }].concat(core.filter((m) => /scientist/i.test(m.role)));
+    const faculty = [{ name: pi.name, role: pi.role, photo: pi.photo, url: pi.url, bio: pi.short }].concat(team.filter((m) => m.section === "faculty"));
     $("#faculty").innerHTML = faculty.map(personHTML).join("");
-    $("#phd").innerHTML = core.filter((m) => /phd/i.test(m.role)).map(personHTML).join("");
-    $("#visiting").innerHTML = team.filter((m) => m.group === "visiting").map(personHTML).join("");
-    $("#alumni").innerHTML = team.filter((m) => m.group === "alumni").map((m) =>
+    $("#phd").innerHTML = team.filter((m) => m.section === "phd").map(personHTML).join("");
+    $("#visiting").innerHTML = team.filter((m) => m.section === "visiting").map(personHTML).join("");
+    $("#alumni").innerHTML = team.filter((m) => m.section === "alumni").map((m) =>
       `<li>${m.url ? `<a class="n" href="${esc(m.url)}">${esc(m.name)}</a>` : `<span class="n">${esc(m.name)}</span>`}<span class="r">${esc(m.role)}</span></li>`).join("");
 
     // a soft light follows the pointer across each card

@@ -2,6 +2,35 @@
 
 Static site for the Human-Centered AI Lab at Northeastern. No build step, no framework: plain HTML, one stylesheet, one script.
 
+## Site editor (for lab members)
+
+`admin/` is a small editing page for people who don't want to touch files: lab members, papers (with
+research areas and a teaser image), and news. It lives at `<site>/admin/`, for version 1
+https://gigi77789.github.io/hailab-redesign/v1/admin/.
+
+How it works:
+
+- Each person signs in with their own GitHub token (classic token, `public_repo` scope; the sign-in page links
+  to a pre-filled form). They need write access to the repository: add them as a collaborator, or, once the
+  repository moves to the `neuhai` organization, to a team there.
+- Every save reads the newest data file from GitHub, applies that one change, and writes it back as one commit
+  (with any uploaded picture), so two people editing at once don't overwrite each other. Every change is in the
+  repository history and can be reverted.
+- The push starts `.github/workflows/deploy-v1.yml`, which republishes the site a minute or two later.
+- The editor only talks to GitHub, never to the web host. When the site moves to its permanent address,
+  change the deploy step in the workflow to upload there, and `site` in `admin/config.js`.
+- `admin/config.js` holds the repository, branch, public address, and the research areas papers can be tagged with.
+- Images uploaded through the editor are shrunk in the browser (portraits cropped square to 640px,
+  teasers to 1200px wide) and saved as `assets/team/<name>-<hash>.jpg` or `assets/papers/<title>-<hash>.jpg`.
+  Papers edited there get `topicsManual`/`imgManual`, so the weekly update keeps their areas and image.
+
+Try it without touching GitHub: `python3 tools/admin_server.py` serves the site with the editor in local test
+mode at http://127.0.0.1:8790/admin/; saves change the files in this folder (only `data/*.js` and images under
+`assets/`) and rebuild the pages. `python3 tools/admin_server.py DIR PORT` does the same for a copy.
+
+The data files are comment lines followed by `window.HAI_X = <JSON>;`, so both the editor and the Python tools
+can rewrite them. `node tools/datafile.js data/x.js` turns a hand-edited file back into that form.
+
 ## Edit content
 
 Most updates only touch a file in `data/`. After editing one by hand, run `python3 tools/pages.py`: it stamps each page's CSS, JS, and data links with a content hash so browsers load the new version instead of a cached copy. (The scripts in `tools/` do this themselves.)
@@ -9,12 +38,12 @@ Most updates only touch a file in `data/`. After editing one by hand, run `pytho
 | To change | Edit |
 | --- | --- |
 | News | `data/news.js` (newest first) |
-| People, roles, photos, short intros | `data/team.js` (photos go in `assets/team/`, square-ish, about 640px; `bio` is one or two sentences) |
+| People, roles, photos, short intros | `data/team.js` (`section`: faculty, phd, visiting, alumni; photos go in `assets/team/`, square, about 640px; `bio` is one short sentence) |
 | Papers | `data/pubs.js` (newest first; `tag` is the short venue shown in the pill) |
 | Lab members bolded in author lists | `data/members.js` |
 | Research areas on the home page | `data/research.js` (each area shows its 4 newest papers automatically) |
 | Grants (count and award numbers on the home page) | `data/grants.js` (funded only; pending proposals, amounts, and PI roles stay off the site) |
-| Lab culture page: activities and photo gallery | `data/culture.js` (photos go in `assets/culture/`) |
+| Lab culture photo wall | `data/culture.js` (photos go in `assets/culture/`) |
 | Lab norms on the Join us page | `data/norms.js` (bump `version` so people agree again) |
 
 ## Publications

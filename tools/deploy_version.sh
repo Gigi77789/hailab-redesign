@@ -10,15 +10,20 @@ REMOTE=$(git -C "$ROOT" remote get-url origin)
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 
-git clone -q --depth 1 --branch gh-pages "$REMOTE" "$WORK"
+# In GitHub Actions the checkout's auth header lives in the source repo's config; reuse it here.
+AUTH=$(git -C "$ROOT" config --get http.https://github.com/.extraheader || true)
+git ${AUTH:+-c http.https://github.com/.extraheader="$AUTH"} clone -q --depth 1 --branch gh-pages "$REMOTE" "$WORK"
 rm -rf "$WORK/$NAME"
 mkdir -p "$WORK/$NAME"
 python3 "$ROOT/tools/pages.py" --draft "$WORK/$NAME" >/dev/null
-cp -R "$ROOT/css" "$ROOT/js" "$ROOT/data" "$ROOT/assets" "$WORK/$NAME/"
+cp -R "$ROOT/css" "$ROOT/js" "$ROOT/data" "$ROOT/assets" "$ROOT/admin" "$WORK/$NAME/"
 
 cd "$WORK"
 git add -A
-git -c user.name="$(git -C "$ROOT" config user.name)" -c user.email="$(git -C "$ROOT" config user.email)" \
-  commit -qm "Deploy $NAME from $(git -C "$ROOT" rev-parse --short HEAD)"
-git push -q origin gh-pages
+NAME_=$(git -C "$ROOT" config user.name || echo "github-actions[bot]")
+MAIL_=$(git -C "$ROOT" config user.email || echo "41898282+github-actions[bot]@users.noreply.github.com")
+git -c user.name="$NAME_" -c user.email="$MAIL_" commit -qm "Deploy $NAME from $(git -C "$ROOT" rev-parse --short HEAD)"
+[ -n "$AUTH" ] && git config http.https://github.com/.extraheader "$AUTH"
+# another deploy may have landed since the clone; replay this one on top of it
+git push -q origin gh-pages || { git pull -q --rebase origin gh-pages && git push -q origin gh-pages; }
 echo "Pushed $NAME to gh-pages on $REMOTE"

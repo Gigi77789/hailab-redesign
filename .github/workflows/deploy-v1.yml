@@ -1,0 +1,23 @@
+# Republishes version 1 (https://gigi77789.github.io/hailab-redesign/v1/) whenever its branch changes,
+# including every save from the site editor (admin/). To publish somewhere else later (a Northeastern
+# server, Netlify, ...), replace the last step with that host's upload step; the editor needs no change.
+name: Deploy version 1
+on:
+  push:
+    branches: [v1-future]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deploy-v1
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Publish to gh-pages/v1
+        run: sh tools/deploy_version.sh v1
