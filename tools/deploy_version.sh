@@ -16,8 +16,8 @@ git ${AUTH:+-c http.https://github.com/.extraheader="$AUTH"} clone -q --depth 1 
 rm -rf "$WORK/$NAME"
 mkdir -p "$WORK/$NAME"
 python3 "$ROOT/tools/pages.py" --draft "$WORK/$NAME" >/dev/null
-# the site editor (admin/) is still being tested, so it is not published; add "$ROOT/admin" here to publish it
-cp -R "$ROOT/css" "$ROOT/js" "$ROOT/data" "$ROOT/assets" "$WORK/$NAME/"
+# the site editor (admin/) is published too; while admin/config.js says demo: true it saves nothing
+cp -R "$ROOT/css" "$ROOT/js" "$ROOT/data" "$ROOT/assets" "$ROOT/admin" "$WORK/$NAME/"
 
 cd "$WORK"
 git add -A

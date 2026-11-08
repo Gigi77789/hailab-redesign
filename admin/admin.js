@@ -7,7 +7,8 @@
 
    Two ways to save:
      - GitHub: the normal mode. The member signs in with their own GitHub token.
-     - Local: when the page is served by tools/admin_server.py, saves go to files on that computer (for testing). */
+     - Local: when the page is served by tools/admin_server.py, saves go to files on that computer (for testing).
+     - Demo: when config.js sets demo: true, saves stay in this browser tab and nothing is written anywhere. */
 (function () {
   "use strict";
   const CFG = window.HAI_ADMIN;
@@ -112,6 +113,26 @@
     }
   }
 
+  // demo: reads the published data files, keeps every change in memory, writes nothing
+  const demoImages = {};
+  class DemoStore {
+    constructor() { this.label = "Demo: changes are not saved"; this.files = {}; }
+    async whoami() { return "Guest"; }
+    async read(path) {
+      if (path in this.files) return this.files[path];
+      const r = await fetch(SITE + path, { cache: "no-store" });
+      if (!r.ok) throw new Error(`Couldn’t load ${path}`);
+      return r.text();
+    }
+    async commit(files) {
+      for (const f of files) {
+        if (f.remove) delete demoImages[f.path];
+        else if (f.base64) demoImages[f.path] = "data:image/jpeg;base64," + f.base64;
+        else this.files[f.path] = f.text;
+      }
+    }
+  }
+
   let store = null, userName = "";
   const state = { pi: null, team: [], pubs: [], news: [] };
 
@@ -150,14 +171,15 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => t.classList.remove("show"), bad ? 7000 : 4500);
   }
-  const savedMsg = () => (store instanceof LocalStore ? "Saved to the files on this computer." : "Saved. The public site updates in a minute or two.");
+  const savedMsg = () => (store instanceof DemoStore ? "Saved in this demo only. The real website did not change, and a reload resets everything."
+    : store instanceof LocalStore ? "Saved to the files on this computer." : "Saved. The public site updates in a minute or two.");
   const slug = (s) => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\(.*?\)|[‘’'"“”]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "item";
   const shortHash = async (b64) => {
     const buf = await crypto.subtle.digest("SHA-1", Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)));
     return [...new Uint8Array(buf)].slice(0, 3).map((x) => x.toString(16).padStart(2, "0")).join("");
   };
   const initials = (n) => n.replace(/\(.*?\)|‘.*?’/g, "").trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join("");
-  const imgSrc = (p) => (!p ? "" : /^(blob:|data:|https?:)/.test(p) ? p : SITE + p);
+  const imgSrc = (p) => (!p ? "" : demoImages[p] || (/^(blob:|data:|https?:)/.test(p) ? p : SITE + p));
   // the plain name used to bold lab members in author lists: no nickname, no parentheses
   const plainName = (n) => n.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s*[‘'"“][^’'"”]*[’'"”]\s*/g, " ").replace(/\s+/g, " ").trim();
 
@@ -573,9 +595,9 @@
   try { tab = sessionStorage.getItem("hai-admin-tab") || tab; } catch (_) { /* storage blocked */ }
 
   function showWho() {
-    const local = store instanceof LocalStore;
-    $("#who").innerHTML = `<span class="mode${local ? " local" : ""}">${esc(store.label)}</span><span>${esc(userName)}</span>
-      <a href="${local ? "../index.html" : esc(CFG.site)}" target="_blank" rel="noopener">View site</a>${local ? "" : `<button type="button" class="linkish" id="signout">Sign out</button>`}`;
+    const local = store instanceof LocalStore, demo = store instanceof DemoStore;
+    $("#who").innerHTML = `<span class="mode${local || demo ? " local" : ""}">${esc(store.label)}</span><span>${esc(userName)}</span>
+      <a href="${local ? "../index.html" : esc(CFG.site)}" target="_blank" rel="noopener">View site</a>${local || demo ? "" : `<button type="button" class="linkish" id="signout">Sign out</button>`}`;
     $("#signout")?.addEventListener("click", () => {
       try { localStorage.removeItem("hai-admin-token"); sessionStorage.removeItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
       location.reload();
@@ -617,6 +639,7 @@
       const r = await fetch("/__admin/ping", { cache: "no-store" });
       if (r.ok && (await r.json()).ok) return await start(new LocalStore());
     } catch (_) { /* not the local server */ }
+    if (CFG.demo) return await start(new DemoStore());
     let token = null;
     try { token = localStorage.getItem("hai-admin-token") || sessionStorage.getItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
     if (!token) return showSignin();

@@ -5,8 +5,9 @@ Static site for the Human-Centered AI Lab at Northeastern. No build step, no fra
 ## Site editor (for lab members)
 
 `admin/` is a small editing page for people who don't want to touch files: lab members, papers (with
-research areas and a teaser image), and news. It is not published yet (still in testing): try it locally with
-`python3 tools/admin_server.py`. To publish it at `<site>/admin/`, add `admin` to the copy line in `tools/deploy_version.sh`.
+research areas and a teaser image), and news. It is published at `<site>/admin/`
+(https://gigi77789.github.io/hailab-redesign/v1/admin/). While `demo: true` in `admin/config.js` it is a demo:
+no sign-in, every feature works, but saves stay in the browser and vanish on reload. Set `demo: false` to save to GitHub.
 
 How it works:
 
