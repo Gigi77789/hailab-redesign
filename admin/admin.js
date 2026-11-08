@@ -639,7 +639,7 @@
       const r = await fetch("/__admin/ping", { cache: "no-store" });
       if (r.ok && (await r.json()).ok) return await start(new LocalStore());
     } catch (_) { /* not the local server */ }
-    if (CFG.demo) return await start(new DemoStore());
+    if (CFG.demo !== false) return await start(new DemoStore()); // sign-in only once config.js says demo: false
     let token = null;
     try { token = localStorage.getItem("hai-admin-token") || sessionStorage.getItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
     if (!token) return showSignin();

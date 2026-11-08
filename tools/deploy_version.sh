@@ -18,6 +18,10 @@ mkdir -p "$WORK/$NAME"
 python3 "$ROOT/tools/pages.py" --draft "$WORK/$NAME" >/dev/null
 # the site editor (admin/) is published too; while admin/config.js says demo: true it saves nothing
 cp -R "$ROOT/css" "$ROOT/js" "$ROOT/data" "$ROOT/assets" "$ROOT/admin" "$WORK/$NAME/"
+# stamp the editor's own files with the commit, so browsers never run a stale copy
+STAMP=$(git -C "$ROOT" rev-parse --short HEAD)
+sed -i.bak -e "s#href=\"admin.css\"#href=\"admin.css?v=$STAMP\"#" -e "s#src=\"config.js\"#src=\"config.js?v=$STAMP\"#" -e "s#src=\"admin.js\"#src=\"admin.js?v=$STAMP\"#" "$WORK/$NAME/admin/index.html"
+rm -f "$WORK/$NAME/admin/index.html.bak"
 
 cd "$WORK"
 git add -A
