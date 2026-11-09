@@ -5,7 +5,7 @@
     python3 tools/find_papers.py --since 2024     # look further back (default: the last two years)
     python3 tools/find_papers.py --suggest-ids    # find OpenAlex author ids for members who have none
 
-Who is searched: the director and the core members (research scientists and PhD students) in
+Who is searched: the director, the research scientists (faculty) and the PhD students in
 src/data/team.yaml that have an `orcid` or an `openalex` author id (several ids separated by "|" when OpenAlex
 split someone into more than one). Visiting members and alumni are not searched.
 A work counts as a lab paper when Dakuo Wang is an author, or at least two of the searched members are.
@@ -40,9 +40,9 @@ def plain(name):
 
 
 def people():
-    """[(name, [openalex author ids])] for the director and core members, plus who was skipped."""
+    """[(name, [openalex author ids])] for the director, faculty and PhD students, plus who was skipped."""
     team = yaml.safe_load((DATA / "team.yaml").read_text())
-    current = [team["director"]] + [m for m in team["members"] if m["group"] == "core"]
+    current = [team["director"]] + [m for m in team["members"] if m["group"] in ("faculty", "phd")]
     out, skipped = [], []
     for m in current:
         ids = [x.strip().rsplit("/", 1)[-1] for x in str(m.get("openalex") or "").split("|") if x.strip()]
@@ -116,7 +116,7 @@ def suggest_ids():
     _, pubs = load_pubs()
     titles = [norm(p["t"]) for p in pubs]
     for m in [team["director"]] + team["members"]:
-        if m.get("group", "core") != "core" or m.get("orcid") or m.get("openalex"):
+        if m.get("group", "faculty") not in ("faculty", "phd") or m.get("orcid") or m.get("openalex"):
             continue
         data = get_json(f"{API}/authors?search={urllib.parse.quote(plain(m['name']))}&per-page=10&mailto={CONTACT}")
         found = []

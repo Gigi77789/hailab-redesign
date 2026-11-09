@@ -1,0 +1,33 @@
+---
+import Base from "../layouts/Base.astro";
+import { CULTURE, url } from "../lib/data";
+// prints on the wall tilt a little, in this repeating pattern
+const TILT = [-2.2, 1.4, -0.8, 2, -1.6, 0.9, 1.8, -1.2];
+---
+<Base title="Lab culture" description="Life at NEU HAI: conference trips, talks and posters, and the things we make and eat together." page="culture">
+<section class="page-head">
+  <div class="wrap">
+    <h1>Lab culture</h1>
+    <p>Conference trips, talks and posters, and the things we make and eat together.</p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:96px" aria-label="Photo wall">
+  <div class="filters wall-filters" id="wall-filters" role="group" aria-label="Show photos of">
+    <button type="button" class="chip" data-cat="" aria-pressed="true">All</button>
+    {CULTURE.kinds.map((k) => <button type="button" class="chip" data-cat={k.key} aria-pressed="false">{k.name}</button>)}
+  </div>
+  <ul class="wall" id="wall">{CULTURE.photos.map((ph, i) => (
+    <li class="print" data-cat={ph.cat} style={`--r:${TILT[i % TILT.length]}deg;--k:${i % 3}`}>
+      <button type="button" class="print-btn" data-i={i} aria-label={`Open photo: ${ph.caption}`}>
+        <img src={url(ph.src)} alt={ph.caption} width={ph.w} height={ph.h} loading="lazy">
+      </button>
+      <p class="print-cap">{ph.caption}</p>
+    </li>))}</ul>
+</section>
+<dialog class="lightbox" id="lightbox" aria-label="Photo">
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photo">‹</button>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next photo">›</button>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
+</dialog>
+</Base>

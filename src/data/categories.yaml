@@ -4,15 +4,13 @@
 # reorder only together with those colours. The rules that assign categories are in tools/pubtools.py.
 - key: health
   name: AI for Healthcare
-- key: agents
-  name: LLM Agents for Human Simulation
+- key: algo
+  name: LLMs and AI Agents
 - key: education
   name: AI for Learning
-- key: data
-  name: Data Science
+- key: hac
+  name: Human-Agent Collaboration
 - key: collab
   name: Human-AI Collaboration
-- key: algo
-  name: AI Algorithms
 - key: community
   name: Community Engagement

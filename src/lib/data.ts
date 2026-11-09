@@ -11,7 +11,7 @@ import newsText from "../data/news.yaml?raw";
 import grantsText from "../data/grants.yaml?raw";
 import normsText from "../data/norms.yaml?raw";
 import researchText from "../data/research.yaml?raw";
-import featuredText from "../data/featured.yaml?raw";
+import cultureText from "../data/culture.yaml?raw";
 
 function load<T extends z.ZodType>(file: string, text: string, schema: T): z.infer<T> {
   const r = schema.safeParse(parseYaml(text));
@@ -34,15 +34,16 @@ const person = z.object({
   role: z.string(),
   url: z.string().optional(),
   photo: z.string().optional(),
+  bio: z.string().optional(),
   orcid: z.string().optional(),
   openalex: z.string().optional(),
 });
 const team = load("team.yaml", teamText, z.object({
   director: z.object({
-    name: z.string(), title: z.string(), photo: z.string(), url: z.string(), email: z.string(),
+    name: z.string(), title: z.string(), role: z.string(), short: z.string(), photo: z.string(), url: z.string(), email: z.string(),
     orcid: z.string().optional(), openalex: z.string().optional(), bio: z.array(z.string()),
   }),
-  members: z.array(person.extend({ group: z.enum(["core", "ra", "visiting", "alumni"]) })),
+  members: z.array(person.extend({ group: z.enum(["faculty", "phd", "ra", "visiting", "alumni"]) })),
 }));
 export const DIRECTOR = team.director;
 export const MEMBERS = team.members;
@@ -126,18 +127,21 @@ for (const e of entries) {
 }
 /** Every paper, newest first (papers.bib order within a year). */
 export const PAPERS: Paper[] = entries.map(toPaper).sort((a, b) => b.year - a.year);
-const byKey = new Map(PAPERS.map((p) => [p.key, p]));
 export const mainTopic = (p: Paper) => p.topics[0];
 
 /* ---------- home page ---------- */
-const keys = load("featured.yaml", featuredText, z.array(z.string()));
-export const FEATURED = keys.map((k) => {
-  const p = byKey.get(k);
-  if (!p) throw new Error(`src/data/featured.yaml: no paper with the key ${k} in papers.bib`);
-  return p;
-});
 export const AREAS = load("research.yaml", researchText, z.array(z.object({ topic, summary: z.string() })))
   .map((a) => ({ ...a, name: TOPIC_NAMES[a.topic] }));
+
+/* ---------- lab culture ---------- */
+const culture = load("culture.yaml", cultureText, z.object({
+  kinds: z.array(z.object({ key: z.string(), name: z.string() })),
+  photos: z.array(z.object({ src: z.string(), w: z.number(), h: z.number(), cat: z.string(), caption: z.string() })),
+}));
+for (const ph of culture.photos) {
+  if (!culture.kinds.some((k) => k.key === ph.cat)) throw new Error(`src/data/culture.yaml: ${ph.src} has cat "${ph.cat}", which is not in kinds`);
+}
+export const CULTURE = culture;
 
 /* ---------- news, grants, norms ---------- */
 export const NEWS = load("news.yaml", newsText, z.array(z.object({

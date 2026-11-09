@@ -1,6 +1,6 @@
 ---
-// The venue pill. Peer-reviewed venues get the "peer" style; preprints don't.
+// The venue pill.
 import type { Paper } from "../lib/data";
 const { paper } = Astro.props as { paper: Paper };
 ---
-<span class:list={["tag", { peer: paper.peer }]}>{paper.tag}</span>
+<span class="tag">{paper.tag}</span>

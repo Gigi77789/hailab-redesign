@@ -1,0 +1,9 @@
+---
+// A card on the Lab members page: photo (or initials), name, role, and a sentence about the person.
+import { url } from "../lib/data";
+const { person: m } = Astro.props as { person: { name: string; role: string; url?: string; photo?: string; bio?: string } };
+const initials = m.name.replace(/\(.*?\)|‘.*?’/g, "").trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join("");
+---
+<li class="person"><span class="face-photo">{m.photo
+  ? <img src={url(m.photo)} alt="" loading="lazy" width="320" height="320">
+  : <span class="face-initials" aria-hidden="true">{initials}</span>}</span><h3>{m.url ? <a href={m.url}>{m.name}</a> : m.name}</h3><span class="face-role">{m.role}</span>{m.bio && <p class="person-bio">{m.bio}</p>}</li>

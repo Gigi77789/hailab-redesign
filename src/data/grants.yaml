@@ -32,7 +32,7 @@
   award: ''
   role: Co-PI
   years: 2025–2026
-  topic: agents
+  topic: collab
 
 - title: 'SCH: Improving Early Prediction and Decision-Making for Sepsis with Human-AI Collaboration'
   sponsor: NIH
@@ -73,7 +73,7 @@
   role: Co-PI
   lead: Lace Padilla, Northeastern University
   years: 2024–2025
-  topic: data
+  topic: collab
   internal: true
 
 - title: The Goal-oriented Autonomous Dialogue System
@@ -82,5 +82,5 @@
   role: Co-PI
   lead: Tomek Strzalkowski, RPI
   years: 2022–2023
-  topic: agents
+  topic: algo
   internal: true

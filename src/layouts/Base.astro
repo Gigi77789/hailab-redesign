@@ -12,8 +12,8 @@ const { title, description, page } = Astro.props;
 const full = title ? `${title} | NEU HAI` : "NEU HAI";
 const draft = Boolean(process.env.DRAFT);
 const NAV = [
-  ["people.html", "People"], ["publications.html", "Publications"], ["grants.html", "Grants"],
-  ["news.html", "News"], ["join.html", "Join us"],
+  ["index.html", "Home"], ["people.html", "Lab members"], ["publications.html", "Publications"],
+  ["culture.html", "Lab culture"], ["news.html", "News"], ["join.html", "Join us"],
 ];
 const current = Astro.url.pathname.split("/").pop() || "index.html";
 ---
@@ -24,19 +24,20 @@ const current = Astro.url.pathname.split("/").pop() || "index.html";
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{full}</title>
 {draft && <meta name="robots" content="noindex, nofollow">}
-<meta name="claude:viewport-fit-sides" content="cover">
+<!-- the theme is set before the page paints: the visitor's saved choice, else their system setting -->
+<script is:inline>(function(){var t;try{t=localStorage.getItem("hai-theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t})()</script>
 <meta name="description" content={description}>
 <meta property="og:title" content={full}>
 <meta property="og:description" content={description}>
 <link rel="icon" href={url("assets/favicon.svg")} type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap">
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a><div class="scroll-line" aria-hidden="true"></div>
 {draft && <div class="draft-note"><div class="wrap">Draft redesign for review. The lab’s current site is <a href="https://hailab.io/">hailab.io</a>.</div></div>}
-<header class="site-header night">
+<header class="site-header">
   <div class="wrap">
     <a class="lockup" href={url("index.html")} aria-label="NEU HAI home">
       <span class="lockup-mark">NEU HAI</span>
@@ -46,6 +47,7 @@ const current = Astro.url.pathname.split("/").pop() || "index.html";
     <nav class="nav" id="nav" aria-label="Main">
       {NAV.map(([href, label]) => <a href={url(href)} aria-current={href === current ? "page" : undefined}>{label}</a>)}
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg></button>
   </div>
 </header>
 <main id="main" data-page={page}>
@@ -55,7 +57,7 @@ const current = Astro.url.pathname.split("/").pop() || "index.html";
   <div class="wrap">
     <div>
       <span class="lockup-mark">NEU HAI</span>
-      <address>Human-Centered AI Lab<br>Khoury College of Computer Sciences and College of Arts, Media and Design<br>Northeastern University, Boston, Massachusetts</address>
+      <address>Human-Centered AI Lab<br>Northeastern University, Boston, Massachusetts</address>
     </div>
     <nav class="foot-links" aria-label="Elsewhere">
       <a href="mailto:d.wang@northeastern.edu">d.wang@northeastern.edu</a>

@@ -5,7 +5,7 @@ import { CATEGORIES, PAPERS } from "../lib/data";
 const years = [...new Set(PAPERS.map((p) => p.year))];
 ---
 <Base title="Publications" description="Publications from NEU HAI, the Human-Centered AI Lab at Northeastern University, in HCI, NLP, and health informatics." page="publications">
-<section class="page-head night">
+<section class="page-head">
   <div class="wrap">
     <h1>Publications</h1>
     <p>Papers from the lab and its collaborators in HCI, natural language processing, and health informatics.</p>
@@ -32,7 +32,7 @@ const years = [...new Set(PAPERS.map((p) => p.year))];
         <ol class="pub-list">{PAPERS.filter((p) => p.year === y).map((p) => <Paper paper={p} />)}</ol>
       </section>
     ))}
-    <p class="empty" hidden>No papers match these filters. <button type="button" id="reset">Show all papers</button></p>
+    <p class="pubs-empty" hidden>No papers match these filters. <button type="button" id="reset">Show all papers</button></p>
   </div>
 </section>
 </Base>
