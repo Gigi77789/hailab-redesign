@@ -25,10 +25,8 @@ const LETTERS = ["N", "E", "U", "H", "A", "I"];
   <canvas class="stars" id="stars" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="status readout" aria-label="Lab location">
-      <span><span class="blip"></span>Northeastern University, Boston</span>
-      <span>42.3398° N <span class="sep">/</span> 71.0892° W</span>
-      <span>Khoury College <span class="sep">+</span> CAMD</span>
-      <span>Local time <b id="clock">--:--:--</b></span>
+      <span><span class="blip"></span>Northeastern University, Boston <span class="sep">+</span> Oakland</span>
+      <span>Khoury College of Computer Sciences <span class="sep">+</span> College of Arts, Media and Design</span>
     </div>
     <h1 class="entry-word" id="word" aria-label="NEU HAI"><span aria-hidden="true"><span class="wd">{LETTERS.slice(0, 3).map((c, i) => <span class="ch" style={`--i:${i}`}>{c}</span>)}</span> <span class="wd">{LETTERS.slice(3).map((c, i) => <span class="ch" style={`--i:${i + 3}`}>{c}</span>)}</span></span></h1>
     <div class="entry-lede">

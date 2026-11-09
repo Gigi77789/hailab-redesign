@@ -478,13 +478,6 @@ if (page === "home") {
     word.addEventListener("pointerenter", () => decode(word, { stagger: 35, base: 60 }));
   }
   starfield($("#stars"));
-  const clock = $("#clock");
-  if (clock) {
-    const fmt = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" });
-    const tickClock = () => (clock.textContent = fmt.format(new Date()));
-    tickClock();
-    setInterval(tickClock, 1000);
-  }
   renderField();
   litWords($("#senses"));
   explorer($("#explorer"));

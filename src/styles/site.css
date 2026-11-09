@@ -299,9 +299,8 @@ p { margin: 0 0 1em; }
 .define-h .hw { font-family: var(--display); font-size: 1.125rem; letter-spacing: 0.12em; }
 .define-h .pos { font-family: var(--mono); font-size: 0.8125rem; color: var(--slate); font-style: normal; }
 
-.senses { list-style: none; counter-reset: sense; margin: 0; padding: 0; max-width: 27em; }
-.senses li { counter-increment: sense; position: relative; padding-left: 2.6em; margin-bottom: 1em; font-size: clamp(1.375rem, 2.3vw, 1.875rem); font-weight: 300; line-height: 1.35; }
-.senses li::before { content: "0" counter(sense); position: absolute; left: 0; top: 0.35em; font-family: var(--mono); font-weight: 500; font-size: 0.5em; letter-spacing: 0.06em; color: var(--signal); }
+.senses { list-style: none; margin: 0; padding: 0; max-width: 27em; }
+.senses li { margin-bottom: 1em; font-size: clamp(1.375rem, 2.3vw, 1.875rem); font-weight: 300; line-height: 1.35; }
 .senses a:hover { color: var(--signal); }
 .senses .w { transition: color 0.35s ease, text-shadow 0.6s ease; }
 .senses.lit-ready .w { color: var(--dim); }
@@ -675,9 +674,9 @@ section[id], h2[id] { scroll-margin-top: 96px; }
   @keyframes boot { 0% { opacity: .3; clip-path: inset(0 0 100% 0); } 100% { opacity: 1; clip-path: inset(0 0 0 0); } }
 }
 
-/* phones: keep the status bar to location and time */
+/* phones: keep the status bar to the location */
 @media (max-width: 600px) {
-  .status > span:nth-child(2), .status > span:nth-child(3) { display: none; }
+  .status > span:nth-child(2) { display: none; }
 }
 @media (hover: none) { #aim { display: none; } }
 .page-head p.readout { font-size: 0.75rem; line-height: 1.6; color: var(--slate); }

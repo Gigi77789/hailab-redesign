@@ -6,6 +6,6 @@ const { grant: g } = Astro.props as { grant: (typeof GRANTS)[number] };
   <span class="readout grant-years">{g.years}</span>
   <div>
     <h3 class="grant-title">{g.title}</h3>
-    <p class="grant-meta"><span class="grant-sponsor">{g.sponsor}{g.award && <Fragment>{" "}<b>{g.award}</b></Fragment>}</span><span>Role: {g.role}</span>{g.lead && <span>Lead PI: {g.lead}</span>}</p>
+    <p class="grant-meta"><span class="grant-sponsor">{g.sponsor}{g.award && <Fragment>{" "}<b>{g.award}</b></Fragment>}</span><span>Dakuo Wang’s role: {g.role}</span>{g.lead && <span>Lead PI: {g.lead}</span>}</p>
   </div>
 </li>
