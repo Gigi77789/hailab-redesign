@@ -26,7 +26,11 @@ const group = (g: string) => MEMBERS.filter((m) => m.group === g);
       <ul class="faces" id="core">{group("core").map((m) => <Face person={m} />)}</ul>
     </div>
     <div class="group">
-      <h2 class="subhead">Research assistants and visiting students</h2>
+      <h2 class="subhead">Research assistants</h2>
+      <ul class="faces small" id="ra">{group("ra").map((m) => <Face person={m} />)}</ul>
+    </div>
+    <div class="group">
+      <h2 class="subhead">Visiting students</h2>
       <ul class="faces small" id="visiting">{group("visiting").map((m) => <Face person={m} />)}</ul>
     </div>
   </div>

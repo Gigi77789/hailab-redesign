@@ -1,6 +1,7 @@
 # People on the People page and the home page. Everyone listed here is bolded in author lists
 # (nicknames in quotes or parentheses are ignored when matching, so “Bingsheng ‘Arthur’ Yao” matches “Bingsheng Yao”).
-#   group: core (research scientists and PhD students), visiting (research assistants and visiting students), alumni
+#   group: core (research scientists and PhD students), ra (research assistants), visiting (visiting students), alumni.
+#     Core members and research assistants are lab members: they appear on the home page.
 #   photo: a square-ish image in public/assets/team/, about 640px; leave it out to show initials
 #   orcid / openalex: lets tools/find_papers.py look up new papers by the director and core members
 
@@ -70,28 +71,30 @@ members:
     group: core
     role: PhD student
 
-  # visiting
+  # research assistants
   - name: Bo Sun
-    group: visiting
+    group: ra
     role: Research assistant
     url: https://qianxi66.github.io/
     photo: assets/team/bo.jpg
   - name: Jiayi (Elise) Su
-    group: visiting
+    group: ra
     role: Research assistant
     url: https://jiayi-elise-su.github.io/
     photo: assets/team/jiayi.jpg
+  - name: Yuewen Gao
+    group: ra
+    role: Research assistant
+    url: https://yuewen-gao.github.io/
+    photo: assets/team/yuewen.jpg
+    orcid: 0009-0009-4258-5952
+
+  # visiting students
   - name: Ruhan Gupta
     group: visiting
     role: Visiting student
     url: https://ruhangupta.com/
     photo: assets/team/ruhan.jpg
-  - name: Yuewen Gao
-    group: visiting
-    role: Research assistant
-    url: https://yuewen-gao.github.io/
-    photo: assets/team/yuewen.jpg
-    orcid: 0009-0009-4258-5952
 
   # alumni
   - name: Chengyou Xu

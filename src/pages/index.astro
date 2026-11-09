@@ -16,8 +16,9 @@ const field = {
 };
 const mainCount = (k: string) => PAPERS.filter((p) => mainTopic(p) === k).length;
 const external = GRANTS.filter((g) => !g.internal);
-const core = MEMBERS.filter((m) => m.group === "core");
-const faces = [{ name: DIRECTOR.name, role: "Lab director", photo: DIRECTOR.photo, url: DIRECTOR.url }, ...core];
+// lab members: core (research scientists and PhD students) and research assistants; visiting students are not
+const members = MEMBERS.filter((m) => m.group === "core" || m.group === "ra");
+const faces = [{ name: DIRECTOR.name, role: "Lab director", photo: DIRECTOR.photo, url: DIRECTOR.url }, ...members];
 const LETTERS = ["N", "E", "U", "H", "A", "I"];
 ---
 <Base description="NEU HAI is the Human-Centered AI Lab at Northeastern University. We design, build, and evaluate AI systems with the people who use them, in health care, education, and on the web." page="home">
@@ -147,7 +148,7 @@ const LETTERS = ["N", "E", "U", "H", "A", "I"];
 <section class="section night" aria-labelledby="people-h">
   <div class="wrap">
     <div class="section-head">
-      <div><span class="readout"><b>{core.length + 1}</b> current <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "visiting").length} visiting <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "alumni").length} alumni</span><h2 id="people-h">People</h2></div>
+      <div><span class="readout"><b>{members.length + 1}</b> current <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "visiting").length} visiting <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "alumni").length} alumni</span><h2 id="people-h">People</h2></div>
       <a class="more" href={url("people.html")}>Visitors and alumni</a>
     </div>
     <ul class="faces home" id="faces">{faces.map((m) => <Face person={m} />)}</ul>

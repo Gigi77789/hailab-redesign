@@ -42,7 +42,7 @@ const team = load("team.yaml", teamText, z.object({
     name: z.string(), title: z.string(), photo: z.string(), url: z.string(), email: z.string(),
     orcid: z.string().optional(), openalex: z.string().optional(), bio: z.array(z.string()),
   }),
-  members: z.array(person.extend({ group: z.enum(["core", "visiting", "alumni"]) })),
+  members: z.array(person.extend({ group: z.enum(["core", "ra", "visiting", "alumni"]) })),
 }));
 export const DIRECTOR = team.director;
 export const MEMBERS = team.members;
