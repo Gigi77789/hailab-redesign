@@ -141,7 +141,7 @@ export const AREAS = load("research.yaml", researchText, z.array(z.object({ topi
 
 /* ---------- news, grants, norms ---------- */
 export const NEWS = load("news.yaml", newsText, z.array(z.object({
-  date: z.string().regex(/^\d{4}-\d{2}$/, "must be YYYY-MM"),
+  date: z.string().regex(/^\d{4}(-\d{2})?$/, "must be YYYY-MM, or YYYY when the month isn't known"),
   html: z.string(),
 })));
 
@@ -159,9 +159,10 @@ export const NORMS = load("norms.yaml", normsText, z.object({
 }));
 
 /* ---------- formatting ---------- */
+/** "2026-04" -> "Apr 2026"; a bare year stays as it is. */
 export const fmtMonth = (d: string) => {
   const [y, m] = d.split("-").map(Number);
-  return new Date(y, m - 1, 1).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  return m ? new Date(y, m - 1, 1).toLocaleDateString("en-US", { month: "short", year: "numeric" }) : String(y);
 };
 
 /** A path inside the site, with the base path the site is served under (e.g. /hailab-redesign/ on GitHub Pages). */

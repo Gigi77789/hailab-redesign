@@ -26,6 +26,7 @@ members:
     group: core
     role: Associate Research Scientist
     url: https://bingshengyao.com
+    photo: assets/team/bingsheng.jpg
     openalex: A5033744502|A5140871236
   - name: Jia Zhang
     group: core
@@ -65,6 +66,9 @@ members:
     role: PhD student
     url: https://ziyiii0-0.github.io/
     photo: assets/team/ziyi.jpg
+  - name: Zihan Xue
+    group: core
+    role: PhD student
 
   # visiting
   - name: Bo Sun

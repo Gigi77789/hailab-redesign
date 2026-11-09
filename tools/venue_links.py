@@ -6,7 +6,7 @@
 For each paper not tagged "Preprint" it searches Crossref, then OpenAlex, for the same title in the
 same year (within one year), ignoring preprint servers. The match becomes the paper's `url` in
 papers.bib, which the site uses for the title link and lists first among its links, labelled by publisher.
-ICLR papers are looked up on OpenReview. Papers it can't confirm keep their current links and
+ICLR and NeurIPS papers are looked up on OpenReview. Papers it can't confirm keep their current links and
 are listed at the end, so a person can add them by hand (url = {...} and url_manual = {true}).
 """
 import re
@@ -66,11 +66,11 @@ def openalex_link(p):
 
 
 def openreview(p):
-    m = re.search(r"ICLR (\d{4})", p.get("tag", ""))
+    m = re.search(r"(ICLR|NeurIPS) (\d{4})", p.get("tag", ""))
     if not m:
         return None
     q = urllib.parse.quote(p["t"])
-    data = get_json(f"https://api2.openreview.net/notes/search?term={q}&group=ICLR.cc/{m.group(1)}/Conference&limit=5")
+    data = get_json(f"https://api2.openreview.net/notes/search?term={q}&group={m.group(1)}.cc/{m.group(2)}/Conference&limit=5")
     for n in (data or {}).get("notes") or []:
         title = ((n.get("content") or {}).get("title") or {}).get("value", "")
         if same_title(p["t"], title) and n.get("forum"):

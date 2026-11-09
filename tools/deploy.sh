@@ -22,7 +22,8 @@ AUTH=$(git -C "$ROOT" config --get http.https://github.com/.extraheader || true)
 # keep the design versions (v1/, v2/, ...) published next to the draft
 PREV=$(mktemp -d)
 if git ${AUTH:+-c http.https://github.com/.extraheader="$AUTH"} clone -q --depth 1 --branch gh-pages "$REMOTE" "$PREV" 2>/dev/null; then
-  for d in "$PREV"/v[0-9]*/; do [ -d "$d" ] && cp -R "$d" "$OUT/"; done
+  # no trailing slash on the source: macOS cp would copy the folder's contents instead of the folder
+  for d in "$PREV"/v[0-9]*/; do [ -d "$d" ] && cp -R "${d%/}" "$OUT/"; done
 fi
 rm -rf "$PREV"
 printf 'User-agent: *\nDisallow: /\n' > "$OUT/robots.txt"

@@ -13,6 +13,7 @@ DRAFT=1 SITE_BASE=/hailab-redesign/ npx astro build   # the review copy: banner,
 sh tools/deploy.sh                       # build the review copy and force-push it to gh-pages
 python3 tools/retag.py                   # recompute paper categories (offline; a no-op run must leave papers.bib unchanged)
 python3 tools/find_papers.py --dry-run   # new papers by Dakuo and core members on OpenAlex
+python3 tools/accept.py "NeurIPS 2026" KEY... [--venue ...] [--openalex W...]   # mark known acceptances
 python3 tools/update_venues.py --dry-run # preprints that now have a published version
 python3 tools/venue_links.py             # official venue links (Crossref/OpenAlex/OpenReview)
 python3 tools/fetch_figures.py           # figures from arXiv HTML into public/assets/papers/

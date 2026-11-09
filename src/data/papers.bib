@@ -7,6 +7,34 @@
 % preview_manual / topics_manual / url_manual = true (keep a hand-set value), cv (number in Dakuo's CV),
 % preprint_venue / preprint_year / preprint_title (the preprint, once a published version replaced it).
 
+@inproceedings{zhang2026starpo,
+  title          = {StaRPO: Stability-Augmented Reinforcement Policy Optimization},
+  author         = {Jinghan Zhang and Fengran Mo and Tharindu Cyril Weerasooriya and Ruimin Dai and X. Y. Han and Yanjie Fu and Dakuo Wang and Kunpeng Liu},
+  booktitle      = {Conference on Neural Information Processing Systems (NeurIPS 2026)},
+  year           = {2026},
+  abbr           = {NeurIPS 2026},
+  topics         = {algo},
+  arxiv          = {2604.08905},
+  preprint_venue = {arXiv preprint},
+  preprint_year  = {2026},
+  openalex       = {W7154182845},
+  abstract       = {Reinforcement learning (RL) is effective in enhancing the accuracy of large language models in complex reasoning tasks. Existing RL policy optimization frameworks rely on final-answer correctness as feedback signals and rarely capture the internal logical structure of the reasoning process. Consequently, the models would generate fluent and semantically relevant responses but logically inconsistent, structurally erratic, or redundant. To this end, we propose StaRPO, a stability-augmented reinforcement learning framework that explicitly incorporates reasoning stability into the optimization objective. Our StaRPO decomposes stability into two computable lightweight metrics: the Autocorrelation Function (ACF) to evaluate local step-to-step coherence, and Path Efficiency (PE) to evaluate global goal-directedness of the reasoning trajectory. These stability rewards are combined with task rewards to provide complementary and process-aware feedback. We validate the effectiveness of using ACF and PE rewards by showing their correlation with logic errors on two backbone models. Experiments on four reasoning benchmarks show that StaRPO consistently outperforms compared baselines and can enhance both final-answer accuracy and logical stability.},
+}
+
+@inproceedings{zhang2026spanuq,
+  title          = {SpanUQ: Span-Level Uncertainty Quantification for Large Language Model Generation},
+  author         = {Yimeng Zhang and Yingying Zhuang and Ziyi Wang and Ye Lu and Pei Chen and A. Gupta and SU Zhe and Ming Tan and Zhilin Zhang and Qun Liu and Manikandarajan Ramanathan and Rajashekar Maragoud and Edward Vul and Jing Huang and Dakuo Wang},
+  booktitle      = {Conference on Neural Information Processing Systems (NeurIPS 2026)},
+  year           = {2026},
+  abbr           = {NeurIPS 2026},
+  topics         = {algo},
+  arxiv          = {2607.05721},
+  preprint_venue = {arXiv preprint},
+  preprint_year  = {2026},
+  openalex       = {W7167742306},
+  abstract       = {Uncertainty estimation is essential for the trustworthy deployment of LLMs: it underpins self-refinement and serves as a decision signal for downstream systems, from verifiers to collaborating agents. However, existing approaches operate at suboptimal granularities: token-level scores lack semantic coherence, while sequence-level scores fail to localize errors. We formalize Span-Level Uncertainty Estimation (SLUE), a new task that targets the natural granularity for uncertainty: semantically coherent text spans, each conveying a single assessable unit of meaning. To address this task, we introduce SPANUQ, a lightweight probe that distills the uncertainty knowledge from expensive multi-sample inference into a single forward pass over LLM hidden states. SPANUQ employs a DETR-style span decoder to simultaneously detect spans and estimate their uncertainty via a Mixture of Beta distribution, trained with a principled combination of Beta NLL regression and contrastive ranking objectives. We construct SPANUQ-BENCH, the first span-level uncertainty benchmark comprising 20K prompts, 293K annotated spans, and continuous soft labels derived from multi-sample claim verification. Experiments on five LLM backbones show that SPANUQ consistently achieves the best span-level uncertainty quality , outperforming the strongest probe baseline and all sampling-based methods while being 10\textasciitilde{}20x faster. Its DETR-based span detector attains 0.910 F1, surpassing the best heuristic by 39.4\%, enabling precise error localization that sequence-level methods cannot provide. The same architecture ports to five LLMs spanning two model families, with one probe trained per backbone, and we additionally observe that sequence-level uncertainty is partially decomposable, suggesting that span-level estimation subsumes sequence-level as a special case. The project page is available damon-demon.github.io/SpanUQ.},
+}
+
 @inproceedings{wang2026padformer,
   title          = {PADFormer: Pose-Agnostic Anomaly Detection from Sparse View Images},
   author         = {Ruiqi Wang and Yiming Qian and Fenggen Yu and Yuxuan Lu and Dakuo Wang and Hao Zhang and Jing Huang},
@@ -486,18 +514,20 @@
   source       = {scholar},
 }
 
-@misc{lu2026firefly,
+@inproceedings{lu2026firefly,
   title          = {Firefly: Illuminating Large-Scale Verified Tool-Call Data Generation from Real APIs},
   author         = {Yuxuan Lu and Ziyi Wang and Yingzhou Lu and Yisi Sang and Jiri Gesi and Xianfeng Tang and Yimeng Zhang and Zhenwei Dai and Hui Liu and Hanqing Lu and Chen Luo and Qi He and Benoit Dumoulin and Jing Huang and Dakuo Wang},
-  howpublished   = {arXiv preprint},
+  booktitle      = {Conference on Neural Information Processing Systems (NeurIPS 2026)},
   year           = {2026},
-  abbr           = {Preprint},
+  abbr           = {NeurIPS 2026},
   topics         = {algo},
   arxiv          = {2605.17558},
   preview        = {assets/papers/2605.17558.jpg},
   preview_from   = {figure1},
   preview_source = {https://arxiv.org/html/2605.17558v1/firefly.png},
   source         = {scholar},
+  preprint_venue = {arXiv preprint},
+  preprint_year  = {2026},
 }
 
 @misc{zeng2026minicorp,
