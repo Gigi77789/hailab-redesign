@@ -21,13 +21,14 @@ The editor writes `team.yaml` and `news.yaml` in one fixed layout (`src/lib/edit
 
 ## Edit content
 
-Every update is a change to one file in `src/data/`, by hand or through the editor. The build checks these files and stops with a message naming the file and entry if something is missing or misspelled.
+Every update is a change to one file in `src/data/`, by hand or through the editor. Within a year, papers appear in their order in `papers.bib`; newer years come first. The build checks these files and stops with a message naming the file and entry if something is missing or misspelled.
 
 | To change | Edit |
 | --- | --- |
 | Papers | `src/data/papers.bib` (BibTeX, newest first; field notes at the top of the file) |
 | News | `src/data/news.yaml` (newest first; the home page shows all of it in its Latest news box) |
 | People, roles, photos, short intros | `src/data/team.yaml` (`group`: faculty, phd, ra, visiting, alumni; photos go in `public/assets/team/`, square, about 640px; `bio` is one short sentence). Everyone listed is bolded in author lists; faculty, PhD students, and research assistants appear on the home page. |
+| Links on author names (Publications) | lab members: `url` in `team.yaml` (and `aliases` for other names they publish under); collaborators: `src/data/authors.yaml` |
 | Research areas on the home page | `src/data/research.yaml` (each area shows its 4 newest papers automatically) |
 | Lab culture photo wall | `src/data/culture.yaml` (photos go in `public/assets/culture/`) |
 | Lab norms on the Join us page | `src/data/norms.yaml` (change `version` so people agree again) |

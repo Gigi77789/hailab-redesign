@@ -1,6 +1,11 @@
 ---
-// An author list with lab members in bold.
-import { isMember } from "../lib/data";
+// An author list: lab members in bold, and names link to the person's website when we know it
+// (team.yaml for lab members, authors.yaml for collaborators).
+import { authorUrl, isMember } from "../lib/data";
 const { names } = Astro.props as { names: string[] };
 ---
-{names.map((n, i) => <Fragment>{i > 0 && ", "}{isMember(n) ? <span class="me">{n}</span> : n}</Fragment>)}
+{names.map((n, i) => {
+  const name = isMember(n) ? <span class="me">{n}</span> : n;
+  const url = authorUrl(n);
+  return <Fragment>{i > 0 && ", "}{url ? <a href={url}>{name}</a> : name}</Fragment>;
+})}

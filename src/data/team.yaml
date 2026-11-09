@@ -5,6 +5,8 @@
 #     they appear on the home page.
 #   bio: one short sentence for the Lab members page (under about 100 characters, so it fits in three lines)
 #   photo: a square image in public/assets/team/, about 640px; leave it out to show initials
+#   url: the person's website; their name links there in author lists too
+#   aliases: other names the person publishes under, so those are bolded and linked as well
 #   orcid / openalex: lets tools/find_papers.py look up new papers by the director, faculty and PhD students
 
 director:
@@ -127,6 +129,8 @@ members:
     url: https://www.jumana.info/
   - name: Reina Chan
     group: alumni
+    aliases:
+      - Szeyi Chan
     role: Research assistant
     url: https://szeyireinachan.github.io/
   - name: Ruishi Zou

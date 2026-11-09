@@ -12,6 +12,7 @@ import grantsText from "../data/grants.yaml?raw";
 import normsText from "../data/norms.yaml?raw";
 import researchText from "../data/research.yaml?raw";
 import cultureText from "../data/culture.yaml?raw";
+import authorsText from "../data/authors.yaml?raw";
 
 function load<T extends z.ZodType>(file: string, text: string, schema: T): z.infer<T> {
   const r = schema.safeParse(parseYaml(text));
@@ -35,6 +36,7 @@ const person = z.object({
   url: z.string().optional(),
   photo: z.string().optional(),
   bio: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   orcid: z.string().optional(),
   openalex: z.string().optional(),
 });
@@ -51,8 +53,17 @@ export const MEMBERS = team.members;
 // names compared without nicknames: “Bingsheng ‘Arthur’ Yao” and “Jiayi (Elise) Su” match “Bingsheng Yao” and “Jiayi Su”
 const normName = (n: string) =>
   n.toLowerCase().replace(/\(.*?\)|[‘’'"“”]\w+[‘’'"“”]/g, " ").replace(/[^a-z\s-]/g, "").replace(/\s+/g, " ").trim();
-const LAB = new Set([DIRECTOR.name, ...MEMBERS.map((m) => m.name)].map(normName));
+const LAB = new Set([DIRECTOR.name, ...MEMBERS.flatMap((m) => [m.name, ...(m.aliases || [])])].map(normName));
 export const isMember = (name: string) => LAB.has(normName(name));
+
+// author names link to a website: lab members' `url` in team.yaml, collaborators' in authors.yaml
+const link = z.string().regex(/^https?:\/\//, "must be a link starting with https://");
+const collaborators = load("authors.yaml", authorsText, z.record(z.string(), link));
+const AUTHOR_URL = new Map<string, string>(Object.entries(collaborators).map(([n, u]) => [normName(n), u]));
+for (const m of [DIRECTOR, ...MEMBERS]) {
+  if (m.url) for (const n of [m.name, ...("aliases" in m ? m.aliases || [] : [])]) AUTHOR_URL.set(normName(n), m.url);
+}
+export const authorUrl = (name: string) => AUTHOR_URL.get(normName(name));
 
 /* ---------- papers ---------- */
 export type Link = { label: string; url: string };
