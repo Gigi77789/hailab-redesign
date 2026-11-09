@@ -3,3 +3,4 @@ dist/
 .astro/
 .DS_Store
 __pycache__/
+tools/pdf_figures.json

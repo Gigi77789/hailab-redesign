@@ -17,13 +17,11 @@ director:
   email: d.wang@northeastern.edu
   orcid: 0000-0001-9371-9441
   bio:
-  - >-
-    Dakuo Wang is an Associate Professor at Northeastern University, jointly appointed in the Khoury College of
-    Computer Sciences and the College of Arts, Media and Design.
-  - >-
-    His research sits where human-computer interaction meets artificial intelligence. He explores, builds, and evaluates
-    human-centered AI systems, with the goal of making AI accessible to every person and every organization, and
-    of helping people work with AI as a collaborator.
+    - Dakuo Wang is an Associate Professor at Northeastern University, jointly appointed in the Khoury College
+      of Computer Sciences and the College of Arts, Media and Design.
+    - His research sits where human-computer interaction meets artificial intelligence. He explores, builds,
+      and evaluates human-centered AI systems, with the goal of making AI accessible to every person and every
+      organization, and of helping people work with AI as a collaborator.
 
 members:
   # research scientists

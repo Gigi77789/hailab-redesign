@@ -25,12 +25,12 @@ CONTACT = "b.yao@northeastern.edu"  # OpenAlex asks API users for a contact addr
 # ---------- papers.bib ----------
 # The scripts work on one dict per paper with short keys:
 #   y year, t title, a [authors], v venue, tag short venue, kind, award, topics [..], abs abstract,
-#   venueUrl official page, links {"arXiv"|"PDF"|"Project"|"Code": url}, img figure path, imgFrom, imgSrcUrl,
+#   venueUrl official page, links {"arXiv"|"PDF"|"Project"|"Code"|"Video"|"Dataset"|"Slides": url}, img figure path, imgFrom, imgSrcUrl,
 #   pre {v, y, t} the preprint before it was published, cv CV number, src, imgManual, topicsManual, venueManual,
 #   key the BibTeX key, extra {field: value} for any other BibTeX fields (pages, doi, publisher...), kept as is.
 HEADER = """% NEU HAI publications, newest first. The site and the scripts in tools/ read this file.
 % Standard fields: title, author (First Last and ...), year, booktitle / journal / howpublished, abstract,
-% url (the official page, used as the title link), arxiv (id), pdf, website, code.
+% url (the official page, used as the title link), arxiv (id), pdf, website, code, video, dataset, slides.
 % Site fields: abbr (the short venue in the pill, e.g. CHI 2026), topics (main category first, at most two:
 % see src/data/categories.yaml), award, kind (abstract or workshop, when the entry type alone doesn't say),
 % preview (figure path under public/), preview_from and preview_source (where tools/fetch_figures.py found it),
@@ -42,7 +42,7 @@ KIND_TYPE = {"conference": "inproceedings", "workshop": "inproceedings", "abstra
 TYPE_KIND = {"inproceedings": "conference", "conference": "conference", "incollection": "conference",
              "article": "journal", "book": "book", "misc": "preprint", "unpublished": "preprint", "techreport": "preprint"}
 VENUE_FIELD = {"article": "journal", "misc": "howpublished", "book": "publisher"}  # otherwise booktitle
-LINK_FIELDS = {"arXiv": "arxiv", "PDF": "pdf", "Project": "website", "Code": "code"}
+LINK_FIELDS = {"arXiv": "arxiv", "PDF": "pdf", "Project": "website", "Code": "code", "Video": "video", "Dataset": "dataset", "Slides": "slides"}
 FLAGS = {"imgManual": "preview_manual", "topicsManual": "topics_manual", "venueManual": "url_manual"}
 KNOWN = {"title", "author", "year", "booktitle", "journal", "howpublished", "publisher", "abbr", "award", "url", "kind",
          "topics", "abstract", "preview", "preview_from", "preview_source", "cv", "source",

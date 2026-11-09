@@ -98,6 +98,9 @@ function toPaper(e: ReturnType<typeof parseBib>[number]): Paper {
   if (f.pdf) links.push({ label: "PDF", url: f.pdf });
   if (f.website) links.push({ label: "Project", url: f.website });
   if (f.code) links.push({ label: "Code", url: f.code });
+  if (f.video) links.push({ label: "Video", url: f.video });
+  if (f.dataset) links.push({ label: "Dataset", url: f.dataset });
+  if (f.slides) links.push({ label: "Slides", url: f.slides });
   const title = r.data.title;
   const tag = r.data.abbr;
   return {

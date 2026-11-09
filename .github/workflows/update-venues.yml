@@ -36,4 +36,4 @@ jobs:
           git add src/data/papers.bib public/assets/papers
           git commit -m "Update preprint venues, venue links, and figures"
           git push
-          sh tools/deploy.sh
+          sh tools/deploy.sh  # pushes made with the workflow's own token don't start deploy.yml, so publish here

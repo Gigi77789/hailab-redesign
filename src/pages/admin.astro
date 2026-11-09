@@ -1,0 +1,75 @@
+---
+// The site editor: lab members edit people, papers and news here (src/scripts/admin.js does the work).
+import "../styles/admin.css";
+import { url } from "../lib/data";
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Site editor | NEU HAI</title>
+<link rel="icon" href={url("assets/favicon.svg")} type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-in">
+    <div class="brand"><span class="mark">NEU HAI</span><span class="sub">Site editor</span></div>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <section class="signin" id="signin" hidden>
+    <h1>Sign in to edit the lab website</h1>
+    <p>Changes you save here go straight to the lab’s GitHub repository, and the public site updates a minute or two later. Every change is recorded, so any mistake can be undone.</p>
+    <ol class="how">
+      <li>You need a GitHub account with write access to <b id="repo-name"></b>. Ask the site maintainer to add you.</li>
+      <li><a id="token-link" target="_blank" rel="noopener">Create a token on GitHub</a> (the link fills in the right permission). Set an expiration, click <i>Generate token</i>, and copy it.</li>
+      <li>Paste it below. It stays in this browser only.</li>
+    </ol>
+    <form id="signin-form" class="signin-form">
+      <label class="field"><span>GitHub token</span><input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_…" required></label>
+      <label class="check"><input type="checkbox" id="remember" checked> Remember me on this computer</label>
+      <button class="btn" type="submit">Sign in</button>
+      <p class="err" id="signin-err" role="alert"></p>
+    </form>
+    <p class="demo-note">Just looking? <a href="?demo">Open the demo</a>: everything works, but nothing is saved.</p>
+  </section>
+
+  <section id="editor" hidden>
+    <nav class="tabs" role="tablist" aria-label="What to edit">
+      <button role="tab" class="tab" data-tab="members" aria-selected="true">Lab members</button>
+      <button role="tab" class="tab" data-tab="papers" aria-selected="false">Publications</button>
+      <button role="tab" class="tab" data-tab="news" aria-selected="false">News</button>
+    </nav>
+    <div class="panel" id="panel-members" role="tabpanel"></div>
+    <div class="panel" id="panel-papers" role="tabpanel" hidden></div>
+    <div class="panel" id="panel-news" role="tabpanel" hidden></div>
+  </section>
+
+  <p class="loading" id="loading">Loading…</p>
+</main>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <form method="dialog" class="sheet-form" id="sheet-form" novalidate>
+    <header class="sheet-head"><h2 id="sheet-title"></h2><button type="button" class="x" id="sheet-x" aria-label="Close">×</button></header>
+    <div class="sheet-body" id="sheet-body"></div>
+    <footer class="sheet-foot">
+      <button type="button" class="btn ghost danger" id="sheet-delete" hidden>Delete</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn ghost" id="sheet-cancel">Cancel</button>
+      <button type="submit" class="btn" id="sheet-save">Save</button>
+    </footer>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>import "../scripts/admin.js";</script>
+</body>
+</html>

@@ -9,7 +9,7 @@ import re
 import unicodedata
 
 # fields whose values are taken verbatim (no LaTeX decoding or escaping)
-VERBATIM = {"url", "doi", "arxiv", "pdf", "website", "code", "preview", "preview_source", "openalex"}
+VERBATIM = {"url", "doi", "arxiv", "pdf", "website", "code", "video", "dataset", "slides", "preview", "preview_source", "openalex"}
 
 ACCENTS = {'"': "\u0308", "'": "\u0301", "`": "\u0300", "^": "\u0302", "~": "\u0303", "=": "\u0304", ".": "\u0307",
            "c": "\u0327", "v": "\u030c", "u": "\u0306", "H": "\u030b", "k": "\u0328", "r": "\u030a"}

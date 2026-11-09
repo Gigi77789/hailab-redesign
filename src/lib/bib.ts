@@ -4,7 +4,7 @@
 export type BibEntry = { type: string; key: string; fields: Record<string, string>; line: number };
 
 // fields whose values are taken verbatim (no LaTeX decoding)
-const VERBATIM = new Set(["url", "doi", "arxiv", "pdf", "website", "code", "preview", "preview_source", "openalex"]);
+const VERBATIM = new Set(["url", "doi", "arxiv", "pdf", "website", "code", "video", "dataset", "slides", "preview", "preview_source", "openalex"]);
 
 const ACCENTS: Record<string, string> = {
   '"': "̈", "'": "́", "`": "̀", "^": "̂", "~": "̃", "=": "̄", ".": "̇",
