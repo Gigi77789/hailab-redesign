@@ -1,4 +1,4 @@
-"""Shared helpers for the publication scripts: loading and saving data/pubs.js, title matching,
+"""Shared helpers for the publication scripts: loading and saving src/data/papers.bib, title matching,
 short venue tags, topic tags, and OpenAlex lookups (free, no API key)."""
 import difflib
 import json
@@ -6,27 +6,162 @@ import pathlib
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
 from html import unescape
 
+import yaml
+
+import bib
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PUBS = ROOT / "data" / "pubs.js"
-PREFIX = "window.HAI_PUBS = "
+DATA = ROOT / "src" / "data"
+PUBS = DATA / "papers.bib"
 CONTACT = "b.yao@northeastern.edu"  # OpenAlex asks API users for a contact address
 
 
+# ---------- papers.bib ----------
+# The scripts work on one dict per paper with short keys:
+#   y year, t title, a [authors], v venue, tag short venue, kind, award, topics [..], abs abstract,
+#   venueUrl official page, links {"arXiv"|"PDF"|"Project"|"Code": url}, img figure path, imgFrom, imgSrcUrl,
+#   pre {v, y, t} the preprint before it was published, cv CV number, src, imgManual, topicsManual, venueManual,
+#   key the BibTeX key, extra {field: value} for any other BibTeX fields (pages, doi, publisher...), kept as is.
+HEADER = """% NEU HAI publications, newest first. The site and the scripts in tools/ read this file.
+% Standard fields: title, author (First Last and ...), year, booktitle / journal / howpublished, abstract,
+% url (the official page, used as the title link), arxiv (id), pdf, website, code.
+% Site fields: abbr (the short venue in the pill, e.g. CHI 2026), topics (main category first, at most two:
+% see src/data/categories.yaml), award, kind (abstract or workshop, when the entry type alone doesn't say),
+% preview (figure path under public/), preview_from and preview_source (where tools/fetch_figures.py found it),
+% preview_manual / topics_manual / url_manual = true (keep a hand-set value), cv (number in Dakuo's CV),
+% preprint_venue / preprint_year / preprint_title (the preprint, once a published version replaced it).
+"""
+KIND_TYPE = {"conference": "inproceedings", "workshop": "inproceedings", "abstract": "inproceedings",
+             "journal": "article", "book": "book", "preprint": "misc"}
+TYPE_KIND = {"inproceedings": "conference", "conference": "conference", "incollection": "conference",
+             "article": "journal", "book": "book", "misc": "preprint", "unpublished": "preprint", "techreport": "preprint"}
+VENUE_FIELD = {"article": "journal", "misc": "howpublished", "book": "publisher"}  # otherwise booktitle
+LINK_FIELDS = {"arXiv": "arxiv", "PDF": "pdf", "Project": "website", "Code": "code"}
+FLAGS = {"imgManual": "preview_manual", "topicsManual": "topics_manual", "venueManual": "url_manual"}
+KNOWN = {"title", "author", "year", "booktitle", "journal", "howpublished", "publisher", "abbr", "award", "url", "kind",
+         "topics", "abstract", "preview", "preview_from", "preview_source", "cv", "source",
+         "preprint_venue", "preprint_year", "preprint_title", *LINK_FIELDS.values(), *FLAGS.values()}
+CATEGORY_KEYS = [c["key"] for c in yaml.safe_load((DATA / "categories.yaml").read_text())]
+
+
+def flip_name(n):
+    """'Wang, Tian' -> 'Tian Wang'."""
+    if "," in n:
+        last, first = [x.strip() for x in n.split(",", 1)]
+        return f"{first} {last}".strip()
+    return n.strip()
+
+
+def _from_entry(kind, key, f):
+    year = f.get("year", "")
+    if not year.isdigit():
+        raise ValueError(f"papers.bib: @{kind}{{{key}: year must be a number, got {year!r}")
+    p = {"key": key, "y": int(year), "t": f.get("title", ""),
+         "a": [flip_name(x) for x in re.split(r"\s+and\s+", f.get("author", "")) if x.strip()],
+         "v": f.get("booktitle") or f.get("journal") or f.get("howpublished") or f.get("publisher") or "",
+         "kind": f.get("kind") or TYPE_KIND.get(kind, "conference")}
+    p["tag"] = f.get("abbr") or ("Preprint" if p["kind"] == "preprint" else venue_tag(p["v"], p["y"]))
+    p["award"] = f.get("award", "")
+    p["topics"] = [t.strip() for t in f.get("topics", "").split(",") if t.strip()]
+    p["abs"] = f.get("abstract", "")
+    if f.get("url"):
+        p["venueUrl"] = f["url"]
+    p["links"] = {}
+    for label, field in LINK_FIELDS.items():
+        if f.get(field):
+            p["links"][label] = f"https://arxiv.org/abs/{f[field]}" if field == "arxiv" and "/" not in f[field] else f[field]
+    for k, field in (("img", "preview"), ("imgFrom", "preview_from"), ("imgSrcUrl", "preview_source"), ("cv", "cv"), ("src", "source")):
+        if f.get(field):
+            p[k] = f[field]
+    for k, field in FLAGS.items():
+        if f.get(field, "").lower() == "true":
+            p[k] = True
+    if f.get("preprint_venue") or f.get("preprint_year"):
+        p["pre"] = {"v": f.get("preprint_venue", ""), "tag": "Preprint", "y": int(f.get("preprint_year") or p["y"])}
+        if f.get("preprint_title"):
+            p["pre"]["t"] = f["preprint_title"]
+    extra = {k: v for k, v in f.items() if k not in KNOWN}
+    if extra:
+        p["extra"] = extra
+    return p
+
+
+def _to_entry(p):
+    kind = p.get("kind") or "conference"
+    btype = KIND_TYPE.get(kind, "inproceedings")
+    f = {"title": p["t"], "author": " and ".join(p["a"])}
+    if p.get("v"):
+        f[VENUE_FIELD.get(btype, "booktitle")] = p["v"]
+    f["year"] = p["y"]
+    f["abbr"] = p["tag"]
+    if TYPE_KIND.get(btype) != kind:
+        f["kind"] = kind
+    if p.get("award"):
+        f["award"] = p["award"]
+    if p.get("topics"):
+        unknown = [t for t in p["topics"] if t not in CATEGORY_KEYS]
+        if unknown:
+            raise ValueError(f"{p['t'][:60]}: unknown topic(s) {unknown}; see src/data/categories.yaml")
+        f["topics"] = ", ".join(p["topics"])
+    if p.get("venueUrl"):
+        f["url"] = p["venueUrl"]
+    for label, field in LINK_FIELDS.items():
+        url = (p.get("links") or {}).get(label)
+        if url:
+            m = re.fullmatch(r"https?://arxiv\.org/abs/(\d{4}\.\d{4,5})(v\d+)?", url) if field == "arxiv" else None
+            f[field] = m.group(1) if m else url
+    for k, field in (("img", "preview"), ("imgFrom", "preview_from"), ("imgSrcUrl", "preview_source")):
+        if p.get(k):
+            f[field] = p[k]
+    for k, field in FLAGS.items():
+        if p.get(k):
+            f[field] = "true"
+    for k, field in (("cv", "cv"), ("src", "source")):
+        if p.get(k):
+            f[field] = p[k]
+    if p.get("pre"):
+        f["preprint_venue"], f["preprint_year"] = p["pre"].get("v", ""), p["pre"].get("y") or p["y"]
+        if p["pre"].get("t"):
+            f["preprint_title"] = p["pre"]["t"]
+    f.update(p.get("extra") or {})
+    if p.get("abs"):
+        f["abstract"] = p["abs"]
+    return btype, f
+
+
+def _new_key(p, taken):
+    """lastnameYEARword, as Google Scholar and al-folio do: wang2026multi."""
+    ascii_ = lambda s: unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    last = re.sub(r"[^a-z]", "", ascii_((p["a"] or ["anon"])[0].split()[-1])) or "anon"
+    words = [w for w in re.findall(r"[a-z0-9]+", ascii_(p["t"])) if w not in {"a", "an", "the", "on", "of", "in", "for", "to", "and", "with"}]
+    key = f"{last}{p['y']}{words[0] if words else ''}"
+    base, n = key, 1
+    while key in taken:
+        n += 1
+        key = f"{base}{chr(ord('a') + n - 1)}"
+    return key
+
+
 def load_pubs():
-    head, body = PUBS.read_text().split(PREFIX, 1)
-    return head, json.loads(body.strip().rstrip(";"))
+    """(header, [paper dicts]) in file order."""
+    return HEADER, [_from_entry(*e) for e in bib.parse(PUBS.read_text())]
 
 
 def save_pubs(head, pubs):
-    PUBS.write_text(head + PREFIX + json.dumps(pubs, ensure_ascii=False, indent=0) + ";\n")
-    # pages carry a content stamp for each data file; rebuild them so browsers pick up the new data
-    import subprocess
-    subprocess.run([sys.executable, str(ROOT / "tools" / "pages.py")], capture_output=True)
+    taken, entries = set(), []
+    for p in pubs:
+        if not p.get("key") or p["key"] in taken:
+            p["key"] = _new_key(p, taken)
+        taken.add(p["key"])
+        btype, fields = _to_entry(p)
+        entries.append((btype, p["key"], fields))
+    PUBS.write_text(bib.dump(entries, HEADER))
 
 
 # ---------- topics ----------
@@ -40,7 +175,7 @@ def save_pubs(head, pubs):
 #   algo = AI Algorithms (models and training methods, including for agents and tool use),
 #   community = Community Engagement (workshops, panels, SIGs the lab organized).
 # A paper that fits none of them goes to Human-AI Collaboration (AI Algorithms at an ML venue).
-CATEGORIES = ["community", "health", "education", "agents", "data", "collab", "algo"]
+# The names and colour order the site shows are in src/data/categories.yaml.
 AREAS = ["health", "education", "data", "agents", "collab", "algo"]  # tie-break order
 DOMAINS = ("health", "education")  # application areas: only count when the title (or venue) names them
 SUBJECTS = ("data", "agents", "collab")  # what a paper studies, as opposed to the algorithms it uses
@@ -73,7 +208,7 @@ def _hits(p):
             {k: min(len(re.findall(r, abstract)), 4) for k, r in RULES.items()})
 
 def classify(p):
-    """[main] or [main, second]; see the note above CATEGORIES."""
+    """[main] or [main, second]; see the note above AREAS."""
     t, a = _hits(p)
     venue = p.get("tag", "") + " " + p.get("v", "")
     ml, hci = bool(re.search(ML_VENUES, venue)), bool(re.search(HCI_VENUES, p.get("tag", "")))
@@ -174,14 +309,6 @@ def venue_tag(venue, year):
             return f"{m.group(1)} {year} Findings"
         return f"{stem} {year}" if with_year else stem
     return "Peer-reviewed"
-
-
-def flip_name(n):
-    """'Wang, Tian' -> 'Tian Wang'."""
-    if "," in n:
-        last, first = [x.strip() for x in n.split(",", 1)]
-        return f"{first} {last}".strip()
-    return n.strip()
 
 
 def openalex(title):

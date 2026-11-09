@@ -1,0 +1,5 @@
+---
+import { TOPIC_NAMES } from "../lib/data";
+const { topic } = Astro.props as { topic: string };
+---
+<span class={`ptag k-${topic}`}><span class="key"></span>{TOPIC_NAMES[topic]}</span>

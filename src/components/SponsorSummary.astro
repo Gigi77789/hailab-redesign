@@ -1,0 +1,11 @@
+---
+// "NIH 4 / NSF 2 / ..." over external grants, most grants first.
+import { GRANTS } from "../lib/data";
+const counts: Record<string, number> = {};
+for (const g of GRANTS.filter((g) => !g.internal)) {
+  const k = g.sponsor.split(" / ")[0];
+  counts[k] = (counts[k] || 0) + 1;
+}
+const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+---
+{rows.map(([k, n], i) => <Fragment>{i > 0 && <Fragment>{" "}<span class="sep">/</span>{" "}</Fragment>}{k}{" "}<b>{n}</b></Fragment>)}

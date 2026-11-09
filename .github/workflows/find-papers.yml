@@ -1,0 +1,52 @@
+# Every Monday: look up Dakuo and the core lab members on OpenAlex for papers that papers.bib doesn't list yet
+# (tools/find_papers.py) and open a pull request that adds them, for a person to check before merging.
+# Needs "Allow GitHub Actions to create and approve pull requests" under Settings > Actions > General.
+name: Find new papers
+on:
+  schedule:
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: find-papers
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: pip install pyyaml
+      - name: Look for new papers
+        run: python3 tools/find_papers.py --summary "$RUNNER_TEMP/found.md"
+      - name: Open or update the pull request
+        run: |
+          if git diff --quiet src/data/papers.bib; then echo "No new papers."; exit 0; fi
+          npm ci
+          npx astro build  # the proposed papers.bib must build
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git commit -am "Add papers found on OpenAlex"
+          git push -f origin "$BRANCH"
+          {
+            echo "tools/find_papers.py found these papers by current lab members on OpenAlex. Before merging:"
+            echo
+            echo "- delete any entry from src/data/papers.bib that is not a lab paper, and add its OpenAlex id to tools/ignored_papers.txt so it is not proposed again;"
+            echo "- check the short venue (abbr), topics, and kind of the rest."
+            echo
+            cat "$RUNNER_TEMP/found.md"
+          } > "$RUNNER_TEMP/body.md"
+          if gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --head "$BRANCH" --title "New papers from OpenAlex" --body-file "$RUNNER_TEMP/body.md"
+          fi

@@ -1,4 +1,4 @@
-"""Merges the publication list from Dakuo's CV (.docx) into data/pubs.js.
+"""Merges the publication list from Dakuo's CV (.docx) into src/data/papers.bib.
 
     python3 tools/import_cv.py path/to/CV.docx            # merge and write
     python3 tools/import_cv.py path/to/CV.docx --dry-run  # report only
@@ -10,7 +10,7 @@ The CV is the source of truth for peer-reviewed venues and years. For every CV e
   * or add it as a new paper, filling full author names and links from OpenAlex
     when a lookup finds the same title.
 Papers on the site that the CV does not list (mostly preprints) are kept.
-Topics are recomputed for every paper unless the paper sets "topicsManual": true.
+Topics are recomputed for every paper unless the paper sets topics_manual = {true}.
 """
 import re
 import sys
@@ -126,7 +126,7 @@ def main():
                 if hit["a"]:
                     p["a"] = hit["a"]
                 if hit["published"] and hit["published"]["url"]:
-                    p["links"]["Paper"] = hit["published"]["url"]
+                    p["venueUrl"] = hit["published"]["url"]
                 if hit["arxiv"]:
                     p["links"]["arXiv"] = hit["arxiv"]
             pubs.append(p)

@@ -1,0 +1,2 @@
+# OpenAlex works that tools/find_papers.py should not propose again: one id per line (W...),
+# optionally followed by a comment, e.g. "W4400000000  # Yao Du's speech-language pathology paper, not a lab paper"

@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+import Face from "../components/Face.astro";
+import { DIRECTOR as pi, MEMBERS, url } from "../lib/data";
+const group = (g: string) => MEMBERS.filter((m) => m.group === g);
+---
+<Base title="People" description="The people of NEU HAI, Northeastern University's Human-Centered AI Lab: faculty, research scientists, PhD students, visitors, and alumni." page="people">
+<section class="page-head night">
+  <div class="wrap"><h1>People</h1></div>
+</section>
+<section class="section" style="padding-top:0" aria-label="Lab director">
+  <div class="wrap pi" id="pi">
+    <div class="pi-photo"><img src={url(pi.photo)} alt={`Portrait of ${pi.name}`} width="270" height="270"></div>
+    <div>
+      <h2>{pi.name}</h2>
+      <p class="pi-title">{pi.title}, Khoury College of Computer Sciences and College of Arts, Media and Design</p>
+      <div class="pi-bio">{pi.bio.map((b) => <p>{b}</p>)}</div>
+      <p class="pi-links"><a href={pi.url}>Personal website</a><a href={`mailto:${pi.email}`}>{pi.email}</a></p>
+    </div>
+  </div>
+</section>
+<section class="section tint">
+  <div class="wrap">
+    <div class="group">
+      <h2 class="subhead">Research scientists and PhD students</h2>
+      <ul class="faces" id="core">{group("core").map((m) => <Face person={m} />)}</ul>
+    </div>
+    <div class="group">
+      <h2 class="subhead">Research assistants and visiting students</h2>
+      <ul class="faces small" id="visiting">{group("visiting").map((m) => <Face person={m} />)}</ul>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <h2 class="subhead">Alumni</h2>
+    <ul class="alumni" id="alumni">
+      {group("alumni").map((m) => <li>{m.url ? <a class="n" href={m.url}>{m.name}</a> : <span class="n">{m.name}</span>}<span class="r">{m.role}</span></li>)}
+    </ul>
+  </div>
+</section>
+</Base>

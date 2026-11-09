@@ -1,0 +1,16 @@
+---
+// A person's photo card (initials when there is no photo).
+import { url } from "../lib/data";
+const { person: m } = Astro.props as { person: { name: string; role: string; url?: string; photo?: string } };
+const initials = m.name.replace(/\(.*?\)|‘.*?’/g, "").trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join("");
+const Tag = m.url ? "a" : "div";
+---
+<li>
+  <Tag class="face" href={m.url || undefined}>
+    <span class="face-photo">{m.photo
+      ? <img src={url(m.photo)} alt="" loading="lazy" width="320" height="320">
+      : <span class="face-initials" aria-hidden="true">{initials}</span>}</span>
+    <span class="face-name">{m.name}</span>
+    <span class="face-role">{m.role}</span>
+  </Tag>
+</li>

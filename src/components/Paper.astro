@@ -1,0 +1,29 @@
+---
+// One paper in the Publications list. The data-* attributes are what the page's search and filters read.
+import type { Paper } from "../lib/data";
+import { url } from "../lib/data";
+import Tag from "./Tag.astro";
+import Authors from "./Authors.astro";
+import TopicTag from "./TopicTag.astro";
+const { paper: p } = Astro.props as { paper: Paper };
+const search = [p.title, ...p.authors, p.venue, p.tag].join(" ").toLowerCase();
+const showVenue = p.venue && p.venue !== p.tag && p.venue.length > 12;
+---
+<li class:list={["pub", { "has-img": p.img }]} data-topics={p.topics.join(" ")} data-peer={p.peer ? "1" : undefined} data-q={search}>
+  {p.img
+    ? <a class="pub-thumb" href={p.href} tabindex="-1" aria-hidden="true"><img src={url(p.img)} alt="" loading="lazy"></a>
+    : <span class="pub-thumb empty" aria-hidden="true"></span>}
+  <div class="pub-body">
+    <h3 class="pub-title"><a href={p.href}>{p.title}</a></h3>
+    <p class="pub-authors"><Authors names={p.authors} /></p>
+    <div class="pub-meta">
+      <Tag paper={p} />
+      {showVenue && <span class="pub-venue">{p.venue}</span>}
+      {p.award && <span class="award">{p.award}</span>}
+      {p.preprint && <span class="pub-pre">Earlier as a preprint</span>}
+      {p.links.length > 0 && <span class="pub-links">{p.links.map((l) => <a href={l.url}>{l.label}</a>)}</span>}
+    </div>
+    <div class="pub-tags" aria-label="Topics">{p.topics.map((t) => <TopicTag topic={t} />)}</div>
+    {p.abstract && <details><summary>Abstract</summary><p>{p.abstract}</p></details>}
+  </div>
+</li>

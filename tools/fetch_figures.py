@@ -5,9 +5,9 @@
 
 For each paper it finds the arXiv id (from its arXiv link, or by asking OpenAlex), opens the
 paper's HTML rendering on arxiv.org (ar5iv for older papers), takes the teaser figure (the
-image under the title in ACM papers) or else the first figure, and saves it under assets/papers/. Papers with no arXiv version or no figure stay without one,
+image under the title in ACM papers) or else the first figure, and saves it under public/assets/papers/. Papers with no arXiv version or no figure stay without one,
 and the site simply shows no image for them.
-Hand-picked figures (set "imgManual": true on the paper) are never replaced.
+Hand-picked figures (preview_manual = {true} in papers.bib) are never replaced.
 arXiv asks automated clients to wait about 3 seconds between requests, so this is slow.
 """
 import pathlib
@@ -21,7 +21,7 @@ import urllib.request
 
 from pubtools import ROOT, load_pubs, openalex, save_pubs
 
-OUT = ROOT / "assets" / "papers"
+OUT = ROOT / "public" / "assets" / "papers"
 UA = {"User-Agent": "neuhai-site/1.0 (lab website figure fetcher; contact b.yao@northeastern.edu)"}
 PAUSE = 3.2
 RECENT = time.localtime().tm_year - 1  # papers from last year on may still gain an arXiv version
@@ -116,7 +116,7 @@ def main():
         old = p.get("img")
         p["img"], p["imgFrom"], p["imgSrcUrl"] = f"assets/papers/{dest.name}", kind, img_url
         if old and old != p["img"] and old.startswith("assets/papers/") and not any(q.get("img") == old for q in pubs if q is not p):
-            (ROOT / old).unlink(missing_ok=True)
+            (ROOT / "public" / old).unlink(missing_ok=True)
         found += 1
         print(f"  + {kind:<8} {p['t'][:70]}")
         save_pubs(head, pubs)  # save as we go: a long run can be stopped and resumed

@@ -1,6 +1,6 @@
 """Promotes preprints to their published venue.
 
-For every paper in data/pubs.js tagged "Preprint", look the title up on OpenAlex. When a
+For every paper in src/data/papers.bib tagged "Preprint", look the title up on OpenAlex. When a
 peer-reviewed version with the same title exists, the paper's venue, short tag and year are
 replaced with the published ones and the preprint details move under `pre`, so the site shows
 "CHI 2026" instead of "Preprint" without anyone editing the data by hand.
@@ -41,10 +41,10 @@ def main():
             continue
         p["pre"] = {"v": p.get("v", ""), "tag": "Preprint", "y": p.get("y")}
         p.update({"v": pub["venue"], "tag": tag, "y": year, "kind": "workshop" if "Workshop" in tag else "conference"})
-        if pub.get("url"):
-            p.setdefault("links", {})["Paper"] = pub["url"]
+        if pub.get("url") and not p.get("venueManual"):
+            p["venueUrl"] = pub["url"]  # tools/venue_links.py --refresh can confirm it against Crossref
         if hit.get("arxiv"):
-            p["links"].setdefault("arXiv", hit["arxiv"])
+            p.setdefault("links", {}).setdefault("arXiv", hit["arxiv"])
         if not p.get("topicsManual"):
             p["topics"] = classify(p)
     if promoted and not dry:

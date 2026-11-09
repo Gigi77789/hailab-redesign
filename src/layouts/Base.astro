@@ -1,0 +1,70 @@
+---
+// Shared page frame: head tags, header, footer, styles and the site script.
+import "../styles/site.css";
+import { url } from "../lib/data";
+
+interface Props {
+  title?: string; // omitted on the home page
+  description: string;
+  page: string; // data-page on <main>: tells src/scripts/site.js which page behaviour to run
+}
+const { title, description, page } = Astro.props;
+const full = title ? `${title} | NEU HAI` : "NEU HAI";
+const draft = Boolean(process.env.DRAFT);
+const NAV = [
+  ["people.html", "People"], ["publications.html", "Publications"], ["grants.html", "Grants"],
+  ["news.html", "News"], ["join.html", "Join us"],
+];
+const current = Astro.url.pathname.split("/").pop() || "index.html";
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{full}</title>
+{draft && <meta name="robots" content="noindex, nofollow">}
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content={description}>
+<meta property="og:title" content={full}>
+<meta property="og:description" content={description}>
+<link rel="icon" href={url("assets/favicon.svg")} type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+{draft && <div class="draft-note"><div class="wrap">Draft redesign for review. The lab’s current site is <a href="https://hailab.io/">hailab.io</a>.</div></div>}
+<header class="site-header night">
+  <div class="wrap">
+    <a class="lockup" href={url("index.html")} aria-label="NEU HAI home">
+      <span class="lockup-mark">NEU HAI</span>
+      <span class="lockup-name">Human-Centered AI Lab<br>Northeastern University</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      {NAV.map(([href, label]) => <a href={url(href)} aria-current={href === current ? "page" : undefined}>{label}</a>)}
+    </nav>
+  </div>
+</header>
+<main id="main" data-page={page}>
+<slot />
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <span class="lockup-mark">NEU HAI</span>
+      <address>Human-Centered AI Lab<br>Khoury College of Computer Sciences and College of Arts, Media and Design<br>Northeastern University, Boston, Massachusetts</address>
+    </div>
+    <nav class="foot-links" aria-label="Elsewhere">
+      <a href="mailto:d.wang@northeastern.edu">d.wang@northeastern.edu</a>
+      <a href="https://github.com/neuhai">GitHub</a>
+      <a href="https://twitter.com/dakuowang">X</a>
+      <a href="https://www.northeastern.edu/">Northeastern</a>
+    </nav>
+  </div>
+</footer>
+<script>import "../scripts/site.js";</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Every Monday: promote preprints whose published version has appeared (tools/update_venues.py),
 # link new papers to their venue (tools/venue_links.py), fetch missing figures (tools/fetch_figures.py),
-# commit the data change, and redeploy the review copy. Run it by hand from the Actions tab too.
+# commit the change to papers.bib and the figures, and redeploy the review copy. Run it by hand from the Actions tab too.
 name: Update preprint venues
 on:
   schedule:
@@ -16,6 +16,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: pip install pyyaml
       - name: Look up preprints, venue links, and figures
         run: |
           python3 tools/update_venues.py
@@ -23,10 +28,12 @@ jobs:
           python3 tools/fetch_figures.py
       - name: Commit and redeploy if anything changed
         run: |
-          if git diff --quiet data/pubs.js && [ -z "$(git status --porcelain assets/papers)" ]; then echo "No preprints were published this week."; exit 0; fi
+          if [ -z "$(git status --porcelain src/data/papers.bib public/assets/papers)" ]; then echo "Nothing changed this week."; exit 0; fi
+          npm ci
+          npx astro build  # a broken papers.bib stops here, before anything is committed
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/pubs.js assets/papers *.html
+          git add src/data/papers.bib public/assets/papers
           git commit -m "Update preprint venues, venue links, and figures"
           git push
           sh tools/deploy.sh

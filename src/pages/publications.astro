@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import Paper from "../components/Paper.astro";
+import { CATEGORIES, PAPERS } from "../lib/data";
+const years = [...new Set(PAPERS.map((p) => p.year))];
+---
+<Base title="Publications" description="Publications from NEU HAI, the Human-Centered AI Lab at Northeastern University, in HCI, NLP, and health informatics." page="publications">
+<section class="page-head night">
+  <div class="wrap">
+    <h1>Publications</h1>
+    <p>Papers from the lab and its collaborators in HCI, natural language processing, and health informatics.</p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:96px">
+  <div class="pubs-tools">
+    <label class="search">
+      <span class="visually-hidden">Search publications</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search titles, authors, venues" autocomplete="off">
+    </label>
+    <div class="filters" id="filters" role="group" aria-label="Filter by topic">
+      <button type="button" class="chip" data-topic="" aria-pressed="true">All topics</button>
+      {CATEGORIES.map((c) => <button type="button" class={`chip k-${c.key}`} data-topic={c.key} aria-pressed="false"><span class="key"></span>{c.name}</button>)}
+      <button type="button" class="chip" data-peer aria-pressed="false">Peer-reviewed only</button>
+    </div>
+  </div>
+  <p class="pubs-status" id="status" aria-live="polite"><b>{PAPERS.length}</b> papers. Lab members’ names are in bold.</p>
+  <div id="pubs">
+    {years.map((y) => (
+      <section class="year-block" aria-labelledby={`y${y}`}>
+        <h2 class="year-label" id={`y${y}`}>{y}</h2>
+        <ol class="pub-list">{PAPERS.filter((p) => p.year === y).map((p) => <Paper paper={p} />)}</ol>
+      </section>
+    ))}
+    <p class="empty" hidden>No papers match these filters. <button type="button" id="reset">Show all papers</button></p>
+  </div>
+</section>
+</Base>

@@ -1,0 +1,14 @@
+# Research areas under "What we work on" on the home page, in this order. Each shows its newest papers:
+# the papers in papers.bib whose main (first) topic is `topic`. Names come from categories.yaml.
+
+- topic: health
+  summary: Decision support that fits how clinicians, patients, and caregivers already work.
+
+- topic: education
+  summary: Tools that support teachers, parents, and children instead of replacing them.
+
+- topic: agents
+  summary: Agents that behave like real customers and users, to test websites, designs, and AI assistants.
+
+- topic: data
+  summary: Human-AI collaboration in annotation, data science, and evaluation work.

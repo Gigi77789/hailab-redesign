@@ -1,0 +1,154 @@
+# People on the People page and the home page. Everyone listed here is bolded in author lists
+# (nicknames in quotes or parentheses are ignored when matching, so “Bingsheng ‘Arthur’ Yao” matches “Bingsheng Yao”).
+#   group: core (research scientists and PhD students), visiting (research assistants and visiting students), alumni
+#   photo: a square-ish image in public/assets/team/, about 640px; leave it out to show initials
+#   orcid / openalex: lets tools/find_papers.py look up new papers by the director and core members
+
+director:
+  name: Dakuo Wang
+  title: Associate Professor
+  photo: assets/team/dakuo.jpg
+  url: https://www.dakuowang.com/
+  email: d.wang@northeastern.edu
+  orcid: 0000-0001-9371-9441
+  bio:
+  - >-
+    Dakuo Wang is an Associate Professor at Northeastern University, jointly appointed in the Khoury College of
+    Computer Sciences and the College of Arts, Media and Design.
+  - >-
+    His research sits where human-computer interaction meets artificial intelligence. He explores, builds, and evaluates
+    human-centered AI systems, with the goal of making AI accessible to every person and every organization, and
+    of helping people work with AI as a collaborator.
+
+members:
+  # core
+  - name: Bingsheng ‘Arthur’ Yao
+    group: core
+    role: Associate Research Scientist
+    url: https://bingshengyao.com
+    openalex: A5033744502|A5140871236
+  - name: Jia Zhang
+    group: core
+    role: Research Scientist
+    photo: assets/team/jia.jpg
+  - name: Yao Du
+    group: core
+    role: Research Scientist
+    url: https://dornsife.usc.edu/ccls/yao-du/
+    photo: assets/team/yaodu.jpg
+    orcid: 0000-0003-2858-2420
+  - name: Jiaju Chen
+    group: core
+    role: PhD student
+    url: https://malcolm-chen.github.io/
+    photo: assets/team/jiaju.jpg
+    orcid: 0009-0005-9598-5838
+  - name: Jingfei Huang
+    group: core
+    role: PhD student
+    url: https://www.jingfeihuang.com/research
+    photo: assets/team/jingfei.jpg
+    orcid: 0009-0002-0213-4160
+  - name: Menglin Zhao
+    group: core
+    role: PhD student
+    url: https://gigi77789.github.io/my_website/
+    photo: assets/team/menglin.jpg
+  - name: Yuxuan Lu
+    group: core
+    role: PhD student
+    url: https://yuxuan.lu
+    photo: assets/team/yuxuan.jpg
+    orcid: 0000-0002-8520-0540
+  - name: Ziyi Wang
+    group: core
+    role: PhD student
+    url: https://ziyiii0-0.github.io/
+    photo: assets/team/ziyi.jpg
+
+  # visiting
+  - name: Bo Sun
+    group: visiting
+    role: Research assistant
+    url: https://qianxi66.github.io/
+    photo: assets/team/bo.jpg
+  - name: Jiayi (Elise) Su
+    group: visiting
+    role: Research assistant
+    url: https://jiayi-elise-su.github.io/
+    photo: assets/team/jiayi.jpg
+  - name: Ruhan Gupta
+    group: visiting
+    role: Visiting student
+    url: https://ruhangupta.com/
+    photo: assets/team/ruhan.jpg
+  - name: Yuewen Gao
+    group: visiting
+    role: Research assistant
+    url: https://yuewen-gao.github.io/
+    photo: assets/team/yuewen.jpg
+    orcid: 0009-0009-4258-5952
+
+  # alumni
+  - name: Chengyou Xu
+    group: alumni
+    role: Master’s student
+    url: https://www.linkedin.com/in/cheney-xu/
+  - name: Jiachen Li
+    group: alumni
+    role: PhD student
+    url: https://jiachen-li.com
+  - name: Jumana Almahmoud
+    group: alumni
+    role: Postdoctoral associate
+    url: https://www.jumana.info/
+  - name: Reina Chan
+    group: alumni
+    role: Research assistant
+    url: https://szeyireinachan.github.io/
+  - name: Ruishi Zou
+    group: alumni
+    role: Visiting student
+    url: https://ruishizou.github.io/
+  - name: Shao Zhang
+    group: alumni
+    role: Visiting student
+    url: https://shaozhang.info
+  - name: Shihan Fu
+    group: alumni
+    role: PhD student
+    url: https://shihanfu.com
+  - name: Siyi (Reyna) Wu
+    group: alumni
+    role: PhD student
+    url: https://reynawu541.github.io/
+  - name: Smit Desai
+    group: alumni
+    role: Now Assistant Professor, CAMD
+    url: https://smitdesai.net/
+  - name: Tian Lu
+    group: alumni
+    role: Visiting student
+    url: https://xander-run.github.io
+  - name: Wenbo Li
+    group: alumni
+    role: Visiting student
+    url: https://wlicb.github.io/me/
+  - name: Yue (Yelena) Yu
+    group: alumni
+    role: Master’s student
+    url: https://yelena.info
+  - name: Yuqi Hu
+    group: alumni
+    role: Research apprentice
+  - name: Zhiping Zhang
+    group: alumni
+    role: Research assistant
+    url: https://www.zhipingzhang.com/
+  - name: Zihe Hao
+    group: alumni
+    role: Research assistant
+  - name: Ziqi Yang
+    group: alumni
+    role: Research assistant
+    url: https://eugeniayang.github.io/

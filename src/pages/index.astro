@@ -1,0 +1,171 @@
+---
+import Base from "../layouts/Base.astro";
+import Tag from "../components/Tag.astro";
+import Authors from "../components/Authors.astro";
+import Face from "../components/Face.astro";
+import Grant from "../components/Grant.astro";
+import SponsorSummary from "../components/SponsorSummary.astro";
+import {
+  AREAS, CATEGORIES, DIRECTOR, FEATURED, GRANTS, MEMBERS, NEWS, PAPERS, fmtMonth, mainTopic, url,
+} from "../lib/data";
+
+// the publication field (hero chart) draws one dot per paper in the browser
+const field = {
+  cats: CATEGORIES,
+  papers: PAPERS.map((p) => ({ t: p.title, y: p.year, tag: p.tag, topics: p.topics, href: p.href })),
+};
+const mainCount = (k: string) => PAPERS.filter((p) => mainTopic(p) === k).length;
+const external = GRANTS.filter((g) => !g.internal);
+const core = MEMBERS.filter((m) => m.group === "core");
+const faces = [{ name: DIRECTOR.name, role: "Lab director", photo: DIRECTOR.photo, url: DIRECTOR.url }, ...core];
+const LETTERS = ["N", "E", "U", "H", "A", "I"];
+---
+<Base description="NEU HAI is the Human-Centered AI Lab at Northeastern University. We design, build, and evaluate AI systems with the people who use them, in health care, education, and on the web." page="home">
+<section class="entry night" aria-labelledby="word">
+  <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="status readout" aria-label="Lab location">
+      <span><span class="blip"></span>Northeastern University, Boston</span>
+      <span>42.3398° N <span class="sep">/</span> 71.0892° W</span>
+      <span>Khoury College <span class="sep">+</span> CAMD</span>
+      <span>Local time <b id="clock">--:--:--</b></span>
+    </div>
+    <h1 class="entry-word" id="word" aria-label="NEU HAI"><span aria-hidden="true"><span class="wd">{LETTERS.slice(0, 3).map((c, i) => <span class="ch" style={`--i:${i}`}>{c}</span>)}</span> <span class="wd">{LETTERS.slice(3).map((c, i) => <span class="ch" style={`--i:${i + 3}`}>{c}</span>)}</span></span></h1>
+    <div class="entry-lede">
+      <div class="entry-pron">
+        <span class="ipa" aria-label="pronounced new-high">/nuː haɪ/</span>
+        <span class="respell">“new-hi”</span>
+        <button class="say" type="button" aria-label="Play pronunciation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Listen</button>
+      </div>
+      <p class="thesis">Human-centered AI, designed and tested with the people who use it.</p>
+      <div class="actions">
+        <a class="btn on-night" href="#research-h">See our research</a>
+        <a class="btn ghost" href={url("join.html")}>Join the lab</a>
+      </div>
+    </div>
+    <figure class="field hud" id="field">
+      <div class="field-top readout">
+        <span>Publication field</span>
+        <span id="aim" aria-hidden="true">Point at the field</span>
+      </div>
+      <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
+        {CATEGORIES.map((c) => <button type="button" class={`fk k-${c.key}`} data-topic={c.key} aria-pressed="false"><span class="key"></span>{c.name}{" "}<span class="n">{mainCount(c.key)}</span></button>)}
+      </div>
+      <div id="field-plot" role="img" aria-label="Dot chart of the lab’s publications by year, one dot per paper, colored by research area."></div>
+      <figcaption id="field-cap" aria-live="polite">One dot per paper. Point at a dot to read it.</figcaption>
+      <div class="tip" id="tip" role="status"></div>
+    </figure>
+    <script is:inline type="application/json" id="field-data" set:html={JSON.stringify(field).replace(/</g, "\\u003c")} />
+  </div>
+</section>
+
+<section class="section define" aria-labelledby="define-h">
+  <div class="wrap define-grid">
+    <div>
+      <h2 class="define-h" id="define-h"><span class="hw">NEU HAI</span> <span class="pos">noun, /nuː haɪ/</span></h2>
+      <ol class="senses" id="senses">
+        <li>The Human-Centered Artificial Intelligence Lab at Northeastern University, led by <a href={url("people.html")}>Prof. Dakuo Wang</a> and based in the Khoury College of Computer Sciences and the College of Arts, Media and Design.</li>
+        <li>A way of building AI with the people who will use it: study how clinicians, teachers, families, and everyday users work, design systems around that work, and test them where it happens.</li>
+      </ol>
+    </div>
+    <aside class="latest" aria-labelledby="latest-h">
+      <h2 id="latest-h">Latest news</h2>
+      <ol id="latest">{NEWS.slice(0, 3).map((n) => <li><time datetime={n.date}>{fmtMonth(n.date)}</time><Fragment set:html={n.html} /></li>)}</ol>
+      <a class="more" href={url("news.html")}>All news</a>
+    </aside>
+  </div>
+</section>
+
+<section class="section tint" aria-labelledby="research-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout">{AREAS.length} areas <span class="sep">/</span> <b>{PAPERS.length}</b> papers tagged</span><h2 id="research-h">What we work on</h2></div>
+      <a class="more" href={url("publications.html")}>All publications</a>
+    </div>
+    <div class="explorer" id="explorer">
+      <div class="ex-list" role="tablist" aria-label="Research areas">
+        {AREAS.map((a, i) => (
+          <button class={`ex-item k-${a.topic}`} role="tab" id={`ex-t-${a.topic}`} aria-controls={`ex-p-${a.topic}`} aria-selected={String(i === 0)} tabindex={i === 0 ? 0 : -1}>
+            <span class="ex-name"><span class="key"></span>{a.name}</span>
+            <span class="ex-meta">{mainCount(a.topic)} papers</span>
+            <span class="ex-short">{a.summary}</span>
+            <span class="ex-bar" aria-hidden="true"><i></i></span>
+          </button>
+        ))}
+      </div>
+      <div class="ex-stage">
+        {AREAS.map((a, i) => (
+          <div class="ex-panel" role="tabpanel" id={`ex-p-${a.topic}`} aria-labelledby={`ex-t-${a.topic}`} hidden={i > 0}>
+            <div class="ex-feature" aria-live="polite"></div>
+            <ol class="ex-papers" aria-label={`Newest papers in ${a.name}`}>
+              {PAPERS.filter((p) => mainTopic(p) === a.topic).slice(0, 4).map((p, j) => (
+                <li class={j === 0 ? "on" : undefined}>
+                  <button type="button" class="ex-paper" aria-pressed={String(j === 0)} data-href={p.href} data-title={p.title} data-img={p.img ? url(p.img) : undefined}>
+                    <span class="ex-paper-title">{p.title}</span>
+                    <span class="ex-paper-meta"><Tag paper={p} />{!/\d{4}/.test(p.tag) && <span class="readout">{p.year}</span>}</span>
+                  </button>
+                  <p class="pub-links ex-row-links">{p.links.length ? p.links.map((l) => <a href={l.url}>{l.label}</a>) : <a href={p.href}>Find the paper</a>}</p>
+                </li>
+              ))}
+            </ol>
+            <a class="more" href={url(`publications.html#${a.topic}`)}>Read more about {a.name}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="sel-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout">Latest <b>{FEATURED.length}</b> of {PAPERS.length}</span><h2 id="sel-h">Recent papers</h2></div>
+      <a class="more" href={url("publications.html")}>All publications</a>
+    </div>
+    <ol class="selected" id="selected">
+      {FEATURED.map((p) => (
+        <li>
+          <Tag paper={p} />
+          <div>
+            <h3 class="pub-title"><a href={p.href}>{p.title}</a></h3>
+            <p class="pub-authors" style="margin:0"><Authors names={p.authors} /></p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section tint" aria-labelledby="grants-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout"><b>{GRANTS.length}</b> funded <span class="sep">/</span> <SponsorSummary /></span><h2 id="grants-h">Grants</h2></div>
+      <a class="more" href={url("grants.html")}>All grants</a>
+    </div>
+    <ul class="grant-list compact" id="home-grants">{external.slice(0, 4).map((g) => <Grant grant={g} />)}</ul>
+  </div>
+</section>
+
+<section class="section night" aria-labelledby="people-h">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="readout"><b>{core.length + 1}</b> current <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "visiting").length} visiting <span class="sep">/</span> {MEMBERS.filter((m) => m.group === "alumni").length} alumni</span><h2 id="people-h">People</h2></div>
+      <a class="more" href={url("people.html")}>Visitors and alumni</a>
+    </div>
+    <ul class="faces home" id="faces">{faces.map((m) => <Face person={m} />)}</ul>
+  </div>
+</section>
+
+<section class="section violet" aria-labelledby="join-h">
+  <div class="wrap join-band">
+    <div>
+      <span class="readout"><span class="blip violet"></span>Status <span class="sep">/</span> recruiting</span>
+      <h2 id="join-h">Work with us</h2>
+      <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
+    </div>
+    <div class="actions">
+      <a class="btn light" href={url("join.html#norms")}>Read the lab norms and apply</a>
+    </div>
+  </div>
+</section>
+</Base>

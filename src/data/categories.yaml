@@ -1,0 +1,18 @@
+# Research categories. A paper's `topics` in papers.bib uses these keys, main one first.
+# The order is the stacking order of the home page chart, and its colours (--t-<key> in
+# src/styles/site.css) were checked for colour-blind separation between neighbours:
+# reorder only together with those colours. The rules that assign categories are in tools/pubtools.py.
+- key: health
+  name: AI for Healthcare
+- key: agents
+  name: LLM Agents for Human Simulation
+- key: education
+  name: AI for Learning
+- key: data
+  name: Data Science
+- key: collab
+  name: Human-AI Collaboration
+- key: algo
+  name: AI Algorithms
+- key: community
+  name: Community Engagement

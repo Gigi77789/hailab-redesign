@@ -1,0 +1,6 @@
+---
+// An author list with lab members in bold.
+import { isMember } from "../lib/data";
+const { names } = Astro.props as { names: string[] };
+---
+{names.map((n, i) => <Fragment>{i > 0 && ", "}{isMember(n) ? <span class="me">{n}</span> : n}</Fragment>)}

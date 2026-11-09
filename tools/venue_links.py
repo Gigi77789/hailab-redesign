@@ -4,10 +4,10 @@
     python3 tools/venue_links.py --refresh  # check every published paper again
 
 For each paper not tagged "Preprint" it searches Crossref, then OpenAlex, for the same title in the
-same year (within one year), ignoring preprint servers. The match becomes `venueUrl`, which the
-site uses for the paper's title link and lists first among its links, labelled by publisher.
+same year (within one year), ignoring preprint servers. The match becomes the paper's `url` in
+papers.bib, which the site uses for the title link and lists first among its links, labelled by publisher.
 ICLR papers are looked up on OpenReview. Papers it can't confirm keep their current links and
-are listed at the end, so a person can add them by hand ("venueUrl": "...").
+are listed at the end, so a person can add them by hand (url = {...} and url_manual = {true}).
 """
 import re
 import sys
@@ -19,42 +19,6 @@ from pubtools import CONTACT, get_json, load_pubs, norm, ratio, save_pubs
 PREPRINT_DOI = re.compile(r"^10\.(48550|21203|31234|36227|1101|5281|6084|32920|2139/ssrn|31219|20944)/|/preprints?\.", re.I)
 PUBLISHED_TYPES = {"proceedings-article", "journal-article", "book-chapter", "book", "monograph", "edited-book"}
 
-
-def label_for(url):
-    u = url.lower()
-    if "10.1145/" in u or "dl.acm.org" in u:
-        return "ACM DL"
-    if "10.18653/" in u or "aclanthology.org" in u:
-        return "ACL Anthology"
-    if "10.1109/" in u or "ieeexplore" in u:
-        return "IEEE Xplore"
-    if "10.1007/" in u or "springer" in u:
-        return "Springer"
-    if "openreview.net" in u:
-        return "OpenReview"
-    if "10.1609/" in u or "aaai.org" in u:
-        return "AAAI"
-    if "10.24963/" in u or "ijcai.org" in u:
-        return "IJCAI"
-    if "10.2196/" in u:
-        return "JMIR"
-    if "10.1016/" in u:
-        return "ScienceDirect"
-    if "10.1038/" in u:
-        return "Nature"
-    if "10.1162/" in u:
-        return "MIT Press"
-    if "10.3389/" in u:
-        return "Frontiers"
-    if "10.1002/" in u:
-        return "Wiley"
-    if "10.1177/" in u:
-        return "SAGE"
-    if "10.1561/" in u:
-        return "Now Publishers"
-    if "10.9776/" in u:
-        return "IDEALS"
-    return "DOI"
 
 
 def same_title(a, b):
@@ -129,9 +93,6 @@ def main():
             continue
         found += 1
         p["venueUrl"] = url
-        # venue link first, then the rest; drop an older "Paper" link that points to the same place
-        rest = {k: v for k, v in (p.get("links") or {}).items() if v != url and k != "Paper"}
-        p["links"] = {label_for(url): url, **rest}
     save_pubs(head, pubs)
     print(f"{found} published paper(s) linked to their venue")
     if missing:
