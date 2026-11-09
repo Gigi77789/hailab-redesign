@@ -6,8 +6,9 @@ Static site for the Human-Centered AI Lab at Northeastern. No build step, no fra
 
 `admin/` is a small editing page for people who don't want to touch files: lab members, papers (with
 research areas and a teaser image), and news. It is published at `<site>/admin/`
-(https://gigi77789.github.io/hailab-redesign/v1/admin/). While `demo: true` in `admin/config.js` it is a demo:
-no sign-in, every feature works, but saves stay in the browser and vanish on reload. Set `demo: false` to save to GitHub.
+(https://gigi77789.github.io/hailab-redesign/v1/admin/); members sign in there and their saves change the site.
+`<site>/admin/?demo` is a demo with no sign-in: every feature works, but saves stay in the browser and vanish on reload.
+`demo: true` in `admin/config.js` makes the published editor demo-only.
 
 How it works:
 

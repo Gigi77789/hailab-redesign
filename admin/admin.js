@@ -8,7 +8,7 @@
    Two ways to save:
      - GitHub: the normal mode. The member signs in with their own GitHub token.
      - Local: when the page is served by tools/admin_server.py, saves go to files on that computer (for testing).
-     - Demo: when config.js sets demo: true, saves stay in this browser tab and nothing is written anywhere. */
+     - Demo: admin/?demo, or config.js demo: true. Saves stay in this browser tab and nothing is written anywhere. */
 (function () {
   "use strict";
   const CFG = window.HAI_ADMIN;
@@ -639,7 +639,7 @@
       const r = await fetch("/__admin/ping", { cache: "no-store" });
       if (r.ok && (await r.json()).ok) return await start(new LocalStore());
     } catch (_) { /* not the local server */ }
-    if (CFG.demo !== false) return await start(new DemoStore()); // sign-in only once config.js says demo: false
+    if (CFG.demo !== false || /[?&]demo\b/.test(location.search)) return await start(new DemoStore()); // admin/?demo: try it without signing in
     let token = null;
     try { token = localStorage.getItem("hai-admin-token") || sessionStorage.getItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
     if (!token) return showSignin();

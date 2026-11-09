@@ -7,9 +7,10 @@ window.HAI_ADMIN = {
   branch: "v1-future",           // branch the site is built from
   site: "https://gigi77789.github.io/hailab-redesign/v1/", // public site, for the "View site" link
 
-  // While the editor is being tested, the published copy is a demo: no sign-in, every feature works,
-  // but saves stay in the visitor's browser and vanish on reload. Set to false to save to GitHub for real.
-  demo: true,
+  // false: members sign in and their saves change the real site.
+  // true: the published editor is a demo (no sign-in, saves stay in the browser and vanish on reload).
+  // Either way, admin/?demo opens the demo.
+  demo: false,
 
   // Research areas a paper can be tagged with, in the same order and wording as CATS in js/site.js.
   areas: [
