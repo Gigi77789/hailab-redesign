@@ -8,7 +8,7 @@ Papers are named by BibTeX key or by the start of their title. --openalex adds a
 doesn't list yet (filled from that OpenAlex work the way tools/find_papers.py fills it) and marks it too.
 Each paper gets the short tag (abbr), the venue (--venue, or the tag), the tag's year and kind, and its
 preprint details move to preprint_venue / preprint_year, the same change tools/update_venues.py makes once
-OpenAlex lists the published version. tools/venue_links.py finds the official page later.
+OpenAlex lists the published version. They move to the top of their year. tools/venue_links.py finds the official page later.
 """
 import argparse
 import re
@@ -52,8 +52,13 @@ def main():
         if not p.get("topicsManual"):
             p["topics"] = classify(p)
         print(f"  {args.tag}: {p['t'][:80]}")
-    pubs.sort(key=lambda q: -q["y"])  # stable: keeps the order within a year
-    save_pubs(head, pubs)
+    # newly accepted papers go to the top of their year, in the order given here, so they show first
+    # on the Publications page and among the newest papers on the home page
+    rest = [q for q in pubs if not any(q is t for t in targets)]
+    for t in reversed(targets):
+        i = next((k for k, q in enumerate(rest) if q["y"] <= t["y"]), len(rest))
+        rest.insert(i, t)
+    save_pubs(head, rest)
 
 
 if __name__ == "__main__":
