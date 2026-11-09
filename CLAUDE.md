@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Static website for the NEU HAI (Human-Centered AI) Lab at Northeastern, built with Astro: pages are rendered to plain HTML at build time from data files, plus one browser script for the light and dark switch, motion and interactivity, and a browser-based site editor (`admin.html`) that commits data changes to GitHub. Python 3 scripts in `tools/` maintain the publication list. `README.md` is the maintainer guide for content edits and the editor; read it before changing data or tooling. There are no tests or linters: `npx astro build` validating every data file is the check.
+Static website for the NEU HAI (Human-Centered AI) Lab at Northeastern, built with Astro: pages are rendered to plain HTML at build time from data files, plus one browser script for the light and dark switch, motion and interactivity, and a browser-based site editor (`/admin/`) that commits data changes to GitHub. Python 3 scripts in `tools/` maintain the publication list. `README.md` is the maintainer guide for content edits and the editor; read it before changing data or tooling. There are no tests or linters: `npx astro build` validating every data file is the check.
 
 ## Commands
 
@@ -11,7 +11,7 @@ npm run dev                              # dev server, http://localhost:4321
 npx astro build                          # build to dist/; fails on any invalid data file
 DRAFT=1 SITE_BASE=/hailab-redesign/ npx astro build   # the review copy: banner, noindex, sub-path
 sh tools/deploy.sh                       # build the review copy and force-push it to gh-pages (keeps v1/, v2/...)
-npm run build && python3 tools/admin_server.py   # site editor in local test mode, http://127.0.0.1:8790/admin.html
+npm run build && python3 tools/admin_server.py   # site editor in local test mode, http://127.0.0.1:8790/admin/
 python3 tools/retag.py                   # recompute paper categories (offline; a no-op run must leave papers.bib unchanged)
 python3 tools/find_papers.py --dry-run   # new papers by Dakuo, research scientists and PhD students on OpenAlex
 python3 tools/accept.py "NeurIPS 2026" KEY... [--venue ...] [--openalex W...]   # mark known acceptances
@@ -34,9 +34,9 @@ Python tools need `pyyaml` and make rate-limited network calls (OpenAlex, Crossr
 
 **Categories.** `categories.yaml` is the single list of keys, display names and chart order, read by the site, the editor and `pubtools.py`; the CSS colours `--t-<key>` in `src/styles/site.css` (light and dark) follow that order, and `pubtools.py` (`RULES`, `SIGNALS`, `classify`) holds the rules that assign them.
 
-**Pages and script.** `src/layouts/Base.astro` is the shared frame; an inline script sets `data-theme` before paint. `src/pages/*.astro` render everything server-side using `src/components/`. `src/scripts/site.js` runs per page based on `data-page` on `<main>`: the home chart reads paper data from the inline `#field-data` JSON; the research areas, photo wall, lightbox and publication filters work on the rendered markup. Asset paths in data (`assets/...`) live under `public/` and must go through `url()` so the `SITE_BASE` sub-path applies.
+**Pages and script.** `src/layouts/Base.astro` is the shared frame; an inline script sets `data-theme` before paint. `src/pages/*.astro` render everything server-side using `src/components/`. `src/scripts/site.js` runs per page based on `data-page` on `<main>`: the home chart reads paper data from the inline `#field-data` JSON; the research areas, photo wall, lightbox and publication filters work on the rendered markup. Asset paths in data (`assets/...`) live under `public/` and must go through `url()` so the `SITE_BASE` sub-path applies. Pages build as folders (`build.format: "directory"`, `people/index.html`) and are linked without `.html` or a trailing slash: `url("people")`, `url("")` for home; `Base.astro` derives the current nav item from the path. `public/<page>.html` files forward the old `.html` addresses, keeping query and hash.
 
-**Site editor.** `src/pages/admin.astro` + `src/scripts/admin.js` (bundled by Astro, so it imports `yaml`, `papers-io.ts` and the YAML config). It reads and writes `src/data/team.yaml`, `news.yaml`, `papers.bib` and images under `public/assets/` through the GitHub API (one commit per save, retried on conflicts), through `tools/admin_server.py` in local test mode, or in memory in demo mode. YAML is written in one fixed layout by `src/lib/editor-files.ts`; hand edits to those files are fine, and the editor's next save rewrites them in that layout. `public/admin/index.html` forwards the old `/admin/` address to `admin.html`.
+**Site editor.** `src/pages/admin.astro` + `src/scripts/admin.js` (bundled by Astro, so it imports `yaml`, `papers-io.ts` and the YAML config). It reads and writes `src/data/team.yaml`, `news.yaml`, `papers.bib` and images under `public/assets/` through the GitHub API (one commit per save, retried on conflicts), through `tools/admin_server.py` in local test mode, or in memory in demo mode. YAML is written in one fixed layout by `src/lib/editor-files.ts`; hand edits to those files are fine, and the editor's next save rewrites them in that layout. The editor lives at `/admin/`, so it reaches the site's files at `../`.
 
 **Whitespace.** Astro 7 defaults to JSX whitespace rules; `astro.config.mjs` sets `compressHTML: true` so whitespace between inline elements survives as in plain HTML. Inside `{...}` expressions whitespace is still trimmed: write `{" "}` where a space must render.
 

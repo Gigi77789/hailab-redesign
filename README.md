@@ -4,7 +4,7 @@ Static site for the Human-Centered AI Lab at Northeastern, built with [Astro](ht
 
 ## Site editor (for lab members)
 
-`admin.html` is an editing page for people who don't want to touch files: lab members, papers (with research areas and a teaser image), and news. It is published with the site (`<site>/admin.html`); members sign in there and their saves change the site. `admin.html?demo` is a demo with no sign-in: every feature works, but saves stay in the browser and vanish on reload. `demo: true` in `src/data/editor.yaml` makes the published editor demo-only.
+`/admin/` is an editing page for people who don't want to touch files: lab members, papers (with research areas and a teaser image), and news. It is published with the site (`<site>/admin/`); members sign in there and their saves change the site. `<site>/admin/?demo` is a demo with no sign-in: every feature works, but saves stay in the browser and vanish on reload. `demo: true` in `src/data/editor.yaml` makes the published editor demo-only.
 
 How it works:
 
@@ -15,7 +15,7 @@ How it works:
 - `src/data/editor.yaml` holds the repository, branch, and public address. The research areas papers can be tagged with come from `src/data/categories.yaml`.
 - Images uploaded through the editor are shrunk in the browser (portraits cropped square to 640px, teasers to 1200px wide) and saved as `public/assets/team/<name>-<hash>.jpg` or `public/assets/papers/<title>-<hash>.jpg`. Papers edited there get `topics_manual` / `preview_manual`, so the weekly update keeps their areas and image.
 
-Try it without touching GitHub: `npm run build && python3 tools/admin_server.py` serves the site with the editor in local test mode at http://127.0.0.1:8790/admin.html; saves change the files in this folder (only the editor's data files and images under `public/assets/`) and rebuild the site. `python3 tools/admin_server.py DIR PORT` does the same for a copy.
+Try it without touching GitHub: `npm run build && python3 tools/admin_server.py` serves the site with the editor in local test mode at http://127.0.0.1:8790/admin/; saves change the files in this folder (only the editor's data files and images under `public/assets/`) and rebuild the site. `python3 tools/admin_server.py DIR PORT` does the same for a copy.
 
 The editor writes `team.yaml` and `news.yaml` in one fixed layout (`src/lib/editor-files.ts`) and `papers.bib` exactly as the Python tools do (`src/lib/papers-io.ts`), so a save changes only the lines it edits.
 
@@ -54,6 +54,10 @@ The scripts in `tools/` keep the list current (they need Python 3 and `pip insta
 - **Figures.** `python3 tools/fetch_figures.py` gives papers without a figure the teaser or first figure from their arXiv version. `python3 tools/pdf_figures.py` then looks at the first page of each remaining paper's open PDF and cuts out the graphic above the "Figure 1" caption (needs `pip install pymupdf`); check the new images in `public/assets/papers/`, then run it with `--apply`. Set `preview_manual = {true}` on a paper to keep a figure you picked.
 
 Three GitHub workflows run the site: `deploy.yml` rebuilds and republishes it whenever `main` changes; `update-venues.yml` runs the preprint, venue link, and figure scripts every Monday, commits what changed, and republishes; `find-papers.yml` runs `find_papers.py` every Monday and opens a pull request with the papers it found, for someone to check before merging. Opening that pull request needs "Allow GitHub Actions to create and approve pull requests" (Settings > Actions > General).
+
+## Addresses
+
+Each page is a folder (`dist/people/index.html`) and is linked without `.html`, as `/people`. Links inside the site go through `url()` in `src/lib/data.ts`, which adds the sub-path the site is served under. The old addresses (`people.html`, `publications.html`, ...) are small files in `public/` that forward to the new ones, keeping `?query` and `#section`.
 
 ## Preview locally
 

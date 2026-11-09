@@ -183,5 +183,6 @@ export const fmtMonth = (d: string) => {
   return m ? new Date(y, m - 1, 1).toLocaleDateString("en-US", { month: "short", year: "numeric" }) : String(y);
 };
 
-/** A path inside the site, with the base path the site is served under (e.g. /hailab-redesign/ on GitHub Pages). */
+/** A path inside the site, with the base path the site is served under (e.g. /hailab-redesign/ on GitHub Pages).
+ * Pages are linked without .html: url("people") is /people, url("") the home page. */
 export const url = (path: string) => import.meta.env.BASE_URL.replace(/\/?$/, "/") + path.replace(/^\//, "");

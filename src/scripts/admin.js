@@ -8,7 +8,7 @@
    Three ways to save:
      - GitHub: the normal mode. The member signs in with their own GitHub token.
      - Local: when the page is served by tools/admin_server.py, saves go to files on that computer (for testing).
-     - Demo: admin.html?demo, or demo: true in src/data/editor.yaml. Saves stay in this browser tab and nothing is written anywhere.
+     - Demo: admin/?demo, or demo: true in src/data/editor.yaml. Saves stay in this browser tab and nothing is written anywhere.
    People and news are YAML (src/data/team.yaml, news.yaml); papers are BibTeX (src/data/papers.bib), read and written
    exactly as tools/pubtools.py does (src/lib/papers-io.ts). */
 import { parse as parseYaml } from "yaml";
@@ -23,7 +23,7 @@ import categoriesText from "../data/categories.yaml?raw";
   CFG.areas = parseYaml(categoriesText).map((c) => [c.key, c.name]);
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const SITE = "./"; // the editor is admin.html, next to the site's own pages
+  const SITE = "../"; // the editor is /admin/, one level below the site's own files
   // where the published site serves each file (src/pages/data/[file].ts), for the demo
   const PUBLISHED = { [FILES.team]: "data/team.yaml", [FILES.news]: "data/news.yaml", [FILES.pubs]: "data/papers.bib" };
   const AREAS = Object.fromEntries(CFG.areas);
@@ -591,7 +591,7 @@ import categoriesText from "../data/categories.yaml?raw";
   function showWho() {
     const local = store instanceof LocalStore, demo = store instanceof DemoStore;
     $("#who").innerHTML = `<span class="mode${local || demo ? " local" : ""}">${esc(store.label)}</span><span>${esc(userName)}</span>
-      <a href="${local ? "index.html" : esc(CFG.site)}" target="_blank" rel="noopener">View site</a>${local || demo ? "" : `<button type="button" class="linkish" id="signout">Sign out</button>`}`;
+      <a href="${local ? "../" : esc(CFG.site)}" target="_blank" rel="noopener">View site</a>${local || demo ? "" : `<button type="button" class="linkish" id="signout">Sign out</button>`}`;
     $("#signout")?.addEventListener("click", () => {
       try { localStorage.removeItem("hai-admin-token"); sessionStorage.removeItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
       location.reload();
@@ -633,7 +633,7 @@ import categoriesText from "../data/categories.yaml?raw";
       const r = await fetch("/__admin/ping", { cache: "no-store" });
       if (r.ok && (await r.json()).ok) return await start(new LocalStore());
     } catch (_) { /* not the local server */ }
-    if (CFG.demo !== false || /[?&]demo\b/.test(location.search)) return await start(new DemoStore()); // admin.html?demo: try it without signing in
+    if (CFG.demo !== false || /[?&]demo\b/.test(location.search)) return await start(new DemoStore()); // admin/?demo: try it without signing in
     let token = null;
     try { token = localStorage.getItem("hai-admin-token") || sessionStorage.getItem("hai-admin-token"); } catch (_) { /* storage blocked */ }
     if (!token) return showSignin();

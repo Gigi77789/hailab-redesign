@@ -1,4 +1,4 @@
-# Settings for the site editor (/admin.html). Change these when the site moves.
+# Settings for the site editor (/admin/). Change these when the site moves.
 # The editor never talks to the web host: it reads and writes the data files in the GitHub repository,
 # and the repository's deploy workflow (.github/workflows/deploy.yml) publishes the site.
 owner: Gigi77789            # GitHub user or organization that owns the repository
@@ -7,5 +7,5 @@ branch: main                # branch the site is built from
 site: https://gigi77789.github.io/hailab-redesign/   # the public site, for the "View site" link
 # false: members sign in and their saves change the real site.
 # true: the published editor is a demo (no sign-in, saves stay in the browser and vanish on reload).
-# Either way, admin.html?demo opens the demo.
+# Either way, admin/?demo opens the demo.
 demo: false

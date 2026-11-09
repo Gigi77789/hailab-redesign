@@ -1,7 +1,7 @@
-"""Serves the built site with the site editor (admin.html) in local test mode: saves write files here
+"""Serves the built site with the site editor (/admin/) in local test mode: saves write files here
 instead of GitHub, and the site is rebuilt after each save.
 
-    npm run build && python3 tools/admin_server.py     # http://127.0.0.1:8790/admin.html
+    npm run build && python3 tools/admin_server.py     # http://127.0.0.1:8790/admin/
     python3 tools/admin_server.py DIR 8791              # another copy of the repository, another port
 
 Only the editor's data files (src/data/team.yaml, news.yaml, papers.bib) and images under public/assets/
@@ -71,5 +71,5 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     handler = functools.partial(Handler, directory=str(ROOT / "dist"))
-    print(f"Site editor (local test mode): http://127.0.0.1:{PORT}/admin.html  site: http://127.0.0.1:{PORT}/  files: {ROOT}", flush=True)
+    print(f"Site editor (local test mode): http://127.0.0.1:{PORT}/admin/  site: http://127.0.0.1:{PORT}/  files: {ROOT}", flush=True)
     http.server.ThreadingHTTPServer(("127.0.0.1", PORT), handler).serve_forever()

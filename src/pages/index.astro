@@ -28,7 +28,7 @@ const shortAuthors = (a: string[]) => (a.length > 6 ? a.slice(0, 6).join(", ") +
     <div>
       <div class="block-head">
         <h2 id="pubs-h">Publications</h2>
-        <a class="more" href={url("publications.html")}>All publications</a>
+        <a class="more" href={url("publications")}>All publications</a>
       </div>
       <figure class="field" id="field" aria-labelledby="pubs-h">
         <div class="field-keys" id="legend" role="group" aria-label="Highlight a research area">
@@ -42,7 +42,7 @@ const shortAuthors = (a: string[]) => (a.length > 6 ? a.slice(0, 6).join(", ") +
     <aside class="latest" aria-labelledby="latest-h">
       <div class="block-head">
         <h2 id="latest-h">Latest news</h2>
-        <a class="more" href={url("news.html")}>All news</a>
+        <a class="more" href={url("news")}>All news</a>
       </div>
       <ol class="news-scroll" id="latest" tabindex="0" aria-label="All news, newest first">{NEWS.map((n) => <li><time datetime={n.date}>{fmtMonth(n.date)}</time><Fragment set:html={n.html} /></li>)}</ol>
     </aside>
@@ -70,7 +70,7 @@ const shortAuthors = (a: string[]) => (a.length > 6 ? a.slice(0, 6).join(", ") +
               </button>
               <div class="ex-open"><div><p class="pub-links ex-row-links">{p.links.length ? p.links.map((l) => <a href={l.url}>{l.label}</a>) : <a href={p.href}>Find the paper</a>}</p></div></div>
             </li>))}</ol>
-          <a class="more" href={url(`publications.html#${a.topic}`)}>All papers in {a.name}</a>
+          <a class="more" href={url(`publications#${a.topic}`)}>All papers in {a.name}</a>
         </div>))}</div>
     </div>
   </div>
@@ -80,7 +80,7 @@ const shortAuthors = (a: string[]) => (a.length > 6 ? a.slice(0, 6).join(", ") +
   <div class="wrap">
     <div class="block-head">
       <h2 id="people-h">Lab members</h2>
-      <a class="more" href={url("people.html")}>Visitors and alumni</a>
+      <a class="more" href={url("people")}>Visitors and alumni</a>
     </div>
     <ul class="faces home" id="faces">{faces.map((m) => <Face person={m} />)}</ul>
   </div>
@@ -92,7 +92,7 @@ const shortAuthors = (a: string[]) => (a.length > 6 ? a.slice(0, 6).join(", ") +
       <h2 id="join-h">Work with us</h2>
       <p>We take PhD students, postdocs, visiting scholars, and research interns who want to build AI for health care, education, or agents, and test it with real people.</p>
     </div>
-    <a class="btn" href={url("join.html")}>Join us</a>
+    <a class="btn" href={url("join")}>Join us</a>
   </div>
 </section>
 </Base>

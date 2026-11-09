@@ -5,7 +5,8 @@ import { defineConfig } from "astro/config";
 // DRAFT=1 adds the "Draft redesign" note and a noindex tag (tools/deploy.sh sets both).
 export default defineConfig({
   base: process.env.SITE_BASE || "/",
-  build: { format: "file" },
+  // each page is a folder (people/index.html), linked as /people
+  build: { format: "directory" },
   // lossless: keeps the whitespace between inline elements that the page layout relies on
   compressHTML: true,
 });

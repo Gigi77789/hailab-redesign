@@ -12,10 +12,11 @@ const { title, description, page } = Astro.props;
 const full = title ? `${title} | NEU HAI` : "NEU HAI";
 const draft = Boolean(process.env.DRAFT);
 const NAV = [
-  ["index.html", "Home"], ["people.html", "Lab members"], ["publications.html", "Publications"],
-  ["culture.html", "Lab culture"], ["news.html", "News"], ["join.html", "Join us"],
+  ["", "Home"], ["people", "Lab members"], ["publications", "Publications"],
+  ["culture", "Lab culture"], ["news", "News"], ["join", "Join us"],
 ];
-const current = Astro.url.pathname.split("/").pop() || "index.html";
+// this page's path inside the site: "" for the home page, "people" for /people/
+const current = Astro.url.pathname.slice(import.meta.env.BASE_URL.replace(/\/?$/, "/").length).replace(/\/$/, "");
 ---
 <!doctype html>
 <html lang="en">
@@ -39,7 +40,7 @@ const current = Astro.url.pathname.split("/").pop() || "index.html";
 {draft && <div class="draft-note"><div class="wrap">Draft redesign for review. The lab’s current site is <a href="https://hailab.io/">hailab.io</a>.</div></div>}
 <header class="site-header">
   <div class="wrap">
-    <a class="lockup" href={url("index.html")} aria-label="NEU HAI home">
+    <a class="lockup" href={url("")} aria-label="NEU HAI home">
       <span class="lockup-mark">NEU HAI</span>
       <span class="lockup-name">Northeastern University<br>Human-Centered AI Lab</span>
     </a>

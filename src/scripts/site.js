@@ -160,7 +160,7 @@
     draw();
     addEventListener("resize", fit);
 
-    // index.html#collab (any category key) opens the chart with that category locked in focus
+    // the home page with #collab (any category key) opens the chart with that category locked in focus
     const fromHash = location.hash.slice(1);
     if (TOPICS[fromHash]) legend.querySelector(`.fk[data-topic="${fromHash}"]`)?.click();
   }

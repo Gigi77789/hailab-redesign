@@ -1,4 +1,4 @@
-# Republishes the site whenever main changes, including every save from the site editor (admin.html):
+# Republishes the site whenever main changes, including every save from the site editor (/admin/):
 # builds it (a data file the build rejects stops here) and pushes the review copy to gh-pages with tools/deploy.sh.
 # To publish somewhere else later (a Northeastern server, Netlify, ...), replace the last step with that
 # host's upload step; the editor needs no change.
