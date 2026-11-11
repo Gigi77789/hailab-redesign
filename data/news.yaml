@@ -1,0 +1,147 @@
+# News, newest first. date is YYYY-MM, or YYYY when the month isn't known; html may contain links.
+
+- date: 2026-09
+  html: 'Three papers accepted to NeurIPS 2026: <a href="https://arxiv.org/abs/2605.17558">“Firefly:
+    Illuminating Large-Scale Verified Tool-Call Data Generation from Real APIs”</a>, <a
+    href="https://arxiv.org/abs/2607.05721">“SpanUQ: Span-Level Uncertainty Quantification for Large Language
+    Model Generation”</a>, and <a href="https://arxiv.org/abs/2604.08905">“StaRPO: Stability-Augmented
+    Reinforcement Policy Optimization”</a>.'
+
+- date: 2026-09
+  html: Welcome to our new PhD students, <a href="https://zihanxue.com/">Zihan Xue</a>, <a
+    href="https://malcolm-chen.github.io/">Jiaju Chen</a>, and <a href="https://www.jingfeihuang.com/research">Jingfei
+    Huang</a>, who join the lab this fall.
+
+- date: 2026-09
+  html: "Our project “BEACON: Bilingual AI to Enhance Caregivers’ Comprehension of Older Patients’ Clinical
+    Course in Critical Care” is funded by the NIH National Institute on Aging."
+
+- date: 2026-07
+  html: "Our project “MindGuard: Early Prediction of Post-Concussion Mental Health Sequelae in Youth with a
+    Multimodal AI System” is funded by the NIH."
+
+- date: 2026-04
+  html: "Four papers accepted to the ACL 2026 main conference: “Can LLM Agents Simulate Multi-Turn Human
+    Behavior?”, “Multi-Agent-as-Judge”, “OPeRA”, and “Trajectory2Task”. See you in San Diego."
+
+- date: 2026-04
+  html: 'Two more papers in Findings of ACL 2026: <a
+    href="https://doi.org/10.18653/v1/2026.findings-acl.443">“Agentic Conversational Search with
+    Contextualized Reasoning via Reinforcement Learning”</a> and <a
+    href="https://doi.org/10.18653/v1/2026.findings-acl.1344">“On-Policy Self-Distillation for Efficient
+    Diffusion Language Models”</a>.'
+
+- date: 2026-01
+  html: Seven papers accepted to CHI 2026, including <a
+    href="https://doi.org/10.1145/3772318.3791960">collaboration breakdowns in post-surgery care</a>, <a
+    href="https://doi.org/10.1145/3772318.3791301">AI support for serious illness conversations</a>, the <a
+    href="https://doi.org/10.1145/3772318.3790529">MIND</a> dashboard for mental health clinicians, and <a
+    href="https://doi.org/10.1145/3772318.3791568">GUI agents facing dark patterns</a>. See you in Barcelona.
+
+- date: 2026-01
+  html: 'Two papers accepted to ICLR 2026: <a href="https://openreview.net/forum?id=fkIePp9YEO">“Shop-R1:
+    Rewarding LLMs to Simulate Human Behavior in Online Shopping”</a> and <a
+    href="https://openreview.net/forum?id=ru93xpQFi1">“SFT Doesn’t Always Hurt General Capabilities”</a>.'
+
+- date: 2026-01
+  html: "“RECOVER: Designing a Large Language Model-based Remote Patient Monitoring System for Postoperative
+    Gastrointestinal Cancer Care” is accepted to CSCW 2026. See you in Salt Lake City."
+
+- date: "2026"
+  html: 'Two late-breaking papers at CHI 2026: <a href="https://doi.org/10.1145/3772363.3778744">“From
+    Human-Human Collaboration to Human-Agent Collaboration”</a> and <a
+    href="https://doi.org/10.1145/3772363.3799039">“Agent A/B”</a>, which tests live websites with LLM
+    agents.'
+
+- date: "2026"
+  html: 'New journal papers: <a href="https://doi.org/10.1038/s41746-026-02791-3">“SurgWound-Bench”</a> in npj
+    Digital Medicine, <a href="https://doi.org/10.1145/3788689">“WatchGuardian”</a> in ACM Transactions on
+    Computing for Healthcare, and <a href="https://doi.org/10.1145/3801972">“Should I Give Up Now?”</a> in ACM
+    TOSEM.'
+
+- date: 2025-12
+  html: Lab members are at NeurIPS 2025 in San Diego (December 2–7) for the Multi-Turn Interaction LLM Workshop
+    and the Scaling Environment Agent Workshop.
+
+- date: 2025-08
+  html: <a href="https://doi.org/10.18653/v1/2025.findings-emnlp.1128">“Large Language Models with Temporal
+    Reasoning for Longitudinal Clinical Summarization and Prediction”</a> is accepted to Findings of EMNLP
+    2025.
+
+- date: 2025-05
+  html: <a href="https://doi.org/10.18653/v1/2025.findings-acl.938">“Towards a Design Guideline for RPA
+    Evaluation”</a>, a survey of LLM-based role-playing agents, is accepted to Findings of ACL 2025.
+
+- date: 2025-01
+  html: Five papers accepted to CHI 2025, on story reading for children, micro-acts of joy, undisclosed
+    generative AI use in coursework, live-streamed dual-teacher classes, and CardioAI. We’ll be in Yokohama.
+
+- date: "2025"
+  html: 'Two papers at CSCW 2025: <a href="https://doi.org/10.1145/3757442">“Mango Mango, How to Let The Lettuce
+    Dry Without A Spinner?”</a>, on an LLM cooking assistant, and <a
+    href="https://doi.org/10.1145/3711061">“Secret Use of Large Language Model (LLM)”</a>.'
+
+- date: "2025"
+  html: <a href="https://doi.org/10.1145/3690624.3709402">“SepsisCalc”</a> appears at KDD 2025, and <a
+    href="https://doi.org/10.1145/3749508">“Vital Insight”</a>, on making sense of personal tracking data with
+    visualization and LLMs, in IMWUT.
+
+- date: 2024-09
+  html: '<a href="https://doi.org/10.18653/v1/2024.emnlp-main.961">“StorySpark: Expert-Annotated QA Pairs with
+    Real-World Knowledge for Children Storytelling”</a> is accepted to EMNLP 2024.'
+
+- date: "2024"
+  html: 'Two papers at CHI 2024: <a href="https://doi.org/10.1145/3613904.3642343">“Rethinking Human-AI
+    Collaboration in Complex Medical Decision Making”</a>, a case study in sepsis diagnosis, and <a
+    href="https://doi.org/10.1145/3613904.3642385">“It’s a Fair Game, or Is It?”</a>, on disclosure risks with
+    LLM chatbots.'
+
+- date: "2024"
+  html: 'Three papers at CSCW 2024: <a href="https://doi.org/10.1145/3687035">children-centered AI for preschool
+    storytelling</a>, <a href="https://doi.org/10.1145/3653708">second opinions in AI-assisted decisions</a>,
+    and <a href="https://doi.org/10.1145/3637358">teachers and students specifying datasets for ML in
+    education</a>.'
+
+- date: "2024"
+  html: 'Two papers in IMWUT 2024: <a href="https://doi.org/10.1145/3659625">“Talk2Care”</a>, an LLM voice
+    assistant between health care providers and older adults, and <a
+    href="https://doi.org/10.1145/3643540">“Mental-LLM”</a>, on mental health prediction from online text.'
+
+- date: 2023-10
+  html: 'Two papers accepted to EMNLP 2023: <a href="https://arxiv.org/abs/2310.15077">“An Automatic Science
+    Journalism Framework”</a> and <a href="https://arxiv.org/abs/2305.12710">“Active Learning for Human
+    Annotators with Explanations”</a>.'
+
+- date: 2023-10
+  html: We hosted <a href="https://www.microsoft.com/en-us/research/people/wangyun/">Dr. Yun Wang</a> from
+    Microsoft Research Asia, who shared her work on human-AI co-creation of visual storytelling.
+
+- date: 2023-09
+  html: <a href="https://juhokim.com/">Prof. Juho Kim</a> from KAIST visited Northeastern for a day of
+    discussions with the lab.
+
+- date: 2023-07
+  html: <a href="https://www.bingshengyao.com/">Bingsheng ‘Arthur’ Yao</a> passed his proposal defense on
+    human-AI collaboration for better performance and explanations.
+
+- date: 2023-07
+  html: 'Two papers accepted to ACL 2023: <a href="https://aclanthology.org/2023.acl-long.821">“Are Human
+    Explanations Always Helpful?”</a> (oral) and <a href="https://aclanthology.org/2023.acl-long.359">“Are
+    Fairytales Fair?”</a>.'
+
+- date: 2023-06
+  html: Our cross-disciplinary team received a $3 million NIMHD grant to build a human-centered AI system for
+    post-operative recovery. <a
+    href="https://www.medstarhealth.org/news-and-publications/news/medstar-health-awarded-grant-to-study-impact-of-amazon-alexa-and-chatgpt-on-post-operative-recovery">Read
+    the announcement</a>.
+
+- date: 2023-05
+  html: Prof. Dakuo Wang visited HKUST. Many thanks to <a href="http://huamin.org/">Prof. Huamin Qu</a> and <a
+    href="https://www.cse.ust.hk/~mxj/">Prof. Xiaojuan Ma</a> for conversations on teaching, mentorship,
+    research, and leadership.
+
+- date: 2023-05
+  html: "Back from CHI 2023. Next stop: CHI 2024 in Hawaiʻi."
+
+- date: 2023-02
+  html: Prof. Dakuo Wang joins Northeastern University as an Associate Professor in Khoury College and CAMD.
