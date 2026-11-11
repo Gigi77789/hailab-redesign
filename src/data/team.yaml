@@ -62,6 +62,12 @@ members:
     photo: assets/team/jingfei.jpg
     bio: Designs multimodal AI for health care, work, and creativity, drawing on a background in design.
     orcid: 0009-0002-0213-4160
+  - name: Zihan Xue
+    group: phd
+    role: PhD student
+    url: https://zihanxue.com/
+    photo: assets/team/zihan.jpg
+    bio: Investigates how AI agents navigate human goals, preferences, and expectations.
   - name: Menglin Zhao
     group: phd
     role: PhD student
@@ -75,12 +81,6 @@ members:
     photo: assets/team/yuxuan.jpg
     bio: Trains, runs, and studies LLM agents that simulate how people behave.
     orcid: 0000-0002-8520-0540
-  - name: Zihan Xue
-    group: phd
-    role: PhD student
-    url: https://scholar.google.com/citations?user=RXO7YYQAAAAJ
-    photo: assets/team/zihan.jpg
-    bio: Investigates how AI agents navigate human goals, preferences, and expectations.
   - name: Ziyi Wang
     group: phd
     role: PhD student
