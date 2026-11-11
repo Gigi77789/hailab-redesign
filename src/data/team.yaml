@@ -77,7 +77,10 @@ members:
     orcid: 0000-0002-8520-0540
   - name: Zihan Xue
     group: phd
-    role: First-year PhD student
+    role: PhD student
+    url: https://scholar.google.com/citations?user=RXO7YYQAAAAJ
+    photo: assets/team/zihan.jpg
+    bio: Investigates how AI agents navigate human goals, preferences, and expectations.
   - name: Ziyi Wang
     group: phd
     role: PhD student
