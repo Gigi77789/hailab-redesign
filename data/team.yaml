@@ -1,0 +1,184 @@
+# People on the Lab members page and the home page. Everyone listed here is bolded in author lists
+# (nicknames in quotes or parentheses are ignored when matching, so “Bingsheng ‘Arthur’ Yao” matches “Bingsheng Yao”).
+#   group: faculty (research scientists; the director is listed separately), phd, ra (research assistants),
+#     visiting (visiting students), alumni. Faculty, PhD students and research assistants are lab members:
+#     they appear on the home page.
+#   bio: one short sentence for the Lab members page (under about 100 characters, so it fits in three lines)
+#   photo: a square image in public/assets/team/, about 640px; leave it out to show initials
+#   url: the person's website; their name links there in author lists too
+#   aliases: other names the person publishes under, so those are bolded and linked as well
+#   orcid / openalex: lets tools/find_papers.py look up new papers by the director, faculty and PhD students
+
+director:
+  name: Dakuo Wang
+  title: Associate Professor
+  role: Associate Professor, lab director
+  short: Leads the lab. Builds and studies human-centered AI that people can work with as a collaborator.
+  photo: assets/team/dakuo.jpg
+  url: https://www.dakuowang.com/
+  email: d.wang@northeastern.edu
+  orcid: 0000-0001-9371-9441
+  bio:
+    - Dakuo Wang is an Associate Professor at Northeastern University, jointly appointed in the Khoury College
+      of Computer Sciences and the College of Arts, Media and Design.
+    - His research sits where human-computer interaction meets artificial intelligence. He explores, builds,
+      and evaluates human-centered AI systems, with the goal of making AI accessible to every person and every
+      organization, and of helping people work with AI as a collaborator.
+
+members:
+  # research scientists
+  - name: Bingsheng ‘Arthur’ Yao
+    group: faculty
+    role: Associate Research Scientist
+    url: https://bingshengyao.com
+    photo: assets/team/bingsheng.jpg
+    bio: Works where NLP meets HCI, on AI for health care and education.
+    openalex: A5033744502|A5140871236
+  - name: Yao Du
+    group: faculty
+    role: Research Scientist
+    url: https://dornsife.usc.edu/ccls/yao-du/
+    photo: assets/team/yaodu.jpg
+    bio: Speech-language pathologist at USC, building tools for communication disorders.
+    orcid: 0000-0003-2858-2420
+  - name: Jia Zhang
+    group: faculty
+    role: Research Scientist
+    photo: assets/team/jia.jpg
+    bio: Neurologist (M.D.) on brain aging and stroke, interested in HCI for mental health.
+
+  # PhD students
+  - name: Jiaju Chen
+    group: phd
+    role: PhD student
+    url: https://malcolm-chen.github.io/
+    photo: assets/team/jiaju.jpg
+    bio: Builds LLM tools for children’s learning and studies how people work with agents.
+    orcid: 0009-0005-9598-5838
+  - name: Jingfei Huang
+    group: phd
+    role: PhD student
+    url: https://www.jingfeihuang.com/research
+    photo: assets/team/jingfei.jpg
+    bio: Designs multimodal AI for health care, work, and creativity, drawing on a background in design.
+    orcid: 0009-0002-0213-4160
+  - name: Zihan Xue
+    group: phd
+    role: PhD student
+    url: https://zihanxue.com/
+    photo: assets/team/zihan.jpg
+    bio: Investigates how AI agents navigate human goals, preferences, and expectations.
+  - name: Menglin Zhao
+    group: phd
+    role: PhD student
+    url: https://gigi77789.github.io/my_website/
+    photo: assets/team/menglin.jpg
+    bio: PhD student in Computer Science, advised by Prof. Dakuo Wang.
+  - name: Yuxuan Lu
+    group: phd
+    role: PhD student
+    url: https://yuxuan.lu
+    photo: assets/team/yuxuan.jpg
+    bio: Trains, runs, and studies LLM agents that simulate how people behave.
+    orcid: 0000-0002-8520-0540
+  - name: Ziyi Wang
+    group: phd
+    role: PhD student
+    url: https://ziyiii0-0.github.io/
+    photo: assets/team/ziyi.jpg
+    bio: Works on NLP with a focus on LLM agents. Proud owner of a very cute cat named Cakecake.
+
+  # research assistants
+  - name: Bo Sun
+    group: ra
+    role: Research assistant
+    url: https://qianxi66.github.io/
+    photo: assets/team/bo.jpg
+    bio: Master’s student at Northeastern, interested in NLP and human-AI interaction.
+  - name: Jiayi (Elise) Su
+    group: ra
+    role: Research assistant
+    url: https://jiayi-elise-su.github.io/
+    photo: assets/team/jiayi.jpg
+    bio: Master’s student in HCI, AI, and health, mostly asking whether the AI actually helps anyone.
+  - name: Yuewen Gao
+    group: ra
+    role: Research assistant
+    url: https://yuewen-gao.github.io/
+    photo: assets/team/yuewen.jpg
+    bio: Undergraduate at Nanjing University, interested in human-AI collaboration and visualization.
+    orcid: 0009-0009-4258-5952
+
+  # visiting students
+  - name: Ruhan Gupta
+    group: visiting
+    role: Visiting student
+    url: https://ruhangupta.com/
+    photo: assets/team/ruhan.jpg
+    bio: High-school student from Texas building accessible AI systems for education.
+
+  # alumni
+  - name: Chengyou Xu
+    group: alumni
+    role: Master’s student
+    url: https://www.linkedin.com/in/cheney-xu/
+  - name: Jiachen Li
+    group: alumni
+    role: PhD student
+    url: https://jiachen-li.com
+  - name: Jumana Almahmoud
+    group: alumni
+    role: Postdoctoral associate
+    url: https://www.jumana.info/
+  - name: Reina Chan
+    group: alumni
+    aliases:
+      - Szeyi Chan
+    role: Research assistant
+    url: https://szeyireinachan.github.io/
+  - name: Ruishi Zou
+    group: alumni
+    role: Visiting student
+    url: https://ruishizou.github.io/
+  - name: Shao Zhang
+    group: alumni
+    role: Visiting student
+    url: https://shaozhang.info
+  - name: Shihan Fu
+    group: alumni
+    role: PhD student
+    url: https://shihanfu.com
+  - name: Siyi (Reyna) Wu
+    group: alumni
+    role: PhD student
+    url: https://reynawu541.github.io/
+  - name: Smit Desai
+    group: alumni
+    role: Now Assistant Professor, CAMD
+    url: https://smitdesai.net/
+  - name: Tian Lu
+    group: alumni
+    role: Visiting student
+    url: https://xander-run.github.io
+  - name: Wenbo Li
+    group: alumni
+    role: Visiting student
+    url: https://wlicb.github.io/me/
+  - name: Yue (Yelena) Yu
+    group: alumni
+    role: Master’s student
+    url: https://yelena.info
+  - name: Yuqi Hu
+    group: alumni
+    role: Research apprentice
+  - name: Zhiping Zhang
+    group: alumni
+    role: Research assistant
+    url: https://www.zhipingzhang.com/
+  - name: Zihe Hao
+    group: alumni
+    role: Research assistant
+  - name: Ziqi Yang
+    group: alumni
+    role: Research assistant
+    url: https://eugeniayang.github.io/
